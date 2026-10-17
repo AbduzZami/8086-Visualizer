@@ -520,6 +520,25 @@ p.cd-b{padding-left:0}
 @media (prefers-reduced-motion: reduce){
   *{animation:none!important;transition:none!important}
 }
+/* Figure 1.6 */
+.dg.f16{min-width:560px;max-width:700px;margin:0 auto}
+.f16 .ttl{font-size:20px;font-weight:700;fill:var(--st-fg);transition:fill .35s}
+.f16 .region.hl .ttl{fill:var(--st-gold)}
+.f16 .rg{fill:transparent;transition:fill .35s}
+.f16 .region.hl .rg{fill:var(--st-hl)}
+.f16 .divl{stroke:var(--st-line2);stroke-width:2.5;stroke-dasharray:12 9}
+.f16 .lab{fill:var(--st-dim);font-size:17px;font-family:var(--f-body);transition:fill .35s}
+.f16 .node.hl .lab{fill:var(--st-gold)}
+.f16 .pipe{transition:opacity .35s}
+.f16 .pipe.dim{opacity:.3}
+.f16 .pc{fill:none;stroke:var(--st-line2);stroke-linejoin:miter;transition:stroke .3s}
+.f16 .pi{fill:none;stroke:var(--st-bg);stroke-linejoin:miter}
+.f16 .pf{fill:none;stroke:transparent;stroke-width:3}
+.f16 .ph{fill:var(--st-bg);stroke:var(--st-line2);stroke-width:2.6;stroke-linejoin:miter;transition:stroke .3s}
+.f16 .pipe.on .pc,.f16 .pipe.on .ph{stroke:var(--st-teal)}
+.f16 .pipe.on .pf{stroke:var(--st-gold);stroke-dasharray:8 16;animation:flow 1s linear infinite}
+.f16 .pipe.on.rev .pf{animation-direction:reverse}
+@media (prefers-reduced-motion:reduce){.f16 .pipe.on .pf{animation:none}}
 </style>
 
 </head>
@@ -945,6 +964,64 @@ SC.swap=(root,cfg)=>{const V={};let cur=null;
 </script>
 <script>
 "use strict";
+/* ================= scene: Figure 1.6, Intel 8086 organization (drawn like the textbook) ================= */
+SC.fig16=(root,cfg)=>{const W=780,H=712;const wrap=el('div',{class:'scroll-x'});
+  const s=sv('svg',{viewBox:`0 0 ${W} ${H}`,class:'dg f16',role:'img','aria-label':'Figure 1.6: Intel 8086 microprocessor organization'});
+  const G={},P={};const gP=sv('g'),gN=sv('g'),gR=sv('g');
+  const T=(x,y,t,cls,o)=>sv('text',Object.assign({x,y,'text-anchor':'middle',class:cls||'nl'},o||{}),t);
+  const node=(id,cls,...kids)=>{const g=sv('g',{class:'node '+(cls||'')},...kids);G[id]=g;gN.append(g);return g;};
+  /* hollow "double-line" arrows, like the book's figure */
+  const pipe=(id,pts,o)=>{o=o||{};const w=o.w||13,HL=o.hl||16,HW=o.hw||14;const Q=pts.map(p=>p.slice());const heads=[];
+    const cut=(i,j)=>{const dx=Q[i][0]-Q[j][0],dy=Q[i][1]-Q[j][1],l=Math.hypot(dx,dy)||1;const u=[dx/l,dy/l];heads.push([pts[i],u]);Q[i]=[pts[i][0]-u[0]*HL,pts[i][1]-u[1]*HL];};
+    if(o.b!==false)cut(Q.length-1,Q.length-2);if(o.a)cut(0,1);
+    const d='M'+Q.map(p=>p.join(',')).join(' L');const g=sv('g',{class:'pipe'});
+    g.append(sv('path',{d,class:'pc','stroke-width':w}),sv('path',{d,class:'pi','stroke-width':w-5.5}),sv('path',{d,class:'pf'}));
+    heads.forEach(([[tx,ty],[ux,uy]])=>{const bx=tx-ux*HL,by=ty-uy*HL,nx=-uy,ny=ux;g.append(sv('polygon',{points:`${tx},${ty} ${bx+nx*HW},${by+ny*HW} ${bx-nx*HW},${by-ny*HW}`,class:'ph'}));});
+    P[id]=g;gP.append(g);return g;};
+  const stack=(x,y,w,h,names)=>names.map((n,k)=>[sv('rect',{x,y:y+k*h,width:w,height:h,class:'nb'}),T(x+w/2,y+k*h+h/2+6,n,'nl mono',{'font-size':17})]);
+  /* the two units */
+  const reg=(id,x,w,title,tx)=>{const g=sv('g',{class:'node region'},sv('rect',{x,y:50,width:w,height:656,rx:14,class:'rg'}),T(tx,34,title,'ttl'));G[id]=g;gR.append(g);};
+  reg('eu',6,356,'Execution Unit (EU)',188);reg('biu',374,400,'Bus Interface Unit (BIU)',572);
+  gR.append(sv('line',{x1:368,y1:52,x2:368,y2:704,class:'divl'}));
+  /* EU side */
+  node('gr','',...stack(197,70,103,26,['AX','BX','CX','DX','SP','BP','SI','DI']),T(105,170,'General','lab'),T(105,192,'registers','lab'));
+  node('ibus','',sv('polygon',{points:'22,378 54,348 54,362 438,362 438,348 470,378 438,408 438,394 54,394 54,408',class:'nb'}),T(246,384,'Internal bus','nl',{'font-size':18}));
+  node('tmp','',sv('rect',{x:150,y:447,width:195,height:43,rx:4,class:'nb'}),T(247,475,'Temporary registers','nl',{'font-size':17}));
+  node('alu','',sv('polygon',{points:'172,540 238,540 252,560 266,540 332,540 300,602 204,602',class:'nb'}),T(252,592,'ALU','nl',{'font-size':20}));
+  node('flg','',sv('rect',{x:192,y:640,width:116,height:40,rx:4,class:'nb'}),T(250,666,'Flags','nl',{'font-size':17}));
+  /* BIU side */
+  node('seg','',...stack(483,195,112,26,['CS','DS','SS','ES','IP']));
+  node('bcl','',sv('rect',{x:488,y:380,width:104,height:80,rx:4,class:'nb'}),T(540,408,'Bus','nl',{'font-size':16}),T(540,427,'control','nl',{'font-size':16}),T(540,446,'logic','nl',{'font-size':16}));
+  node('ext','',T(706,426,'External bus','nl',{'font-size':17}));
+  const qc=[];for(let k=0;k<6;k++)qc.push(sv('rect',{x:405+k*16,y:532,width:16,height:60,class:'nb'}));
+  node('q','',...qc,T(452,620,'Instruction queue','lab'));
+  /* paths (drawn under the boxes) */
+  pipe('p_gr',[[248,278],[248,362]],{a:true});
+  pipe('p_t1',[[205,394],[205,447]],{a:true});pipe('p_t2',[[300,394],[300,447]],{a:true});
+  pipe('p_a1',[[205,490],[205,540]]);pipe('p_a2',[[300,490],[300,540]]);
+  pipe('p_af',[[284,602],[284,640]],{a:true,w:7,hl:10,hw:8});
+  pipe('p_ar',[[206,590],[124,590],[124,394]]);
+  pipe('p_fr',[[220,680],[220,696],[70,696],[70,394]]);
+  pipe('p_si',[[410,362],[410,150],[540,150],[540,195]],{a:true});
+  pipe('p_sb',[[540,325],[540,380]]);
+  pipe('p_ex',[[592,420],[648,420]],{a:true});
+  pipe('p_bq',[[566,460],[566,562],[501,562]]);
+  pipe('p_qe',[[405,562],[322,562]]);
+  pipe('p_qi',[[386,557],[386,394]]);
+  s.append(gR,gP,gN);wrap.append(s);root.append(wrap);
+  const hint=el('div',{class:'swipe',text:'⟷ swipe'});hint.hidden=true;root.append(hint);
+  ['touchstart','pointerdown','wheel'].forEach(ev=>wrap.addEventListener(ev,()=>{hint.hidden=true;},{passive:true}));
+  const follow=hl=>{const sw=wrap.scrollWidth,cw=wrap.clientWidth;const over=sw>cw+4;hint.hidden=!over;if(!over||!hl.size)return;
+    let a=1e9,b=-1e9;hl.forEach(id=>{const g=G[id];if(!g||id==='eu'||id==='biu')return;try{const bb=g.getBBox();a=Math.min(a,bb.x);b=Math.max(b,bb.x+bb.width);}catch(e){}});
+    if(b<a){if(hl.has('biu')){a=374;b=774;}else if(hl.has('eu')){a=6;b=362;}else return;}
+    const k=s.getBoundingClientRect().width/W;const left=Math.max(0,(a+b)/2*k-cw/2);try{wrap.scrollTo({left,behavior:RM?'auto':'smooth'});}catch(e){wrap.scrollLeft=left;}};
+  return{go(i,steps){const st=steps[i].s||{};const hl=new Set(st.hl||[]),on=new Set(st.on||[]),rev=new Set(st.rev||[]);
+    for(const id in G){G[id].classList.toggle('hl',hl.has(id));G[id].classList.toggle('dim',!!st.dim&&!hl.has(id)&&id!=='eu'&&id!=='biu');}
+    for(const id in P){P[id].classList.toggle('on',on.has(id));P[id].classList.toggle('rev',rev.has(id));P[id].classList.toggle('dim',!!st.dim&&!on.has(id));}
+    requestAnimationFrame(()=>follow(hl));}};};
+</script>
+<script>
+"use strict";
 /* ================= Try-it tools ================= */
 const TT={
   conv:{en:'Number converter',bn:'সংখ্যা রূপান্তর'},seg:{en:'Segment:offset calculator',bn:'সেগমেন্ট:অফসেট ক্যালকুলেটর'},
@@ -1134,31 +1211,27 @@ T('Buses: address, data and control','বাস: অ্যাড্রেস, �
      'ডেটা বাস দুই দিকেই কাজ করে। রিডের সময় ডেটা সিপিইউতে আসে, আর রাইটের সময় ডেটা সিপিইউ থেকে মেমোরি বা আই/ও-তে যায়।',{hl:['db'],on:['d1','d2','d3'],rev:['d1','d2','d3'],note:'write: CPU → data bus → memory / I/O'})]),
 
 T('Inside the 8086: EU and BIU','৮০৮৬-এর ভেতরে: ইইউ ও বিআইইউ',
- {type:'dg',h:540,nodes:[
-  {id:'eu',x:15,y:15,w:470,h:510,shape:'frame',l:'Execution Unit (EU)'},
-  {id:'biu',x:515,y:15,w:470,h:510,shape:'frame',l:'Bus Interface Unit (BIU)'},
-  {id:'gr',x:45,y:70,w:190,h:170,l:'General\nregisters',s:'AX BX CX DX\nSP BP SI DI',smono:true},
-  {id:'tmp',x:270,y:70,w:190,h:90,l:'Temp registers'},
-  {id:'alu',x:270,y:230,w:190,h:120,l:'ALU',s:'+ − × ÷ AND OR'},
-  {id:'flg',x:45,y:400,w:190,h:90,l:'FLAGS'},
-  {id:'seg',x:545,y:70,w:190,h:170,l:'Segment\nregisters',s:'CS DS SS ES\nIP',smono:true},
-  {id:'adr',x:765,y:70,w:190,h:110,l:'Bus control',s:'Σ address logic'},
-  {id:'q',x:545,y:330,w:250,h:100,l:'Instruction queue',s:'6 bytes, prefetched'},
-  {id:'ext',x:825,y:330,w:130,h:100,l:'External\nbus',fs:20}],
-  edges:[{id:'e1',a:'gr:r:.3',b:'tmp:l',bi:true,l:'internal bus',ly:76},{id:'e2',a:'tmp:b',b:'alu:t'},{id:'e3',a:'alu:b',b:'flg:r'},
-   {id:'e4',a:'seg:r:.3',b:'adr:l'},{id:'e5',a:'adr:b',b:'ext:t'},{id:'e6',a:'ext:l',b:'q:r'},{id:'e7',a:'q:t:.2',b:'tmp:r',l:'to EU'}]},
- [st('The 8086 is organized as two units that work side by side. On the left is the Execution Unit, or EU, which actually executes the instructions.',
-     '৮০৮৬ প্রসেসর দুটি ইউনিটে ভাগ করা, যারা পাশাপাশি কাজ করে। বাম দিকে এক্সিকিউশন ইউনিট বা ইইউ, যেটি আসলে ইনস্ট্রাকশনগুলো এক্সিকিউট করে।',{hl:['eu','gr','tmp','alu','flg']}),
-  st('The general registers hold the data the EU is working on. Operands travel over the internal bus, through temporary registers, into the ALU.',
-     'জেনারেল রেজিস্টারগুলোতে ইইউ যে ডেটা নিয়ে কাজ করছে তা থাকে। অপারেন্ডগুলো ইন্টারনাল বাস ধরে, টেম্পোরারি রেজিস্টার হয়ে, এএলইউ-তে পৌঁছায়।',{hl:['gr','tmp','alu'],on:['e1','e2']}),
-  st('The ALU does the arithmetic and logic. After each operation it updates the FLAGS register to record the status of the result.',
-     'এএলইউ গাণিতিক আর লজিক্যাল কাজগুলো করে। প্রতিটি অপারেশনের পর এটি ফ্ল্যাগ রেজিস্টার আপডেট করে, যাতে ফলাফলের অবস্থা লেখা থাকে।',{hl:['alu','flg'],on:['e3']}),
-  st('On the right is the Bus Interface Unit, or BIU. It uses the segment registers and IP to compute memory addresses, and it drives the external bus.',
-     'ডান দিকে বাস ইন্টারফেস ইউনিট বা বিআইইউ। এটি সেগমেন্ট রেজিস্টার আর আইপি ব্যবহার করে মেমোরি অ্যাড্রেস হিসাব করে, এবং এক্সটার্নাল বাস নিয়ন্ত্রণ করে।',{hl:['biu','seg','adr','ext'],on:['e4','e5']}),
-  st('While the EU is busy, the BIU fetches the next instruction bytes ahead of time into a six-byte instruction queue.',
-     'ইইউ যখন ব্যস্ত, তখন বিআইইউ আগেভাগেই পরের ইনস্ট্রাকশনের বাইটগুলো এনে ছয় বাইটের ইনস্ট্রাকশন কিউতে রেখে দেয়।',{hl:['q','ext'],on:['e6']}),
-  st('So fetching and executing overlap instead of happening one after the other. This overlap, called pipelining, is what makes the 8086 fast.',
-     'ফলে ফেচ আর এক্সিকিউট একটির পর একটি না হয়ে একসাথে চলে। এই ওভারল্যাপকে পাইপলাইনিং বলে, আর এটাই ৮০৮৬-কে দ্রুত করে।',{hl:['q','tmp','alu'],on:['e6','e7','e2','e5'],note:'BIU fetches while EU executes = pipelining'})]),
+ {type:'fig16'},
+ [st('This is Figure 1.6 from the textbook: the organization of the Intel 8086. A dashed line splits the chip into two units that work side by side: the Execution Unit, or EU, on the left and the Bus Interface Unit, or BIU, on the right.',
+     'এটি পাঠ্যবইয়ের চিত্র ১.৬: ইন্টেল ৮০৮৬-এর গঠন। একটি ড্যাশ দাগ চিপটিকে দুটি ইউনিটে ভাগ করেছে, যারা পাশাপাশি কাজ করে: বাম দিকে এক্সিকিউশন ইউনিট বা ইইউ, আর ডান দিকে বাস ইন্টারফেস ইউনিট বা বিআইইউ।',{hl:['eu','biu']}),
+  st('Start in the EU. The general registers AX, BX, CX, DX, SP, BP, SI and DI hold the data and addresses the EU is working with right now.',
+     'শুরু করি ইইউ থেকে। জেনারেল রেজিস্টার AX, BX, CX, DX, SP, BP, SI ও DI-তে সেই ডেটা ও অ্যাড্রেস থাকে, যা নিয়ে ইইউ এই মুহূর্তে কাজ করছে।',{hl:['gr'],on:['p_gr'],dim:true}),
+  st('The internal bus is the fast path inside the chip. It links the registers, the temporary registers and the ALU, and it even crosses the dashed line to reach the BIU.',
+     'ইন্টারনাল বাস হলো চিপের ভেতরের দ্রুত পথ। এটি রেজিস্টার, টেম্পোরারি রেজিস্টার আর এএলইউ-কে যুক্ত করে, এমনকি ড্যাশ দাগ পেরিয়ে বিআইইউ পর্যন্ত পৌঁছায়।',{hl:['ibus'],on:['p_gr','p_t1','p_t2','p_si'],dim:true}),
+  st('The temporary registers are hidden from the programmer. They hold the two operands on their way into the ALU.',
+     'টেম্পোরারি রেজিস্টারগুলো প্রোগ্রামার দেখতে পায় না। দুটি অপারেন্ড এএলইউ-তে ঢোকার পথে এগুলোতে সাময়িকভাবে থাকে।',{hl:['tmp','alu'],on:['p_t1','p_t2','p_a1','p_a2'],dim:true}),
+  st('The ALU does the arithmetic and the logic: add, subtract, multiply, divide, AND, OR and NOT. Its result goes back onto the internal bus.',
+     'এএলইউ গাণিতিক ও লজিক্যাল কাজ করে: যোগ, বিয়োগ, গুণ, ভাগ, AND, OR ও NOT। এর ফলাফল আবার ইন্টারনাল বাসে ফিরে যায়।',{hl:['alu','ibus'],on:['p_a1','p_a2','p_ar'],dim:true}),
+  st('After every operation the ALU updates the Flags register, which records the status of the result. The flags can also be read over the internal bus.',
+     'প্রতিটি অপারেশনের পর এএলইউ ফ্ল্যাগ রেজিস্টার আপডেট করে, যাতে ফলাফলের অবস্থা লেখা থাকে। ইন্টারনাল বাস দিয়ে ফ্ল্যাগগুলোও পড়া যায়।',{hl:['alu','flg'],on:['p_af','p_fr'],dim:true}),
+  st('Now the BIU. Its segment registers CS, DS, SS and ES, together with the instruction pointer IP, tell where the code, data, stack and next instruction are in memory.',
+     'এবার বিআইইউ। এর সেগমেন্ট রেজিস্টার CS, DS, SS ও ES, আর ইনস্ট্রাকশন পয়েন্টার IP মিলে বলে দেয় মেমোরিতে কোড, ডেটা, স্ট্যাক আর পরের ইনস্ট্রাকশন কোথায় আছে।',{hl:['seg','biu'],on:['p_si'],dim:true}),
+  st('The bus control logic turns a segment and an offset into a twenty-bit physical address, and it generates the control signals for every memory or I/O access over the external bus.',
+     'বাস কন্ট্রোল লজিক সেগমেন্ট আর অফসেট থেকে বিশ বিটের ফিজিক্যাল অ্যাড্রেস তৈরি করে, এবং এক্সটার্নাল বাস দিয়ে প্রতিটি মেমোরি বা আই/ও অ্যাক্সেসের কন্ট্রোল সিগন্যাল তৈরি করে।',{hl:['bcl','ext','seg'],on:['p_sb','p_ex'],dim:true}),
+  st('While the EU is busy, the BIU fetches the next instruction bytes from memory ahead of time and keeps up to six of them in the instruction queue.',
+     'ইইউ যখন ব্যস্ত, তখন বিআইইউ আগেভাগেই মেমোরি থেকে পরের ইনস্ট্রাকশনের বাইটগুলো এনে ইনস্ট্রাকশন কিউতে সর্বোচ্চ ছয়টি পর্যন্ত জমা রাখে।',{hl:['q','bcl','ext'],on:['p_ex','p_bq'],rev:['p_ex'],dim:true}),
+  st('The EU takes its next instruction straight from the queue, so it rarely waits for memory. Fetching and executing overlap instead of happening one after another. This is pipelining, and it is what makes the 8086 fast.',
+     'ইইউ পরের ইনস্ট্রাকশন সরাসরি কিউ থেকে নেয়, তাই তাকে মেমোরির জন্য খুব কমই অপেক্ষা করতে হয়। ফেচ আর এক্সিকিউট একটির পর একটি না হয়ে একসাথে চলে। একেই পাইপলাইনিং বলে, আর এটাই ৮০৮৬-কে দ্রুত করে।',{hl:['q','alu','tmp','bcl'],on:['p_ex','p_bq','p_qe','p_qi','p_a1','p_a2'],rev:['p_ex'],note:{en:'BIU fetches while EU executes = pipelining',bn:'বিআইইউ ফেচ করে, ইইউ একই সময়ে এক্সিকিউট করে = পাইপলাইনিং'}})]),
 
 T('The 8086 registers','৮০৮৬-এর রেজিস্টারসমূহ',
  {type:'regs',dimGroups:true,init:{AX:'0000',BX:'0000',CX:'0000',DX:'0000',SP:'0100',BP:'0000',SI:'0000',DI:'0000',CS:'0B3C',DS:'0B4C',SS:'0B4E',ES:'0B2C',IP:'0000',FLAGS:'0202'}},
