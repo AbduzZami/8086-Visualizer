@@ -501,6 +501,10 @@ p.cd-b{padding-left:0}
   .mcol.narrow .mrow{grid-template-columns:minmax(0,auto) 40px 50px 56px}
   .mregs{min-width:0;width:100%}
   .rf{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .rf .reg{flex-wrap:wrap;row-gap:2px}
+  .rf .reg .rd{flex-basis:100%;font-size:.7rem}
+  .rf .reg.split .rd{margin-top:12px}
+  .rg{padding:8px 9px}
   .rv{font-size:.92rem;min-width:40px;padding:3px 6px}
   .ins{font-size:16px}
   .cp{font-size:12px;max-height:250px}
@@ -1745,6 +1749,57 @@ T('Special jobs of AX, BX, CX, DX','AX, BX, CX, DX এর বিশেষ কা
   st('DX, the data register, pairs with AX in multiply and divide, and it holds the port address in I/O operations.',
      'DX বা ডেটা রেজিস্টার গুণ ও ভাগে AX এর সাথে জোড়া বাঁধে, আর আই/ও অপারেশনে পোর্টের অ্যাড্রেস রাখে।',{hl:[3]})]),
 
+T('Address registers: segment, pointer and index','অ্যাড্রেস রেজিস্টার: সেগমেন্ট, পয়েন্টার ও ইনডেক্স',
+ {type:'regs',dimGroups:true,groups:[{id:'seg',t:'Segment registers: where a 64 KB segment starts',r:['CS','DS','SS','ES']},{id:'ptr',t:'Pointer & index registers: offsets inside a segment',r:['IP','SP','BP','SI','DI']},{id:'d',t:'Data register (helper)',r:['AX']}],
+  descs:{CS:{en:'code segment number',bn:'কোড সেগমেন্টের নম্বর'},DS:{en:'data segment number',bn:'ডেটা সেগমেন্টের নম্বর'},SS:{en:'stack segment number',bn:'স্ট্যাক সেগমেন্টের নম্বর'},ES:{en:'extra segment number',bn:'এক্সট্রা সেগমেন্টের নম্বর'},
+   IP:{en:'next instruction · with CS',bn:'পরের ইনস্ট্রাকশন · CS-এর সাথে'},SP:{en:'top of stack · with SS',bn:'স্ট্যাকের চূড়া · SS-এর সাথে'},BP:{en:'inside the stack · with SS',bn:'স্ট্যাকের ভেতরে · SS-এর সাথে'},SI:{en:'source offset · with DS',bn:'সোর্স অফসেট · DS-এর সাথে'},DI:{en:'destination offset · with ES',bn:'ডেস্টিনেশন অফসেট · ES-এর সাথে'},AX:{en:'accumulator',bn:'অ্যাকুমুলেটর'}},
+  init:{CS:'0B3C',DS:'0B2C',SS:'0B4E',ES:'0B2C',IP:'0000',SP:'0100'}},
+ [st('The second kind is the address registers. They hold addresses, not ordinary data. There are nine of them, all 16 bits wide, and unlike AX to DX they cannot be split into 8-bit halves.',
+     'দ্বিতীয় প্রকার হলো অ্যাড্রেস রেজিস্টার। এগুলো সাধারণ ডেটা নয়, অ্যাড্রেস ধরে রাখে। এরা মোট নয়টি, সবগুলো ১৬ বিটের, আর AX থেকে DX-এর মতো এদের ৮ বিটের দুই ভাগে ভাগ করা যায় না।',{grp:['seg','ptr']}),
+  st('Every memory address has two parts: a segment number and an offset. The four segment registers hold segment numbers: CS for the code, DS for the data, SS for the stack, and ES for an extra data segment.',
+     'মেমোরির প্রতিটি অ্যাড্রেসের দুটি অংশ: একটি সেগমেন্ট নম্বর আর একটি অফসেট। চারটি সেগমেন্ট রেজিস্টার সেগমেন্ট নম্বর ধরে রাখে: কোডের জন্য CS, ডেটার জন্য DS, স্ট্যাকের জন্য SS, আর বাড়তি একটি ডেটা সেগমেন্টের জন্য ES।',{grp:'seg',hl:['CS','DS','SS','ES']}),
+  st('When a program starts, DS does not point to its own data yet. A segment register cannot be loaded with a number directly; MOV DS, 0B4C hex is not allowed. So the number goes into a general register first.',
+     'প্রোগ্রাম শুরু হওয়ার সময় DS এখনো তার নিজের ডেটার দিকে নির্দেশ করে না। সেগমেন্ট রেজিস্টারে সরাসরি কোনো সংখ্যা লোড করা যায় না; MOV DS,0B4Ch লেখা যায় না। তাই সংখ্যাটি আগে একটি সাধারণ রেজিস্টারে নিতে হয়।',{grp:['seg','d'],ins:'MOV AX,@DATA',set:{AX:'0B4C'},hl:['AX']}),
+  st('Then MOV DS, AX copies it across. Now DS = 0B4C, the program\'s own data segment. This two-step pattern starts almost every program.',
+     'তারপর MOV DS,AX মানটি কপি করে দেয়। এখন DS = 0B4C, অর্থাৎ প্রোগ্রামের নিজের ডেটা সেগমেন্ট। প্রায় প্রতিটি প্রোগ্রাম এই দুই ধাপ দিয়ে শুরু হয়।',{grp:['seg','d'],ins:'MOV DS,AX',fly:{from:'AX',to:'DS',v:'0B4C'},set:{DS:'0B4C'},hl:['DS']}),
+  st('Segment registers are only for addressing. You cannot do arithmetic on them, and you cannot load them with a constant. You can only copy into them from a register or from memory.',
+     'সেগমেন্ট রেজিস্টার শুধু অ্যাড্রেসিংয়ের জন্য। এদের উপর গণনা করা যায় না, আর ধ্রুবক সংখ্যাও লোড করা যায় না। শুধু অন্য রেজিস্টার বা মেমোরি থেকে কপি করা যায়।',{grp:'seg',hl:['DS'],note:'MOV DS,AX ✓   ·   MOV DS,0B4Ch ✗   ·   ADD DS,1 ✗'}),
+  st('The pointer and index registers hold offsets. IP pairs with CS: CS colon IP is the address of the next instruction. IP moves forward by itself after every instruction, and no MOV can write to it.',
+     'পয়েন্টার ও ইনডেক্স রেজিস্টার অফসেট ধরে রাখে। IP জোড়া বাঁধে CS-এর সাথে: CS:IP হলো পরের ইনস্ট্রাকশনের অ্যাড্রেস। প্রতিটি ইনস্ট্রাকশনের পর IP নিজে থেকেই এগিয়ে যায়, আর কোনো MOV দিয়ে এতে লেখা যায় না।',{grp:['seg','ptr'],hl:['CS','IP'],note:'CS:IP → next instruction'}),
+  st('SP pairs with SS: SS colon SP is the top of the stack. Each PUSH stores a word and moves SP down by 2, so after PUSH AX, SP = 00FE.',
+     'SP জোড়া বাঁধে SS-এর সাথে: SS:SP হলো স্ট্যাকের চূড়া। প্রতিটি PUSH একটি ওয়ার্ড রাখে আর SP কে ২ কমায়, তাই PUSH AX-এর পর SP = 00FE।',{grp:['seg','ptr'],ins:'PUSH AX',set:{SP:'00FE'},hl:['SS','SP'],note:'SS:SP → top of the stack'}),
+  st('BP also works in the stack segment. Copying SP into BP gives a fixed reference point, so data inside the stack can be reached even while SP keeps moving.',
+     'BP-ও স্ট্যাক সেগমেন্টে কাজ করে। SP কে BP-তে কপি করলে একটি স্থির রেফারেন্স পাওয়া যায়, ফলে SP নড়তে থাকলেও স্ট্যাকের ভেতরের ডেটায় পৌঁছানো যায়।',{grp:['seg','ptr'],ins:'MOV BP,SP',fly:{from:'SP',to:'BP',v:'00FE'},set:{BP:'00FE'},hl:['BP','SS']}),
+  st('SI and DI are the index registers. SI usually points to a source in the data segment, and DI to a destination in the extra segment. The string instructions use exactly DS colon SI and ES colon DI.',
+     'SI আর DI হলো ইনডেক্স রেজিস্টার। SI সাধারণত ডেটা সেগমেন্টে একটি সোর্সের দিকে, আর DI এক্সট্রা সেগমেন্টে একটি গন্তব্যের দিকে নির্দেশ করে। স্ট্রিং ইনস্ট্রাকশনগুলো ঠিক DS:SI আর ES:DI ব্যবহার করে।',{grp:['seg','ptr'],ins:'MOV SI,0',set:{SI:'0000',DI:'0000'},hl:['DS','SI','ES','DI'],note:'DS:SI → source   ·   ES:DI → destination'}),
+  st('Unlike segment registers, pointer and index registers can do arithmetic. INC SI moves SI to the next byte, which is how a program walks through an array or a string.',
+     'সেগমেন্ট রেজিস্টারের মতো নয়, পয়েন্টার ও ইনডেক্স রেজিস্টার দিয়ে গণনা করা যায়। INC SI, SI কে পরের বাইটে নিয়ে যায়; এভাবেই প্রোগ্রাম একটি অ্যারে বা স্ট্রিংয়ের উপর দিয়ে এগিয়ে চলে।',{grp:'ptr',ins:'INC SI',set:{SI:'0001'},hl:['SI']}),
+  st('So every address is a pair: a segment register gives the segment, and a pointer or index register gives the offset. BX can also hold an offset in the data segment.',
+     'তাই প্রতিটি অ্যাড্রেস একটি জোড়া: সেগমেন্ট রেজিস্টার দেয় সেগমেন্ট, আর পয়েন্টার বা ইনডেক্স রেজিস্টার দেয় অফসেট। BX-ও ডেটা সেগমেন্টে একটি অফসেট ধরে রাখতে পারে।',{grp:['seg','ptr'],hl:['CS','IP','SS','SP','BP','DS','SI','ES','DI'],note:'CS:IP · SS:SP · SS:BP · DS:SI · ES:DI'})]),
+
+T('The status register: FLAGS','স্ট্যাটাস রেজিস্টার: ফ্ল্যাগ',
+ {type:'bits',rows:[{id:'f',label:'FLAGS',n:16,idx:true,names:FLAGNAMES,v:'0000000000000000'}]},
+ [st('The third kind is the status register, FLAGS. It is 16 bits wide, but it is not one number. Each bit is a separate flag, and the 8086 uses only 9 of the 16 bits.',
+     'তৃতীয় প্রকার হলো স্ট্যাটাস রেজিস্টার, ফ্ল্যাগ। এটি ১৬ বিটের, কিন্তু এটি একটি সংখ্যা নয়। প্রতিটি বিট একটি আলাদা ফ্ল্যাগ, আর ৮০৮৬ এর ১৬টি বিটের মধ্যে মাত্র ৯টি ব্যবহার করে।',{hl:{f:[0,2,4,6,7,8,9,10,11]},note:'9 of 16 bits are flags'}),
+  st('Six of them are status flags: CF, PF, AF, ZF, SF and OF, in bits 0, 2, 4, 6, 7 and 11. The processor sets or clears them after each arithmetic or logic instruction, to describe the result.',
+     'এদের ছয়টি স্ট্যাটাস ফ্ল্যাগ: CF, PF, AF, ZF, SF আর OF, বিট ০, ২, ৪, ৬, ৭ আর ১১-তে। প্রতিটি গাণিতিক বা লজিক ইনস্ট্রাকশনের পর প্রসেসর ফলাফল বোঝাতে এগুলো সেট বা ক্লিয়ার করে।',{hl:{f:[0,2,4,6,7,11]}}),
+  st('Watch them work. With AL = FF hex, ADD AL, 1 gives 100 hex, but only 00 fits in AL. The 1 that falls off the top sets the carry flag, CF = 1, and since the result is zero, ZF = 1.',
+     'কাজ করতে দেখো। AL = FFh হলে ADD AL,1 দেয় 100h, কিন্তু AL-এ শুধু 00 আঁটে। উপর থেকে পড়ে যাওয়া ১ ক্যারি ফ্ল্যাগ সেট করে, CF = 1, আর ফলাফল শূন্য বলে ZF = 1।',{rows:{f:'0000000001010101'},hl:{f:[0,6]},note:'AL = FFh;  ADD AL,1  →  AL = 00h'}),
+  st('The same result also sets PF and AF. PF = 1 because 00 has an even number of 1 bits, zero of them. AF = 1 because adding to F in the low four bits carried out of bit 3. SF = 0 and OF = 0.',
+     'একই ফলাফল PF আর AF-ও সেট করে। PF = 1, কারণ 00-তে ১ বিটের সংখ্যা জোড়, শূন্যটি। AF = 1, কারণ নিচের চার বিটের F-এর সাথে যোগ করায় বিট ৩ থেকে ক্যারি বেরিয়েছে। SF = 0 আর OF = 0।',{rows:{f:'0000000001010101'},hl:{f:[2,4,7,11]},note:'CF=1  ZF=1  PF=1  AF=1  SF=0  OF=0'}),
+  st('Another example. With AL = 7F hex, ADD AL, 1 gives 80 hex. Its top bit is 1, so SF = 1. As signed numbers, 127 plus 1 cannot be minus 128, so the overflow flag OF = 1. There is no carry out, so CF = 0.',
+     'আরেকটি উদাহরণ। AL = 7Fh হলে ADD AL,1 দেয় 80h। এর সবচেয়ে উপরের বিট ১, তাই SF = 1। সাইনড সংখ্যা হিসেবে ১২৭ যোগ ১ কখনো মাইনাস ১২৮ হতে পারে না, তাই ওভারফ্লো ফ্ল্যাগ OF = 1। বাইরে কোনো ক্যারি নেই, তাই CF = 0।',{rows:{f:'0000100010010000'},hl:{f:[7,11,0]},note:'AL = 7Fh;  ADD AL,1  →  AL = 80h'}),
+  st('80 hex is 1000 0000: only one 1 bit, an odd number, so PF = 0. Again F plus 1 carried out of bit 3, so AF = 1. Every result leaves its own fingerprint in the status flags.',
+     '80h হলো 1000 0000: মাত্র একটি ১ বিট, বিজোড় সংখ্যা, তাই PF = 0। আবারও F যোগ ১ বিট ৩ থেকে ক্যারি দিয়েছে, তাই AF = 1। প্রতিটি ফলাফল স্ট্যাটাস ফ্ল্যাগে নিজের ছাপ রেখে যায়।',{rows:{f:'0000100010010000'},hl:{f:[2,4]},note:'CF=0  ZF=0  PF=0  AF=1  SF=1  OF=1'}),
+  st('The other three are control flags: TF in bit 8, IF in bit 9 and DF in bit 10. The processor does not set them; the program does, to change how the processor behaves.',
+     'বাকি তিনটি কন্ট্রোল ফ্ল্যাগ: বিট ৮-এ TF, বিট ৯-এ IF আর বিট ১০-এ DF। প্রসেসর এগুলো সেট করে না; প্রোগ্রাম সেট করে, যাতে প্রসেসরের আচরণ বদলায়।',{rows:{f:'0000000000000000'},hl:{f:[8,9,10]}}),
+  st('STI sets IF, so the processor accepts hardware interrupts such as the keyboard; CLI clears it and they are ignored. STD and CLD set and clear DF, the direction for string instructions. TF makes the CPU stop after every instruction, which debuggers use for single-stepping.',
+     'STI, IF সেট করে, ফলে প্রসেসর কিবোর্ডের মতো হার্ডওয়্যার ইন্টারাপ্ট গ্রহণ করে; CLI এটি ক্লিয়ার করলে সেগুলো উপেক্ষিত হয়। STD আর CLD, DF সেট ও ক্লিয়ার করে, যা স্ট্রিং ইনস্ট্রাকশনের দিক ঠিক করে। TF প্রতিটি ইনস্ট্রাকশনের পর সিপিইউ থামায়, যা ডিবাগার এক-এক ধাপে চালাতে ব্যবহার করে।',{rows:{f:'0000001000000000'},hl:{f:[9]},note:'STI → IF = 1'}),
+  st('Flags are how a program makes decisions. After SUB AX, AX the result is 0, so ZF = 1, and a following JZ jumps because it reads ZF.',
+     'ফ্ল্যাগ দিয়েই প্রোগ্রাম সিদ্ধান্ত নেয়। SUB AX,AX-এর পর ফলাফল ০, তাই ZF = 1, আর পরের JZ ইনস্ট্রাকশন ZF পড়ে জাম্প করে।',{rows:{f:'0000001001000100'},hl:{f:[6]},note:'SUB AX,AX → ZF = 1 → JZ jumps'}),
+  st('In one sentence: status flags are set by the processor for you to read, and control flags are set by you to tell the processor what to do.',
+     'এক বাক্যে: স্ট্যাটাস ফ্ল্যাগ প্রসেসর সেট করে, তুমি পড়ো; আর কন্ট্রোল ফ্ল্যাগ তুমি সেট করো, প্রসেসরকে কী করতে হবে তা বলতে।',{hl:{f:[0,2,4,6,7,11,8,9,10]},note:'status: CPU → you   ·   control: you → CPU'})]),
+
 T('20-bit addresses and segments','২০ বিটের অ্যাড্রেস ও সেগমেন্ট',
  {type:'seg'},
  [st('Memory is a collection of bytes, each with an address starting from 0. The 8086 gives every location a 20-bit physical address, from 00000 to FFFFF hex. That is one megabyte.',
@@ -1805,21 +1860,6 @@ T('Segment registers and program segments','সেগমেন্ট রেজ�
   st('A program segment need not fill all 64 kilobytes, and because segments overlap, small segments can sit close together. At any moment only the four segments named in the registers are reachable, but a program can change a register to reach a different segment.',
      'একটি প্রোগ্রাম সেগমেন্টকে পুরো ৬৪ কিলোবাইট ভরাট করতে হয় না, আর সেগমেন্ট ওভারল্যাপ করে বলে ছোট সেগমেন্টগুলো কাছাকাছি বসানো যায়। যেকোনো সময় শুধু রেজিস্টারে থাকা চারটি সেগমেন্টই ব্যবহার করা যায়, তবে প্রোগ্রাম রেজিস্টার বদলে অন্য সেগমেন্টে যেতে পারে।',{hl:['cs','ds','ss','es'],on:['e1','e2','e3','e4']})]),
 
-T('Pointer and index registers','পয়েন্টার ও ইনডেক্স রেজিস্টার',
- {type:'cards',min:220,items:[
-  {tag:'SP · Stack pointer',h:{en:'Top of the stack',bn:'স্ট্যাকের চূড়া'},b:{en:['Used together with SS','Always points to the top of the stack'],bn:['SS এর সাথে মিলে ব্যবহার হয়','সবসময় স্ট্যাকের চূড়ার দিকে নির্দেশ করে']}},
-  {tag:'BP · Base pointer',h:{en:'Data on the stack',bn:'স্ট্যাকের ডেটা'},b:{en:['Mainly used to reach data on the stack','Unlike SP, it can also reach other segments'],bn:['মূলত স্ট্যাকের ডেটা অ্যাক্সেস করতে ব্যবহার হয়','SP এর মতো নয়, এটি অন্য সেগমেন্টেও যেতে পারে']}},
-  {tag:'SI · Source index',h:{en:'Walks through data',bn:'ডেটার উপর দিয়ে চলে'},b:{en:['Points into the data segment (DS)','Increment SI to reach consecutive bytes','Source pointer for string operations'],bn:['ডেটা সেগমেন্টে (DS) নির্দেশ করে','SI বাড়িয়ে পরপর বাইটে যাওয়া যায়','স্ট্রিং অপারেশনের সোর্স পয়েন্টার']}},
-  {tag:'DI · Destination index',h:{en:'Like SI, for destinations',bn:'SI এর মতো, গন্তব্যের জন্য'},b:{en:['Same jobs as SI','String operations use DI with ES'],bn:['SI এর মতোই কাজ','স্ট্রিং অপারেশনে ES এর সাথে DI ব্যবহার হয়']}}]},
- [st('SP, BP, SI and DI normally hold offset addresses of memory locations. Unlike segment registers, they can also be used in arithmetic. SP, the stack pointer, works with SS and always points to the top of the stack.',
-     'SP, BP, SI, DI সাধারণত মেমোরি লোকেশনের অফসেট অ্যাড্রেস ধরে রাখে। সেগমেন্ট রেজিস্টারের মতো নয়, এগুলো দিয়ে গণনাও করা যায়। SP বা স্ট্যাক পয়েন্টার SS এর সাথে কাজ করে এবং সবসময় স্ট্যাকের চূড়ার দিকে নির্দেশ করে।',{hl:[0]}),
-  st('BP, the base pointer, is mainly used to reach data on the stack. Unlike SP, it can also reach data in other segments.',
-     'BP বা বেস পয়েন্টার মূলত স্ট্যাকের ডেটা অ্যাক্সেস করতে ব্যবহার হয়। SP এর মতো নয়, এটি অন্য সেগমেন্টের ডেটাও অ্যাক্সেস করতে পারে।',{hl:[1]}),
-  st('SI, the source index, points into the data segment. Adding one to SI steps through consecutive memory locations, which is perfect for arrays and strings.',
-     'SI বা সোর্স ইনডেক্স ডেটা সেগমেন্টে নির্দেশ করে। SI এ এক যোগ করলে পরপর মেমোরি লোকেশনে যাওয়া যায়, যা অ্যারে আর স্ট্রিংয়ের জন্য উপযুক্ত।',{hl:[2]}),
-  st('DI, the destination index, does the same jobs as SI. String operations use DI to reach locations in the extra segment, addressed by ES.',
-     'DI বা ডেস্টিনেশন ইনডেক্স SI এর মতোই কাজ করে। স্ট্রিং অপারেশনে ES দিয়ে নির্দেশিত এক্সট্রা সেগমেন্টে যেতে DI ব্যবহার হয়।',{hl:[3]})]),
-
 T('The instruction pointer: CS:IP','ইনস্ট্রাকশন পয়েন্টার: CS:IP',
  {type:'code',lines:['0000  MOV AX,@DATA','0003  MOV DS,AX','0005  MOV AH,9','0007  LEA DX,MSG','000B  INT 21H','000D  MOV AH,4CH','000F  INT 21H'],regs:['CS','IP'],init:{CS:'0B3C'}},
  [st('To fetch instructions, the 8086 uses the pair CS and IP. CS holds the segment number of the code, and IP holds the offset of the next instruction.',
@@ -1831,20 +1871,7 @@ T('The instruction pointer: CS:IP','ইনস্ট্রাকশন পয়�
   st('LEA is 4 bytes long, so after it IP jumps from 7 to B.',
      'LEA ৪ বাইট লম্বা, তাই এর পরে IP ৭ থেকে B তে যায়।',{ln:5,regs:{IP:'000B'}}),
   st('Unlike the other registers, IP cannot be an operand of an instruction. To go somewhere else, a program uses jump, call and return instructions, which update CS and IP for you.',
-     'অন্য রেজিস্টারের মতো IP কোনো ইনস্ট্রাকশনের অপারেন্ড হতে পারে না। অন্য কোথাও যেতে হলে প্রোগ্রাম জাম্প, কল আর রিটার্ন ইনস্ট্রাকশন ব্যবহার করে, যেগুলো CS আর IP আপডেট করে দেয়।',{ln:5,rhl:['IP'],note:'MOV IP,AX ✗ — use JMP / CALL / RET'})]),
-
-T('FLAGS: status and control','ফ্ল্যাগ: স্ট্যাটাস ও কন্ট্রোল',
- {type:'bits',rows:[{id:'f',label:'FLAGS',n:16,idx:true,names:FLAGNAMES,v:'0000000000000000'}]},
- [st('The FLAGS register shows the status of the processor by setting individual bits, called flags. There are two kinds.',
-     'ফ্ল্যাগ রেজিস্টার আলাদা আলাদা বিট সেট করে প্রসেসরের অবস্থা দেখায়, এই বিটগুলোকে বলে ফ্ল্যাগ। ফ্ল্যাগ দুই ধরনের।',{}),
-  st('Status flags reflect the result of an instruction: carry, parity, auxiliary carry, zero, sign and overflow. The processor sets them for you to read.',
-     'স্ট্যাটাস ফ্ল্যাগ একটি ইনস্ট্রাকশনের ফলাফল দেখায়: ক্যারি, প্যারিটি, অক্সিলিয়ারি ক্যারি, জিরো, সাইন আর ওভারফ্লো। প্রসেসর এগুলো সেট করে, আমরা পড়ি।',{hl:{f:[0,2,4,6,7,11]},note:'status: CF PF AF ZF SF OF'}),
-  st('For example, when a subtraction gives zero, the zero flag ZF becomes 1. A following instruction can test ZF and jump to code that handles a zero result.',
-     'যেমন, কোনো বিয়োগের ফল শূন্য হলে জিরো ফ্ল্যাগ ZF হয়ে যায় ১। পরের ইনস্ট্রাকশন ZF পরীক্ষা করে শূন্য ফলাফলের জন্য লেখা কোডে জাম্প করতে পারে।',{rows:{f:'0000000001000000'},hl:{f:[6]},note:'SUB AX,AX → result 0 → ZF = 1'}),
-  st('Control flags enable or disable certain operations of the processor: trap, interrupt and direction. For example, if the interrupt flag is cleared, keyboard input is ignored.',
-     'কন্ট্রোল ফ্ল্যাগ প্রসেসরের কিছু কাজ চালু বা বন্ধ করে: ট্র্যাপ, ইন্টারাপ্ট আর ডিরেকশন। যেমন, ইন্টারাপ্ট ফ্ল্যাগ ক্লিয়ার করলে কিবোর্ডের ইনপুট উপেক্ষা করা হয়।',{hl:{f:[8,9,10]},note:'control: TF IF DF'}),
-  st('One sentence separates them. Status flags are set by the processor for you to read. Control flags are set by you to change how the processor behaves.',
-     'এক বাক্যে পার্থক্য: স্ট্যাটাস ফ্ল্যাগ প্রসেসর সেট করে, আমরা পড়ি। কন্ট্রোল ফ্ল্যাগ আমরা সেট করি, যাতে প্রসেসরের আচরণ বদলায়।',{note:'status: CPU → you   ·   control: you → CPU'})])
+     'অন্য রেজিস্টারের মতো IP কোনো ইনস্ট্রাকশনের অপারেন্ড হতে পারে না। অন্য কোথাও যেতে হলে প্রোগ্রাম জাম্প, কল আর রিটার্ন ইনস্ট্রাকশন ব্যবহার করে, যেগুলো CS আর IP আপডেট করে দেয়।',{ln:5,rhl:['IP'],note:'MOV IP,AX ✗ — use JMP / CALL / RET'})])
 ]});
 
 /* ===================== CHAPTER 4 ===================== */
@@ -3406,31 +3433,34 @@ QZ.c3t3=[
  M(E('Which register is the counter for LOOP?','LOOP এর কাউন্টার কোন রেজিস্টার?'),['CX','AX','BX','DX'],E('LOOP decrements CX.','LOOP, CX কমায়।')),
  M(E('XLAT keeps the table address in…','XLAT টেবিলের অ্যাড্রেস রাখে…'),['BX','CX','SI','DX'],E('BX is also an address register; XLAT uses it.','BX অ্যাড্রেস রেজিস্টার হিসেবেও কাজ করে; XLAT একে ব্যবহার করে।')),
  M(E('Shifting or rotating N times takes the count from…','N বার শিফট বা রোটেটের সংখ্যা নেওয়া হয়…'),['CL','AL','DL','BL'],E('SHL AX,CL uses CL as the count.','SHL AX,CL এ সংখ্যা থাকে CL এ।'))];
-QZ.c3t4=[
+QZ.c3t6=[
  I(E('How many bytes are in one segment? (decimal)','একটি সেগমেন্টে কত বাইট? (দশমিকে)'),['65536'],E('2¹⁶ = 65,536 bytes = 64 KB.','২¹⁶ = ৬৫,৫৩৬ বাইট = ৬৪ কিলোবাইট।')),
  I(E('Highest 20-bit physical address? (hex)','সর্বোচ্চ ২০ বিট ফিজিক্যাল অ্যাড্রেস? (হেক্সে)'),['FFFFF'],E('Twenty 1-bits = five hex F digits.','বিশটি ১ বিট = পাঁচটি হেক্স F।')),
  M(E('Why does the 8086 divide memory into segments?','৮০৮৬ কেন মেমোরিকে সেগমেন্টে ভাগ করে?'),[E('A 20-bit address does not fit in a 16-bit register','২০ বিটের অ্যাড্রেস ১৬ বিটের রেজিস্টারে আঁটে না'),E('To save power','বিদ্যুৎ বাঁচাতে'),E('To make memory faster','মেমোরি দ্রুত করতে'),E('Because RAM is volatile','র‍্যাম ভোলাটাইল বলে')],E('Two 16-bit numbers, segment and offset, build the 20-bit address.','দুটি ১৬ বিটের সংখ্যা, সেগমেন্ট আর অফসেট, মিলে ২০ বিটের অ্যাড্রেস হয়।'))];
-QZ.c3t5=[
+QZ.c3t7=[
  I(E('Physical address of 1234:0002? (hex)','1234:0002 এর ফিজিক্যাল অ্যাড্রেস? (হেক্সে)'),['12342'],E('12340h + 0002h = 12342h.','12340h + 0002h = 12342h।')),
  I(E('Physical address of A4FB:4872? (hex)','A4FB:4872 এর ফিজিক্যাল অ্যাড্রেস? (হেক্সে)'),['A9822'],E('A4FB0h + 4872h = A9822h.','A4FB0h + 4872h = A9822h।')),
  I(E('Physical address of 0B4C:0010? (hex)','0B4C:0010 এর ফিজিক্যাল অ্যাড্রেস? (হেক্সে)'),['0B4D0'],E('0B4C0h + 0010h = 0B4D0h.','0B4C0h + 0010h = 0B4D0h।'))];
-QZ.c3t6=[
+QZ.c3t8=[
  I(E('Physical address 1256Ah in segment 1240h. Offset? (hex)','ফিজিক্যাল 1256Ah, সেগমেন্ট 1240h। অফসেট? (হেক্সে)'),['016A'],E('1256Ah − 12400h = 016Ah.','1256Ah − 12400h = 016Ah।')),
  I(E('Physical 80FD2h has offset BFD2h. Segment? (hex)','ফিজিক্যাল 80FD2h এর অফসেট BFD2h। সেগমেন্ট? (হেক্সে)'),['7500'],E('80FD2h − BFD2h = 75000h; drop the last digit: 7500h.','80FD2h − BFD2h = 75000h; শেষ অঙ্ক বাদ: 7500h।')),
  I(E('How many bytes are in one paragraph?','এক প্যারাগ্রাফে কত বাইট?'),['16'],E('Segments start every 16 bytes, called a paragraph.','প্রতি ১৬ বাইট পরপর সেগমেন্ট শুরু হয়, একে বলে প্যারাগ্রাফ।'))];
-QZ.c3t7=[
+QZ.c3t9=[
  M(E('Which register holds the data segment number?','ডেটা সেগমেন্টের নম্বর কোন রেজিস্টারে?'),['DS','CS','SS','ES'],E('DS = data segment.','DS = ডেটা সেগমেন্ট।')),
  M(E('ES is used for…','ES ব্যবহার হয়…'),[E('a second (extra) data segment','দ্বিতীয় (অতিরিক্ত) ডেটা সেগমেন্টে'),E('the stack','স্ট্যাকে'),E('instructions','ইনস্ট্রাকশনে'),E('I/O ports','আই/ও পোর্টে')],E('ES is the extra segment, used for a second data area and string destinations.','ES হলো এক্সট্রা সেগমেন্ট, দ্বিতীয় ডেটা এলাকা আর স্ট্রিংয়ের গন্তব্যে ব্যবহৃত।')),
  M(E('How many segments can be reached at one moment?','একই সময়ে কয়টি সেগমেন্ট ব্যবহার করা যায়?'),[E('4, one per segment register','৪টি, প্রতিটি সেগমেন্ট রেজিস্টারে একটি'),'1','16',E('All 65,536','সবগুলো ৬৫,৫৩৬')],E('Only the segments named in CS, DS, SS and ES are accessible until a register is changed.','রেজিস্টার না বদলানো পর্যন্ত শুধু CS, DS, SS, ES এর সেগমেন্টগুলোই ব্যবহার করা যায়।'))];
-QZ.c3t8=[
+QZ.c3t4=[
+ M(E('Which of these instructions is NOT allowed?','নিচের কোন ইনস্ট্রাকশনটি লেখা যায় না?'),['MOV DS,0B4Ch','MOV DS,AX','MOV AX,DS','MOV SI,0'],E('A segment register cannot be loaded with a constant; load a general register first, then MOV DS,AX.','সেগমেন্ট রেজিস্টারে ধ্রুবক লোড করা যায় না; আগে সাধারণ রেজিস্টারে নিয়ে তারপর MOV DS,AX।')),
+ M(E('Which pair gives the address of the next instruction?','কোন জোড়া পরের ইনস্ট্রাকশনের অ্যাড্রেস দেয়?'),['CS:IP','DS:SI','SS:SP','ES:DI'],E('CS holds the code segment and IP the offset of the next instruction.','CS-এ কোড সেগমেন্ট আর IP-তে পরের ইনস্ট্রাকশনের অফসেট।')),
  M(E('Which register always points to the top of the stack?','কোন রেজিস্টার সবসময় স্ট্যাকের চূড়ায় নির্দেশ করে?'),['SP','BP','SI','DI'],E('SP, with SS, marks the top of the stack.','SP, SS এর সাথে মিলে স্ট্যাকের চূড়া দেখায়।')),
  M(E('String operations use DI with which segment?','স্ট্রিং অপারেশনে DI কোন সেগমেন্টের সাথে ব্যবহৃত হয়?'),['ES','DS','SS','CS'],E('The destination of a string operation is ES:DI.','স্ট্রিং অপারেশনের গন্তব্য ES:DI।')),
  M(E('Unlike segment registers, SP, BP, SI and DI can be…','সেগমেন্ট রেজিস্টারের মতো নয়, SP, BP, SI, DI…'),[E('used in arithmetic','গণনায় ব্যবহার করা যায়'),E('used as IP','IP হিসেবে ব্যবহার করা যায়'),E('loaded only by DOS','শুধু ডস লোড করতে পারে'),E('used only by the BIU','শুধু বিআইইউ ব্যবহার করে')],E('You can ADD, INC or SUB them like data registers.','ডেটা রেজিস্টারের মতো এদের উপর ADD, INC, SUB করা যায়।'))];
-QZ.c3t9=[
+QZ.c3t10=[
  I(E('IP = 0007h and the next instruction is 4 bytes long. IP after it runs? (hex)','IP = 0007h আর পরের ইনস্ট্রাকশন ৪ বাইট। এটি চলার পর IP? (হেক্সে)'),['000B'],E('7 + 4 = 11 = 0Bh.','৭ + ৪ = ১১ = 0Bh।')),
  M(E('How does a program make IP point somewhere else?','প্রোগ্রাম কীভাবে IP কে অন্য জায়গায় নেয়?'),[E('With JMP, CALL or RET','JMP, CALL বা RET দিয়ে'),E('With MOV IP,AX','MOV IP,AX দিয়ে'),E('With INC IP','INC IP দিয়ে'),E('With PUSH IP','PUSH IP দিয়ে')],E('IP cannot be an operand; jumps, calls and returns change it.','IP অপারেন্ড হতে পারে না; জাম্প, কল আর রিটার্ন একে বদলায়।')),
  M(E('CS holds…','CS এ থাকে…'),[E('the segment number of the code','কোডের সেগমেন্ট নম্বর'),E('the offset of the next instruction','পরের ইনস্ট্রাকশনের অফসেট'),E('the top of the stack','স্ট্যাকের চূড়া'),E('the data segment number','ডেটা সেগমেন্ট নম্বর')],E('CS is the code segment; IP is the offset within it.','CS কোড সেগমেন্ট; IP এর ভেতরের অফসেট।'))];
-QZ.c3t10=[
+QZ.c3t5=[
+ I(E('AL = 7Fh, then ADD AL,1. What is OF? (0 or 1)','AL = 7Fh, তারপর ADD AL,1। OF কত? (0 বা 1)'),['1'],E('+127 + 1 cannot fit in a signed byte, so the result 80h looks negative: overflow.','+১২৭ + ১ সাইনড বাইটে আঁটে না, তাই ফল 80h ঋণাত্মক দেখায়: ওভারফ্লো।')),
  M(E('Which of these is a control flag?','নিচের কোনটি কন্ট্রোল ফ্ল্যাগ?'),['IF','ZF','CF','SF'],E('Control flags: TF, IF, DF. The rest are status flags.','কন্ট্রোল ফ্ল্যাগ: TF, IF, DF। বাকিগুলো স্ট্যাটাস ফ্ল্যাগ।')),
  I(E('After SUB AX,AX, what is ZF?','SUB AX,AX এর পরে ZF কত?'),['1'],E('Any number minus itself is 0, so ZF = 1.','নিজের থেকে নিজেকে বিয়োগ করলে ০, তাই ZF = ১।')),
  I(E('How many of the 16 FLAGS bits does the 8086 use?','FLAGS এর ১৬ বিটের কয়টি ৮০৮৬ ব্যবহার করে?'),['9'],E('6 status + 3 control = 9.','৬ স্ট্যাটাস + ৩ কন্ট্রোল = ৯।'))];
