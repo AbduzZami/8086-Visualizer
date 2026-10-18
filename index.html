@@ -651,6 +651,9 @@ p.cd-b{padding-left:0}
 .f15 .fx.on .fr{opacity:1;animation:flow 1s linear infinite}
 .f15 .fdot{fill:var(--st-gold);stroke:var(--st-bg);stroke-width:2;display:none}
 .f15 .fx.on .fdot{display:block}
+.f15 .fx.out .fr{stroke:#F28B82}
+.f15 .fx.out .fdot{fill:#F28B82}
+.f15 .fx.in .fr,.f15 .fx.out .fr{stroke-width:3}
 /* keep the animation inside the screen */
 .scene{transform-origin:0 0}
 .stage.fitted{min-height:0}
@@ -1184,7 +1187,9 @@ SC.fig15=(root,cfg)=>{const W=1000,H=520;const wrap=el('div',{class:'scroll-x'})
   /* signal routes (animated on top) */
   const R={a_cm:'M130,190 L130,100 L500,100 L500,190',a_ci:'M130,190 L130,100 L855,100 L855,190',c_cm:'M200,290 L200,370 L455,370 L455,290',c_ci:'M200,290 L200,370 L795,370 L795,290',
     d_mc:'M520,290 L520,430 L120,430 L120,290',d_cm:'M120,290 L120,430 L520,430 L520,290',d_ic:'M875,290 L875,430 L120,430 L120,290',d_ci:'M120,290 L120,430 L875,430 L875,290'};
-  for(const k in R){const g=sv('g',{class:'fx'});g.append(sv('path',{d:R[k],class:'fr'}));if(!RM){const dot=sv('circle',{r:8,class:'fdot'});dot.append(sv('animateMotion',{dur:'1.6s',repeatCount:'indefinite',path:R[k]}));g.append(dot);}FX[k]=g;gF.append(g);}
+  /* two lanes inside the data bus, to show both directions at once */
+  ['d_mc','d_ic'].forEach(k=>R[k+'_in']=R[k]);['d_cm','d_ci'].forEach(k=>R[k+'_out']=R[k]);
+  for(const k in R){const lane=/_in$/.test(k)?'in':/_out$/.test(k)?'out':'';const g=sv('g',{class:'fx'+(lane?' '+lane:''),transform:lane==='in'?'translate(4,4)':lane==='out'?'translate(-4,-4)':null});g.append(sv('path',{d:R[k],class:'fr'}));if(!RM){const dot=sv('circle',{r:8,class:'fdot'});dot.append(sv('animateMotion',{dur:'1.6s',repeatCount:'indefinite',path:R[k]}));g.append(dot);}FX[k]=g;gF.append(g);}
   wrap.append(s);root.append(wrap);
   return{go(i,steps){const st=steps[i].s||{};const hl=new Set(st.hl||[]),on=new Set(st.on||[]);
     for(const id in G){G[id].classList.toggle('hl',hl.has(id));G[id].classList.toggle('on',hl.has(id)&&/b$/.test(id));G[id].classList.toggle('dim',hl.size>0&&!hl.has(id));}
@@ -1500,8 +1505,8 @@ T('Buses: address, data and control','বাস: অ্যাড্রেস, �
      'রিডের সময় ডেটা বাস। মেমোরি বা আই/ও সার্কিট চাওয়া ডেটা ডেটা বাসে দেয়, আর তা সিপিইউতে পৌঁছায়। মেমোরির একটি বাইটের মতোই কিবোর্ডের কি-কোডও এভাবে আসে।',{hl:['db','cpu','mem','io'],on:['d_mc','d_ic'],note:{en:'read · memory / I/O → data bus → CPU',bn:'রিড · মেমোরি / আই/ও → ডেটা বাস → সিপিইউ'}}),
   st('The data bus on a write. Now the data travels out of the CPU into memory or the I/O circuit. Because data moves both ways, the data bus arrows point into all three boxes.',
      'রাইটের সময় ডেটা বাস। এবার ডেটা সিপিইউ থেকে বেরিয়ে মেমোরি বা আই/ও সার্কিটে যায়। ডেটা দুই দিকেই চলে বলে ডেটা বাসের তীর তিনটি অংশেই ঢুকেছে।',{hl:['db','cpu','mem','io'],on:['d_cm','d_ci'],note:{en:'write · CPU → data bus → memory / I/O',bn:'রাইট · সিপিইউ → ডেটা বাস → মেমোরি / আই/ও'}}),
-  st('Putting it together, every read takes three steps on the three buses. The CPU puts the address on the address bus and sends read on the control bus, to memory and I/O alike. Then memory, for a memory address, or the I/O circuit, for a port address, returns the data on the data bus.',
-     'সব মিলিয়ে, প্রতিটি রিড তিনটি বাসে তিনটি ধাপে হয়। সিপিইউ অ্যাড্রেস বাসে অ্যাড্রেস দেয় আর কন্ট্রোল বাসে রিড পাঠায়, মেমোরি ও আই/ও দুটোতেই। তারপর মেমোরির অ্যাড্রেস হলে মেমোরি, আর পোর্টের অ্যাড্রেস হলে আই/ও সার্কিট, ডেটা বাসে ডেটা ফেরত দেয়।',{hl:['ab','cb','db','cpu','mem','io'],on:['a_cm','a_ci','c_cm','c_ci','d_mc','d_ic'],note:{en:'address, control: CPU → memory & I/O   ·   data: both ways',bn:'অ্যাড্রেস, কন্ট্রোল: সিপিইউ → মেমোরি ও আই/ও   ·   ডেটা: দুই দিকে'}})]),
+  st('Putting it together. The CPU sends addresses on the address bus and commands on the control bus, out to memory and I/O alike. The data bus is the only two-way bus: in gold, data comes into the CPU from memory or I/O on a read, and in pink, data goes out of the CPU to memory or I/O on a write.',
+     'সব মিলিয়ে। সিপিইউ অ্যাড্রেস বাসে অ্যাড্রেস আর কন্ট্রোল বাসে কমান্ড পাঠায়, মেমোরি ও আই/ও দুটোতেই। ডেটা বাসই একমাত্র দ্বিমুখী বাস: সোনালি রঙে, রিডের সময় মেমোরি বা আই/ও থেকে ডেটা সিপিইউতে আসে, আর গোলাপি রঙে, রাইটের সময় সিপিইউ থেকে ডেটা মেমোরি বা আই/ও-তে যায়।',{hl:['ab','cb','db','cpu','mem','io'],on:['a_cm','a_ci','c_cm','c_ci','d_mc_in','d_ic_in','d_cm_out','d_ci_out'],note:{en:'data bus: gold = into CPU (read) · pink = out of CPU (write)',bn:'ডেটা বাস: সোনালি = সিপিইউতে আসে (রিড) · গোলাপি = সিপিইউ থেকে যায় (রাইট)'}})]),
 
 T('The 8086 registers','৮০৮৬-এর রেজিস্টারসমূহ',
  {type:'regs',dimGroups:true,revealNames:true,init:{AX:'0000',BX:'0000',CX:'0000',DX:'0000',SP:'0100',BP:'0000',SI:'0000',DI:'0000',CS:'0B3C',DS:'0B4C',SS:'0B4E',ES:'0B2C',IP:'0000',FLAGS:'0202'},
