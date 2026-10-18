@@ -154,10 +154,10 @@ h1{font-family:var(--f-disp);font-weight:700;font-size:clamp(1.5rem,2.6vw,2.1rem
   padding:4px 10px;border-radius:6px;font-size:.95rem;box-shadow:0 6px 18px rgba(0,0,0,.45);pointer-events:none;white-space:nowrap}
 .chg{animation:chg .9s ease-out}
 @keyframes chg{0%{background:var(--st-gold);color:#1B1405}100%{}}
-.scroll-x{overflow-x:auto;width:100%}
+.scroll-x{overflow:visible;width:100%}
 /* diagram */
-.dg{width:100%;min-width:620px;height:auto;display:block}
-.split .dg{min-width:400px}
+.dg{width:100%;min-width:0;height:auto;display:block}
+.split .dg{min-width:0}
 .dg text{fill:var(--st-fg);font-family:var(--f-disp)}
 .dg .nl{font-weight:600}
 .dg .nl.mono,.dg .ns.mono{font-family:var(--f-mono);font-weight:500}
@@ -457,7 +457,7 @@ p.cd-b{padding-left:0}
   /* controls: compact bar that stays on screen; settings folded away */
   .ctrl{position:sticky;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--rule);display:grid;grid-template-columns:minmax(0,1fr);gap:8px;
     padding:8px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
-  .btns{justify-content:center;gap:12px}
+  .btns{justify-content:center;gap:8px}
   .ib.optbtn{display:grid}
   .ib.optbtn[aria-expanded="true"]{background:var(--accent-soft);border-color:var(--accent)}
   .dots{min-width:0}
@@ -500,7 +500,7 @@ p.cd-b{padding-left:0}
   .mrow{grid-template-columns:minmax(0,auto) 50px minmax(76px,auto) 60px;font-size:.78rem;gap:6px}
   .mcol.narrow .mrow{grid-template-columns:minmax(0,auto) 40px 50px 56px}
   .mregs{min-width:0;width:100%}
-  .rf{grid-template-columns:minmax(0,1fr);gap:10px}
+  .rf{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
   .rv{font-size:.92rem;min-width:40px;padding:3px 6px}
   .ins{font-size:16px}
   .cp{font-size:12px;max-height:250px}
@@ -521,7 +521,7 @@ p.cd-b{padding-left:0}
   *{animation:none!important;transition:none!important}
 }
 /* Figure 1.6 */
-.dg.f16{min-width:560px;max-width:700px;margin:0 auto}
+.dg.f16{min-width:0;max-width:700px;margin:0 auto}
 .f16 .ttl{font-size:20px;font-weight:700;fill:var(--st-fg);transition:fill .35s}
 .f16 .region.hl .ttl{fill:var(--st-gold)}
 .f16 .rg{fill:transparent;transition:fill .35s}
@@ -542,7 +542,7 @@ p.cd-b{padding-left:0}
 /* Chapter 12: whole-system scene */
 .scene.sc-sys{max-width:none}
 .sys{width:100%;display:flex;flex-direction:column;gap:12px;min-width:0}
-.dg.sysv{min-width:880px;--sy-a:#F2B550;--sy-d:#4CC9CE;--sy-c:#F28B82}
+.dg.sysv{min-width:0;--sy-a:#F2B550;--sy-d:#4CC9CE;--sy-c:#F28B82}
 .sysv .big>.nb{fill:rgba(255,255,255,.018);stroke:var(--st-line2);stroke-width:2}
 .sysv .node.big.hl>.nb{fill:rgba(242,181,80,.06)}
 .sysv .ttl{font-size:19px;font-weight:700;letter-spacing:.01em}
@@ -631,7 +631,35 @@ p.cd-b{padding-left:0}
 .busline i{font-style:normal;font-size:10px;letter-spacing:.06em}
 .busline b{font-weight:600}
 .busline .bl-a.on{border-color:#F2B550;color:#F2B550}.busline .bl-d.on{border-color:#4CC9CE;color:#4CC9CE}.busline .bl-c.on{border-color:#F28B82;color:#F28B82}
-@media (max-width:760px){.busline{display:flex}.dg.sysv{min-width:1000px}.syl{grid-template-columns:24px 42px 92px minmax(0,1fr)}.syc{font-size:11.5px;max-height:200px}.chn{padding:5px 8px}.chn b{font-size:12px}.chn span{font-size:11px}}
+@media (max-width:760px){.busline{display:flex}.syl{grid-template-columns:24px 42px 92px minmax(0,1fr)}.syc{font-size:11.5px;max-height:200px}.chn{padding:5px 8px}.chn b{font-size:12px}.chn span{font-size:11px}}
+/* keep the animation inside the screen */
+.scene{transform-origin:0 0}
+.stage.fitted{min-height:0}
+.fit-tip{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);font-size:.74rem;color:var(--st-gold);background:var(--st-hl);border:1px solid #5C4A22;border-radius:999px;padding:4px 12px;white-space:nowrap;max-width:calc(100% - 20px);overflow:hidden;text-overflow:ellipsis}
+@media (max-width:760px){.fit-tip{position:static;transform:none}.cp .cl,.syl .ss{white-space:pre-wrap;word-break:break-word}.syl .sb{white-space:normal}}
+.player:fullscreen{overflow:auto;display:flex;flex-direction:column;border-radius:0;background:var(--surface)}
+.player:fullscreen .stage{flex:1 1 auto}
+.player:-webkit-full-screen{overflow:auto;display:flex;flex-direction:column;border-radius:0;background:var(--surface)}
+.player.pfull{position:fixed;inset:0;z-index:100;margin:0;border:0;border-radius:0;display:flex;flex-direction:column;overflow:auto;background:var(--surface)}
+.player.pfull .stage{flex:1 1 auto}
+body.pfull-on{overflow:hidden}
+@media (orientation:landscape) and (max-height:520px){
+  .player.pfull{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,32%);grid-template-rows:minmax(0,1fr) auto;overflow:hidden}
+  .player.pfull .stage{grid-row:1/3;min-height:0;padding:30px 10px 10px;overflow:hidden}
+  .player.pfull .cap{grid-column:2;overflow:auto;font-size:.95rem;padding:10px 14px}
+  .player.pfull .ctrl{grid-column:2;position:static;padding:8px 10px}
+  .player.pfull .vhint,.player.pfull .opts{display:none}
+  .player.pfull .btns,.player:fullscreen .btns{flex-wrap:wrap;justify-content:center;gap:6px}
+  .player.pfull .ib,.player:fullscreen .ib{width:38px;height:38px}
+  .player.pfull .ib.play,.player:fullscreen .ib.play{width:46px;height:46px}
+  .player.pfull .ib.optbtn,.player:fullscreen .ib.optbtn{display:none}
+  .player.pfull .dots,.player:fullscreen .dots{min-width:0;flex-basis:100%}
+  .player:fullscreen .opts{display:none}
+  .player:fullscreen{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,32%);grid-template-rows:minmax(0,1fr) auto;overflow:hidden}
+  .player:fullscreen .stage{grid-row:1/3;min-height:0;padding:30px 10px 10px;overflow:hidden}
+  .player:fullscreen .cap{grid-column:2;overflow:auto;font-size:.95rem;padding:10px 14px}
+  .player:fullscreen .ctrl{grid-column:2;position:static;padding:8px 10px}
+  .player:fullscreen .vhint{display:none}}
 </style>
 
 </head>
@@ -679,6 +707,7 @@ p.cd-b{padding-left:0}
         <div class="st-step" id="stStep"></div>
         <div class="scene" id="scene"></div>
         <div class="st-note" id="stNote" hidden></div>
+        <div class="fit-tip" id="fitTip" hidden></div>
       </div>
       <div class="cap" id="cap" aria-live="polite"></div>
       <div class="ctrl">
@@ -688,6 +717,7 @@ p.cd-b{padding-left:0}
           <button class="ib play" id="bPlay" aria-label="Play"><svg viewBox="0 0 24 24" id="playIco"><path d="M7 4v16l13-8z"/></svg></button>
           <button class="ib" id="bNext" aria-label="Next step"><svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5l11 7-11 7z"/></svg></button>
           <button class="ib vbtn" id="bVoice" aria-pressed="true" aria-label="Voice on"><svg viewBox="0 0 24 24" id="voiceIco"></svg></button>
+          <button class="ib" id="bFull" aria-label="Full screen"><svg viewBox="0 0 24 24" id="fullIco"><path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 4v-4h2v6h-6v-2z"/></svg></button>
           <button class="ib optbtn" id="bOpts" aria-label="Voice and speed settings" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M3 6h9v2H3zm13 0h5v2h-5zM12 3h2v8h-2zM3 16h4v2H3zm8 0h10v2H11zM7 13h2v8H7z"/></svg></button>
         </div>
         <div class="dots" id="dots"></div>
@@ -3737,12 +3767,12 @@ QZ.c12t5=[
 "use strict";
 /* ================= player app ================= */
 const UI={
- en:{chapters:'Chapters',chapter:'Chapter',narr:'Narration',play:'Play',pause:'Pause',prev:'Previous step',next:'Next step',restart:'Restart topic',step:'Step',voice:'Voice',speed:'Speed',vEn:'English voice',vBn:'Bangla voice',tN:'Natural',tD:'Deeper',tB:'Brighter',noBn1:'Only one Bangla voice is installed on this device; use the Tone picker for variety. For four natural Bangla voices (Nabanita, Pradeep, Tanishaa, Bashkar), open this page in Microsoft Edge. On Android, open Settings → Text-to-speech → Google → Install voice data and add Bengali (India) as well as Bengali (Bangladesh).',test:'Test',noneEn:'No English voice on this device',noneBn:'No Bangla voice on this device',sampleEn:'Hello students. This is how I will narrate the lessons.',sampleBn:'শিক্ষার্থীরা, শুভেচ্ছা। আমি এভাবেই পাঠগুলো বর্ণনা করব।',auto:'Auto-play next topic',vOn:'Voice on (tap to mute)',vOff:'Voice off (tap to unmute)',
+ en:{chapters:'Chapters',chapter:'Chapter',narr:'Narration',play:'Play',pause:'Pause',prev:'Previous step',next:'Next step',restart:'Restart topic',full:'Full screen',fullX:'Exit full screen',fitTip:'Turn your phone sideways or tap ⛶ for a bigger view',fitTipL:'Tap ⛶ to fill the screen',step:'Step',voice:'Voice',speed:'Speed',vEn:'English voice',vBn:'Bangla voice',tN:'Natural',tD:'Deeper',tB:'Brighter',noBn1:'Only one Bangla voice is installed on this device; use the Tone picker for variety. For four natural Bangla voices (Nabanita, Pradeep, Tanishaa, Bashkar), open this page in Microsoft Edge. On Android, open Settings → Text-to-speech → Google → Install voice data and add Bengali (India) as well as Bengali (Bangladesh).',test:'Test',noneEn:'No English voice on this device',noneBn:'No Bangla voice on this device',sampleEn:'Hello students. This is how I will narrate the lessons.',sampleBn:'শিক্ষার্থীরা, শুভেচ্ছা। আমি এভাবেই পাঠগুলো বর্ণনা করব।',auto:'Auto-play next topic',vOn:'Voice on (tap to mute)',vOff:'Voice off (tap to unmute)',
    tryit:'Try it',nextT:'Next topic',prevT:'Previous topic',done:'done',of:'of',lab:'Narration',noVoice:'Captions only (no voice)',sub:'Microprocessor & Assembly Language · Abduz Zami, Dept. of CSE, BUFT',
    keys:'Keys: Space play / pause · ← → previous / next step',quizH:'Check your understanding',check:'Check',ok:'Correct',no:'Not quite',ans:'Answer',score:'Score',retry:'Try again',type:'Type your answer',toQuiz:'Answer the questions ↓',allRight:'All correct — well done!',foot:'Progress is saved in this browser.',
    noBn:'No Bangla voice is installed on this device, so Bangla captions play silently. For several Bangla voices, open this page in Microsoft Edge (Nabanita, Pradeep, Tanishaa, Bashkar) or in Chrome on Android (Google Bangla). On Windows you can also add the Bangla speech pack in Settings → Time & language → Speech.',
    noEn:'No English voice was found on this device. Captions will play silently.',noTTS:'This browser has no speech engine, so captions will play silently.'},
- bn:{chapters:'অধ্যায়সমূহ',chapter:'অধ্যায়',narr:'বর্ণনা',play:'চালাও',pause:'থামাও',prev:'আগের ধাপ',next:'পরের ধাপ',restart:'শুরু থেকে',step:'ধাপ',voice:'কণ্ঠ',speed:'গতি',vEn:'ইংরেজি কণ্ঠ',vBn:'বাংলা কণ্ঠ',tN:'স্বাভাবিক',tD:'গভীর',tB:'উজ্জ্বল',noBn1:'এই ডিভাইসে মাত্র একটি বাংলা কণ্ঠ আছে; ভিন্নতার জন্য টোন বেছে নাও। চারটি স্বাভাবিক বাংলা কণ্ঠ (Nabanita, Pradeep, Tanishaa, Bashkar) পেতে পেজটি Microsoft Edge এ খোলো। Android এ Settings → Text-to-speech → Google → Install voice data থেকে Bengali (Bangladesh) এর সাথে Bengali (India) ও যোগ করো।',test:'শুনে দেখো',noneEn:'এই ডিভাইসে ইংরেজি কণ্ঠ নেই',noneBn:'এই ডিভাইসে বাংলা কণ্ঠ নেই',sampleEn:'Hello students. This is how I will narrate the lessons.',sampleBn:'শিক্ষার্থীরা, শুভেচ্ছা। আমি এভাবেই পাঠগুলো বর্ণনা করব।',auto:'পরের টপিক নিজে থেকে চলবে',vOn:'ভয়েস চালু (বন্ধ করতে চাপুন)',vOff:'ভয়েস বন্ধ (চালু করতে চাপুন)',
+ bn:{chapters:'অধ্যায়সমূহ',chapter:'অধ্যায়',narr:'বর্ণনা',play:'চালাও',pause:'থামাও',prev:'আগের ধাপ',next:'পরের ধাপ',restart:'শুরু থেকে',full:'ফুল স্ক্রিন',fullX:'ফুল স্ক্রিন বন্ধ',fitTip:'বড় করে দেখতে ফোনটি আড়াআড়ি ধরো বা ⛶ চাপো',fitTipL:'পুরো স্ক্রিনে দেখতে ⛶ চাপো',step:'ধাপ',voice:'কণ্ঠ',speed:'গতি',vEn:'ইংরেজি কণ্ঠ',vBn:'বাংলা কণ্ঠ',tN:'স্বাভাবিক',tD:'গভীর',tB:'উজ্জ্বল',noBn1:'এই ডিভাইসে মাত্র একটি বাংলা কণ্ঠ আছে; ভিন্নতার জন্য টোন বেছে নাও। চারটি স্বাভাবিক বাংলা কণ্ঠ (Nabanita, Pradeep, Tanishaa, Bashkar) পেতে পেজটি Microsoft Edge এ খোলো। Android এ Settings → Text-to-speech → Google → Install voice data থেকে Bengali (Bangladesh) এর সাথে Bengali (India) ও যোগ করো।',test:'শুনে দেখো',noneEn:'এই ডিভাইসে ইংরেজি কণ্ঠ নেই',noneBn:'এই ডিভাইসে বাংলা কণ্ঠ নেই',sampleEn:'Hello students. This is how I will narrate the lessons.',sampleBn:'শিক্ষার্থীরা, শুভেচ্ছা। আমি এভাবেই পাঠগুলো বর্ণনা করব।',auto:'পরের টপিক নিজে থেকে চলবে',vOn:'ভয়েস চালু (বন্ধ করতে চাপুন)',vOff:'ভয়েস বন্ধ (চালু করতে চাপুন)',
    tryit:'নিজে করে দেখো',nextT:'পরের টপিক',prevT:'আগের টপিক',done:'সম্পন্ন',of:'/',lab:'বর্ণনা',noVoice:'শুধু সাবটাইটেল (কণ্ঠ নেই)',sub:'মাইক্রোপ্রসেসর ও অ্যাসেম্বলি ল্যাঙ্গুয়েজ · আব্দুজ জামি, সিএসই বিভাগ, বিইউএফটি',
    keys:'কী: স্পেস চালাও / থামাও · ← → আগের / পরের ধাপ',quizH:'নিজেকে যাচাই করো',check:'যাচাই',ok:'সঠিক',no:'হয়নি',ans:'উত্তর',score:'স্কোর',retry:'আবার চেষ্টা',type:'উত্তর লিখুন',toQuiz:'প্রশ্নের উত্তর দাও ↓',allRight:'সবগুলো সঠিক — চমৎকার!',foot:'অগ্রগতি এই ব্রাউজারে সংরক্ষিত থাকে।',
    noBn:'এই ডিভাইসে বাংলা কণ্ঠ ইনস্টল করা নেই, তাই বাংলা সাবটাইটেল নিঃশব্দে চলবে। একাধিক বাংলা কণ্ঠের জন্য পেজটি Microsoft Edge এ খুলুন (Nabanita, Pradeep, Tanishaa, Bashkar), অথবা Android এ Chrome ব্যবহার করুন (Google বাংলা)। Windows এ Settings → Time & language → Speech থেকে বাংলা স্পিচ প্যাকও যোগ করা যায়।',
@@ -3834,14 +3864,37 @@ function renderNav(){const ch=CH[APP.c];const pv=APP.t>0?[APP.c,APP.t-1]:(APP.c>
   N.classList.remove('glow');}
 function renderStatic(){document.documentElement.lang=LANG==='bn'?'bn':'en';document.body.classList.toggle('bn-on',LANG==='bn');$('lgEn').setAttribute('aria-pressed',String(LANG==='en'));$('lgBn').setAttribute('aria-pressed',String(LANG==='bn'));
   $('lVoiceEn').textContent=U('vEn');$('lVoiceBn').textContent=U('vBn');['toneEn','toneBn'].forEach(id=>{const o=$(id).options;o[0].textContent=U('tN');o[1].textContent=U('tD');o[2].textContent=U('tB');});$('tEn').textContent=U('test');$('tBn').textContent=U('test');$('lSpeed').textContent=U('speed');$('lAuto').textContent=U('auto');$('lgLab').textContent=U('lab');$('bSub').textContent=U('sub');
-  $('bPrev').setAttribute('aria-label',U('prev'));$('bNext').setAttribute('aria-label',U('next'));$('bRestart').setAttribute('aria-label',U('restart'));updPlay();updVoice();}
-function buildScene(){const host=$('scene');host.innerHTML='';host.className='scene sc-'+TOPIC.sc.type;try{SCENE=SC[TOPIC.sc.type](host,TOPIC.sc);}catch(e){console.error(e);SCENE={go(){}};}}
+  $('bPrev').setAttribute('aria-label',U('prev'));$('bNext').setAttribute('aria-label',U('next'));$('bRestart').setAttribute('aria-label',U('restart'));updPlay();updVoice();updFull();}
+let FITT=0,FITT2=0;
+function fitStage(){const host=$('scene'),stage=$('stage'),tip=$('fitTip');if(!host||!stage)return;
+  host.style.transform='';host.style.marginBottom='';stage.classList.remove('fitted');
+  const cs=getComputedStyle(stage),px=k=>parseFloat(cs[k])||0;
+  const baseW=host.clientWidth||1,natW=Math.max(baseW,host.scrollWidth),natH=Math.max(host.offsetHeight,host.scrollHeight,1);
+  const note=$('stNote');const noteH=(!note.hidden&&getComputedStyle(note).position==='static')?note.offsetHeight+12:0;
+  const ctrl=document.querySelector('.ctrl'),btns=document.querySelector('.ctrl .btns');const side=getComputedStyle($('player')).display==='grid';
+  const mob=window.innerWidth<=760;const capH=side?0:Math.max($('cap').offsetHeight,64),ctrlH=side||!ctrl?0:(mob?ctrl.offsetHeight:btns.offsetHeight+30);
+  const availW=stage.clientWidth-px('paddingLeft')-px('paddingRight');
+  const room=t=>Math.max(150,window.innerHeight-capH-ctrlH-px('paddingTop')-px('paddingBottom')-noteH-t-10);
+  let s=Math.min(1,availW/natW,room(0)/natH);
+  const small=(s<0.55||/^(sys|fig16)$/.test(TOPIC.sc.type))&&window.innerWidth<700&&window.innerHeight>window.innerWidth&&!isFull();
+  const land=window.innerHeight<520&&window.innerWidth>window.innerHeight&&!isFull();
+  tip.hidden=!(small||land);if(small||land){tip.textContent=land?'⛶ '+U('fitTipL'):'⤾ '+U('fitTip');s=Math.min(1,availW/natW,room(tip.offsetHeight+12)/natH);}
+  if(s>0.985)return;s=Math.max(s,0.2);
+  host.style.transform=`translateX(${(baseW-natW*s)/2}px) scale(${s})`;host.style.marginBottom=`${-natH*(1-s)}px`;stage.classList.add('fitted');}
+function scheduleFit(){cancelAnimationFrame(FITT);clearTimeout(FITT2);FITT=requestAnimationFrame(()=>{fitStage();FITT2=setTimeout(fitStage,450);});}
+const isFull=()=>!!(document.fullscreenElement||document.webkitFullscreenElement||$('player').classList.contains('pfull'));
+const hasFS=()=>!!(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen);
+function pseudoFull(on){$('player').classList.toggle('pfull',on);document.body.classList.toggle('pfull-on',on);updFull();scheduleFit();}
+function toggleFull(){const pl=$('player');if(!hasFS()||pl.classList.contains('pfull')){pseudoFull(!pl.classList.contains('pfull'));return;}try{if(isFull()){(document.exitFullscreen||document.webkitExitFullscreen).call(document);}
+  else{const r=(pl.requestFullscreen||pl.webkitRequestFullscreen).call(pl);if(r&&r.then)r.then(()=>{try{if(window.innerWidth<700&&screen.orientation&&screen.orientation.lock)screen.orientation.lock('landscape').catch(()=>{});}catch(e){}}).catch(()=>{});}}catch(e){}}
+function updFull(){const f=isFull();$('fullIco').innerHTML=f?'<path d="M6 4h2v6H2V8h4zm10 0h2v4h4v2h-6zM2 14h6v6H6v-4H2zm14 0h6v2h-4v4h-2z"/>':'<path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 4v-4h2v6h-6v-2z"/>';$('bFull').setAttribute('aria-label',U(f?'fullX':'full'));$('bFull').title=U(f?'fullX':'full');}
+function buildScene(){const host=$('scene');host.innerHTML='';host.className='scene sc-'+TOPIC.sc.type;try{SCENE=SC[TOPIC.sc.type](host,TOPIC.sc);}catch(e){console.error(e);SCENE={go(){}};}scheduleFit();}
 function renderDots(){const d=$('dots');d.innerHTML='';TOPIC.steps.forEach((_,k)=>d.append(el('button',{class:(k<APP.i?'seen':'')+(k===APP.i?' cur':''),'aria-label':`${U('step')} ${k+1}`,onclick:()=>{const was=APP.playing;stop();goStep(k,0);if(was)play();}})));}
 function goStep(i,dir){APP.i=i;const s=TOPIC.steps[i];try{SCENE.go(i,TOPIC.steps,dir);}catch(e){console.error(e);}
   $('cap').innerHTML='<span class="spk"></span>'+mk(s[LANG]);if(i===TOPIC.steps.length-1&&QZ[tid(APP.c,APP.t)]){$('cap').append(el('button',{class:'qgo',text:U('toQuiz'),onclick:toQuiz}));}const note=(s.s||{}).note;const n=$('stNote');n.hidden=!note;if(note)n.innerHTML=mk(note);
   $('stStep').textContent=`${U('step')} ${i+1} ${U('of')} ${TOPIC.steps.length}`;renderDots();
   [...$('trList').children].forEach((li,k)=>li.classList.toggle('cur',k===i));
-  if(i===TOPIC.steps.length-1)markDone();}
+  if(i===TOPIC.steps.length-1)markDone();scheduleFit();}
 function markDone(){const id=tid(APP.c,APP.t);if(!DONE.has(id)){DONE.add(id);store.set('done',[...DONE]);renderRail();renderHead();}}
 function loadTopic(c,t,o){o=o||{};stop();APP.c=c;APP.t=t;APP.i=0;TOPIC=CH[c].topics[t];store.set('pos',[c,t]);
   try{history.replaceState(null,'','#'+tid(c,t));}catch(e){}
@@ -3866,7 +3919,7 @@ function setLang(l){if(l===LANG)return;const was=APP.playing;stop();LANG=l;store
 function boot(){STAGE=$('stage');LANG=store.get('lang','en')==='bn'?'bn':'en';APP.rate=+store.get('rate',1)||1;APP.auto=!!store.get('auto',false);APP.voice=store.get('voice',true)!==false;const tn=store.get('tone',null);if(tn&&typeof tn==='object')APP.tone=Object.assign({en:'n',bn:'n'},tn);
   $('selRate').value=String(APP.rate);$('chkAuto').checked=APP.auto;
   $('lgEn').onclick=()=>setLang('en');$('lgBn').onclick=()=>setLang('bn');
-  $('bPlay').onclick=()=>APP.playing?stop():play();$('bVoice').onclick=toggleVoice;$('bPrev').onclick=()=>step(-1);$('bNext').onclick=()=>step(1);$('bRestart').onclick=()=>{const was=APP.playing;stop();goStep(0,0);if(was)play();};
+  $('bPlay').onclick=()=>APP.playing?stop():play();$('bVoice').onclick=toggleVoice;$('bFull').onclick=toggleFull;document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('player').classList.contains('pfull'))pseudoFull(false);});['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{updFull();scheduleFit();}));$('bPrev').onclick=()=>step(-1);$('bNext').onclick=()=>step(1);$('bRestart').onclick=()=>{const was=APP.playing;stop();goStep(0,0);if(was)play();};
   $('selRate').onchange=e=>{APP.rate=+e.target.value;store.set('rate',APP.rate);if(APP.playing){stop();play();}};
   $('chkAuto').onchange=e=>{APP.auto=e.target.checked;store.set('auto',APP.auto);};
   const onVoice=lang=>e=>{SP.pick[lang]=e.target.value;store.set('voice',SP.pick);if(APP.playing&&lang===LANG){stop();play();}};
@@ -3877,7 +3930,7 @@ function boot(){STAGE=$('stage');LANG=store.get('lang','en')==='bn'?'bn':'en';AP
   $('bOpts').onclick=()=>{const o=$('player').classList.toggle('opts-open');$('bOpts').setAttribute('aria-expanded',String(o));};
   $('railTog').onclick=()=>{const o=$('railNav').classList.toggle('open');$('railTog').setAttribute('aria-expanded',String(o));};
   document.addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA/.test((e.target.tagName||'')))return;if(e.key===' '){e.preventDefault();APP.playing?stop():play();}else if(e.key==='ArrowRight')step(1);else if(e.key==='ArrowLeft')step(-1);});
-  let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{if(SCENE&&TOPIC&&!APP.animating)try{SCENE.go(APP.i,TOPIC.steps,0);}catch(e){}},250);});
+  let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{if(SCENE&&TOPIC&&!APP.animating)try{SCENE.go(APP.i,TOPIC.steps,0);}catch(e){}scheduleFit();},250);});
   if(SP.ok){loadVoices();try{speechSynthesis.onvoiceschanged=loadVoices;}catch(e){}setTimeout(loadVoices,700);}
   renderStatic();fillVoices();
   let c=0,t=0;const m=(location.hash||'').match(/^#c(\d+)(?:t(\d+))?$/);
