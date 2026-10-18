@@ -610,12 +610,12 @@ p.cd-b{padding-left:0}
 .sysv .scell.chg>.nb{animation:schg 1s ease-out}
 @keyframes schg{0%{fill:var(--st-gold)}100%{}}
 .chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center}
-.tchip{border:1px solid var(--st-line2);border-radius:10px;padding:6px 12px;background:var(--st-panel);display:flex;flex-direction:column;align-items:center;gap:1px;opacity:.5;transition:all .3s}
-.tchip b{font-size:13.5px;font-weight:600}
-.tchip span{font-family:var(--f-mono);font-size:12px;color:var(--st-dim)}
-.tchip.done{opacity:.9;border-color:#2C6E78}
-.tchip.cur{opacity:1;border-color:var(--st-gold);background:var(--st-hl);box-shadow:0 0 0 3px rgba(242,181,80,.18)}
-.tchip.cur b{color:var(--st-gold)}
+.chn{border:1px solid var(--st-line2);border-radius:10px;padding:6px 12px;background:var(--st-panel);display:flex;flex-direction:column;align-items:center;gap:1px;opacity:.5;transition:all .3s}
+.chn b{font-size:13.5px;font-weight:600}
+.chn span{font-family:var(--f-mono);font-size:12px;color:var(--st-dim)}
+.chn.done{opacity:.9;border-color:#2C6E78}
+.chn.cur{opacity:1;border-color:var(--st-gold);background:var(--st-hl);box-shadow:0 0 0 3px rgba(242,181,80,.18)}
+.chn.cur b{color:var(--st-gold)}
 .chA{color:var(--st-dim);font-size:14px}
 .syc{max-height:176px;font-size:13px}
 .syl{display:grid;grid-template-columns:30px 54px 112px minmax(0,1fr);white-space:pre;line-height:1.7;transition:background .25s}
@@ -631,7 +631,7 @@ p.cd-b{padding-left:0}
 .busline i{font-style:normal;font-size:10px;letter-spacing:.06em}
 .busline b{font-weight:600}
 .busline .bl-a.on{border-color:#F2B550;color:#F2B550}.busline .bl-d.on{border-color:#4CC9CE;color:#4CC9CE}.busline .bl-c.on{border-color:#F28B82;color:#F28B82}
-@media (max-width:760px){.busline{display:flex}.dg.sysv{min-width:1000px}.syl{grid-template-columns:24px 42px 92px minmax(0,1fr)}.syc{font-size:11.5px;max-height:200px}.tchip{padding:5px 8px}.tchip b{font-size:12px}.tchip span{font-size:11px}}
+@media (max-width:760px){.busline{display:flex}.dg.sysv{min-width:1000px}.syl{grid-template-columns:24px 42px 92px minmax(0,1fr)}.syc{font-size:11.5px;max-height:200px}.chn{padding:5px 8px}.chn b{font-size:12px}.chn span{font-size:11px}}
 </style>
 
 </head>
@@ -1130,7 +1130,7 @@ const INTERNAL={'q>dec':['M306,289 L297,289 L297,391 L288,391','var(--st-teal)']
 SC.sys=(root,cfg)=>{const init=cfg.init||{};
   const box=el('div',{class:'sys'});root.append(box);
   let chips=null;
-  if(cfg.chain){const c=el('div',{class:'chain'});chips=cfg.chain.map((x,k)=>{const ch=el('div',{class:'tchip'},el('b',{text:L(x.l)}),el('span',{text:L(x.f)||''}));if(k)c.append(el('span',{class:'chA',text:'→'}));c.append(ch);return{k:x.k,el:ch};});box.append(c);}
+  if(cfg.chain){const c=el('div',{class:'chain'});chips=cfg.chain.map((x,k)=>{const ch=el('div',{class:'chn'},el('b',{text:L(x.l)}),el('span',{text:L(x.f)||''}));if(k)c.append(el('span',{class:'chA',text:'→'}));c.append(ch);return{k:x.k,el:ch};});box.append(c);}
   const wrap=el('div',{class:'scroll-x'});box.append(wrap);
   const s=sv('svg',{viewBox:`0 0 ${W} ${H}`,class:'dg sysv',role:'img','aria-label':'An 8086 computer: CPU, address, data and control buses, memory, keyboard, display and disk'});wrap.append(s);
   const BL={};const busline=el('div',{class:'busline'},...['a','d','c'].map(k=>{const v=el('b');BL[k]=el('span',{class:'bl-'+k},el('i',{text:{a:'ADDR',d:'DATA',c:'CTRL'}[k]}),v);BL[k]._v=v;return BL[k];}));box.append(busline);
