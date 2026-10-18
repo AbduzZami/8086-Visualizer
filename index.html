@@ -636,6 +636,13 @@ p.cd-b{padding-left:0}
 .busline b{font-weight:600}
 .busline .bl-a.on{border-color:#F2B550;color:#F2B550}.busline .bl-d.on{border-color:#4CC9CE;color:#4CC9CE}.busline .bl-c.on{border-color:#F28B82;color:#F28B82}
 @media (max-width:760px){.busline{display:flex}.syl{grid-template-columns:24px 42px 92px minmax(0,1fr)}.syc{font-size:11.5px;max-height:200px}.chn{padding:5px 8px}.chn b{font-size:12px}.chn span{font-size:11px}}
+/* register full names, revealed one by one */
+.reg .rd{transition:opacity .45s,color .3s}
+.reg .rd.rdh{opacity:0}
+.reg .rd.rdnew{color:var(--st-gold);font-weight:600}
+.reg .rd.rdpop{animation:rdpop .6s ease-out}
+@keyframes rdpop{0%{opacity:0;transform:translateX(-8px)}100%{opacity:1;transform:none}}
+.ins b.a{color:#fff;text-decoration:underline;text-decoration-color:var(--st-gold);text-underline-offset:4px}
 /* Figure 1.5 buses */
 .f15 .bul{font-size:24px;font-weight:600;fill:var(--st-fg);transition:fill .3s}
 .f15 .pipe.hl .bul{fill:var(--st-gold)}
@@ -957,8 +964,10 @@ SC.regs=(root,cfg)=>{const w=el('div',{class:'rfwrap'});const ins=el('div',{clas
         h.classList.toggle('hl',hl.has(n[0]+'H'));l.classList.toggle('hl',hl.has(n[0]+'L'));if(fl&&oh!==v.slice(0,2))flash(h);if(fl&&ol!==v.slice(2))flash(l);}
       else{const e=E[n+'_v'];const o=e.firstChild.textContent;e.firstChild.textContent=v;if(fl&&o!==v)flash(e);}
       E[n].classList.toggle('hl',hl.has(n));}));
-    ins.textContent=s.ins||'';ins.style.visibility=s.ins?'visible':'hidden';}
-  return{go(i,steps,dir){const my=++token;const s=steps[i].s||{};
+    if(s.insH){ins.innerHTML=mk(s.insH);ins.style.visibility='visible';}else{ins.textContent=s.ins||'';ins.style.visibility=s.ins?'visible':'hidden';}
+    if(REV)groups.forEach(g=>g.r.forEach(n=>{const rd=E[n].querySelector('.rd');if(!rd)return;rd.classList.toggle('rdh',!REV.has(n));const nw=hl.has(n);if(nw&&!rd.classList.contains('rdnew')&&!RM){rd.classList.remove('rdpop');void rd.offsetWidth;rd.classList.add('rdpop');}rd.classList.toggle('rdnew',nw);}));}
+  let REV=null;
+  return{go(i,steps,dir){const my=++token;const s=steps[i].s||{};REV=cfg.revealNames?uni(steps,i,'hl'):null;
     if(dir===1&&s.fly&&!RM){const P=stateAt(steps,i-1>=0?i-1:0,i);if(i===0){Object.assign(P,init);if(s.pre)put(P,s.pre);}render(P,Object.assign({},s,{hl:[]}),false);
       Promise.all([].concat(s.fly).map(f=>fly(target(f.from),target(f.to),f.v))).then(()=>{if(my===token)render(stateAt(steps,i),s,true);});}
     else render(stateAt(steps,i),s,dir===1);}};};
@@ -1516,17 +1525,38 @@ T('Inside the 8086: EU and BIU','৮০৮৬-এর ভেতরে: ইইউ 
      'ইইউ পরের ইনস্ট্রাকশন সরাসরি কিউ থেকে নেয়, তাই তাকে মেমোরির জন্য খুব কমই অপেক্ষা করতে হয়। ফেচ আর এক্সিকিউট একটির পর একটি না হয়ে একসাথে চলে। একেই পাইপলাইনিং বলে, আর এটাই ৮০৮৬-কে দ্রুত করে।',{hl:['q','alu','tmp','bcl'],on:['p_ex','p_bq','p_qe','p_qi','p_a1','p_a2'],rev:['p_ex'],note:{en:'BIU fetches while EU executes = pipelining',bn:'বিআইইউ ফেচ করে, ইইউ একই সময়ে এক্সিকিউট করে = পাইপলাইনিং'}})]),
 
 T('The 8086 registers','৮০৮৬-এর রেজিস্টারসমূহ',
- {type:'regs',dimGroups:true,init:{AX:'0000',BX:'0000',CX:'0000',DX:'0000',SP:'0100',BP:'0000',SI:'0000',DI:'0000',CS:'0B3C',DS:'0B4C',SS:'0B4E',ES:'0B2C',IP:'0000',FLAGS:'0202'}},
- [st('The 8086 has fourteen 16-bit registers. AX, BX, CX and DX are the data registers, used for arithmetic and moving data. Each one splits into a high byte and a low byte.',
-     '৮০৮৬-এ মোট চৌদ্দটি ১৬ বিটের রেজিস্টার আছে। AX, BX, CX, DX হলো ডেটা রেজিস্টার, যেগুলো গণনা আর ডেটা আদান-প্রদানে ব্যবহৃত হয়। প্রতিটিকে আবার হাই বাইট আর লো বাইটে ভাগ করা যায়।',{grp:'data'}),
-  st('SP, BP, SI and DI are the pointer and index registers. They hold offsets used to address the stack and arrays.',
-     'SP, BP, SI, DI হলো পয়েন্টার ও ইনডেক্স রেজিস্টার। স্ট্যাক আর অ্যারে অ্যাক্সেস করার জন্য এরা অফসেট অ্যাড্রেস ধরে রাখে।',{grp:'ptr'}),
-  st('CS, DS, SS and ES are the segment registers. Each one holds the start of a 64-kilobyte segment: code, data, stack, or an extra segment.',
-     'CS, DS, SS, ES হলো সেগমেন্ট রেজিস্টার। প্রত্যেকে একটি ৬৪ কিলোবাইট সেগমেন্টের শুরু ধরে রাখে: কোড, ডেটা, স্ট্যাক অথবা একটি অতিরিক্ত সেগমেন্ট।',{grp:'seg'}),
-  st('IP, the instruction pointer, works together with CS to point at the next instruction to be executed.',
-     'IP বা ইনস্ট্রাকশন পয়েন্টার, CS এর সাথে মিলে পরবর্তী যে ইনস্ট্রাকশন এক্সিকিউট হবে তার দিকে নির্দেশ করে।',{grp:'ctl',hl:['IP','CS']}),
-  st('Finally, the FLAGS register records the status of the last ALU operation, using one bit for each condition.',
-     'সবশেষে ফ্ল্যাগ রেজিস্টার, যা শেষ এএলইউ অপারেশনের অবস্থা লিখে রাখে, প্রতিটি অবস্থার জন্য একটি করে বিট।',{grp:'ctl',hl:['FLAGS']})]),
+ {type:'regs',dimGroups:true,revealNames:true,init:{AX:'0000',BX:'0000',CX:'0000',DX:'0000',SP:'0100',BP:'0000',SI:'0000',DI:'0000',CS:'0B3C',DS:'0B4C',SS:'0B4E',ES:'0B2C',IP:'0000',FLAGS:'0202'},
+  descs:{AX:'Accumulator register',BX:'Base register',CX:'Count register',DX:'Data register',SP:'Stack Pointer',BP:'Base Pointer',SI:'Source Index',DI:'Destination Index',CS:'Code Segment',DS:'Data Segment',SS:'Stack Segment',ES:'Extra Segment',IP:'Instruction Pointer',FLAGS:'FLAGS (status) register'}},
+ [st('The 8086 has fourteen 16-bit registers, in four groups. Each short name comes from a full name. Let us meet them one by one.',
+     '৮০৮৬-এ চারটি দলে মোট চৌদ্দটি ১৬ বিটের রেজিস্টার আছে। প্রতিটি ছোট নাম একটি পূর্ণ নাম থেকে এসেছে। চলো একে একে পরিচিত হই।',{insH:'14 registers · 16 bits each'}),
+  st('First the data registers. AX is the Accumulator register, the main register for arithmetic. Like all four data registers, it splits into a high byte AH and a low byte AL.',
+     'প্রথমে ডেটা রেজিস্টার। AX হলো অ্যাকুমুলেটর রেজিস্টার, গণনার প্রধান রেজিস্টার। চারটি ডেটা রেজিস্টারের মতো এটিকেও হাই বাইট AH আর লো বাইট AL-এ ভাগ করা যায়।',{grp:'data',hl:['AX'],insH:'AX = [[A]]ccumulator'}),
+  st('BX is the Base register. It can also hold the base address of a table in memory.',
+     'BX হলো বেস রেজিস্টার। এটি মেমোরির একটি টেবিলের বেস অ্যাড্রেসও ধরে রাখতে পারে।',{grp:'data',hl:['BX'],insH:'BX = [[B]]ase'}),
+  st('CX is the Count register. Loops and repeated instructions count down in CX.',
+     'CX হলো কাউন্ট রেজিস্টার। লুপ আর পুনরাবৃত্ত ইনস্ট্রাকশন CX-এ গুনে গুনে কমায়।',{grp:'data',hl:['CX'],insH:'CX = [[C]]ount'}),
+  st('DX is the Data register. It works with AX in multiply and divide, and holds port addresses for I/O.',
+     'DX হলো ডেটা রেজিস্টার। গুণ আর ভাগে এটি AX-এর সাথে কাজ করে, আর আই/ও-র জন্য পোর্ট অ্যাড্রেস রাখে।',{grp:'data',hl:['DX'],insH:'DX = [[D]]ata'}),
+  st('Now the pointer and index registers. SP is the Stack Pointer: it always points to the top of the stack.',
+     'এবার পয়েন্টার ও ইনডেক্স রেজিস্টার। SP হলো স্ট্যাক পয়েন্টার: এটি সবসময় স্ট্যাকের চূড়ার দিকে নির্দেশ করে।',{grp:'ptr',hl:['SP'],insH:'SP = [[S]]tack [[P]]ointer'}),
+  st('BP is the Base Pointer, used to reach data inside the stack.',
+     'BP হলো বেস পয়েন্টার, স্ট্যাকের ভেতরের ডেটায় পৌঁছাতে ব্যবহৃত হয়।',{grp:'ptr',hl:['BP'],insH:'BP = [[B]]ase [[P]]ointer'}),
+  st('SI is the Source Index. It points to the source data, for example while copying a string.',
+     'SI হলো সোর্স ইনডেক্স। এটি সোর্স ডেটার দিকে নির্দেশ করে, যেমন একটি স্ট্রিং কপি করার সময়।',{grp:'ptr',hl:['SI'],insH:'SI = [[S]]ource [[I]]ndex'}),
+  st('DI is the Destination Index. It points to where data is going.',
+     'DI হলো ডেস্টিনেশন ইনডেক্স। ডেটা কোথায় যাচ্ছে, এটি সেদিকে নির্দেশ করে।',{grp:'ptr',hl:['DI'],insH:'DI = [[D]]estination [[I]]ndex'}),
+  st('Next the segment registers, each holding the start of a 64-kilobyte segment. CS is the Code Segment register: where the program\'s instructions are.',
+     'এরপর সেগমেন্ট রেজিস্টার, প্রত্যেকে একটি ৬৪ কিলোবাইট সেগমেন্টের শুরু ধরে রাখে। CS হলো কোড সেগমেন্ট রেজিস্টার: প্রোগ্রামের ইনস্ট্রাকশনগুলো যেখানে আছে।',{grp:'seg',hl:['CS'],insH:'CS = [[C]]ode [[S]]egment'}),
+  st('DS is the Data Segment register: where the program\'s variables are.',
+     'DS হলো ডেটা সেগমেন্ট রেজিস্টার: প্রোগ্রামের ভেরিয়েবলগুলো যেখানে আছে।',{grp:'seg',hl:['DS'],insH:'DS = [[D]]ata [[S]]egment'}),
+  st('SS is the Stack Segment register: where the stack is.',
+     'SS হলো স্ট্যাক সেগমেন্ট রেজিস্টার: স্ট্যাক যেখানে আছে।',{grp:'seg',hl:['SS'],insH:'SS = [[S]]tack [[S]]egment'}),
+  st('ES is the Extra Segment register: a second data segment when one is needed.',
+     'ES হলো এক্সট্রা সেগমেন্ট রেজিস্টার: দরকার হলে একটি দ্বিতীয় ডেটা সেগমেন্ট।',{grp:'seg',hl:['ES'],insH:'ES = [[E]]xtra [[S]]egment'}),
+  st('IP is the Instruction Pointer. Together with CS, it points to the next instruction to be executed.',
+     'IP হলো ইনস্ট্রাকশন পয়েন্টার। CS-এর সাথে মিলে এটি পরবর্তী যে ইনস্ট্রাকশন এক্সিকিউট হবে তার দিকে নির্দেশ করে।',{grp:'ctl',hl:['IP'],insH:'IP = [[I]]nstruction [[P]]ointer'}),
+  st('Finally, the FLAGS register records the status of the last ALU operation, one bit for each condition. That completes all fourteen.',
+     'সবশেষে ফ্ল্যাগ রেজিস্টার, যা শেষ এএলইউ অপারেশনের অবস্থা লিখে রাখে, প্রতিটি অবস্থার জন্য একটি করে বিট। এভাবে চৌদ্দটিই পূর্ণ হলো।',{grp:'ctl',hl:['FLAGS'],insH:'FLAGS = status [[flags]]',note:{en:'4 data · 4 pointer/index · 4 segment · IP · FLAGS',bn:'৪ ডেটা · ৪ পয়েন্টার/ইনডেক্স · ৪ সেগমেন্ট · IP · FLAGS'}})]),
 
 T('I/O ports: serial vs. parallel','আই/ও পোর্ট: সিরিয়াল বনাম প্যারালাল',
  {type:'dg',h:500,nodes:[
