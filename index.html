@@ -636,6 +636,14 @@ p.cd-b{padding-left:0}
 .busline b{font-weight:600}
 .busline .bl-a.on{border-color:#F2B550;color:#F2B550}.busline .bl-d.on{border-color:#4CC9CE;color:#4CC9CE}.busline .bl-c.on{border-color:#F28B82;color:#F28B82}
 @media (max-width:760px){.busline{display:flex}.syl{grid-template-columns:24px 42px 92px minmax(0,1fr)}.syc{font-size:11.5px;max-height:200px}.chn{padding:5px 8px}.chn b{font-size:12px}.chn span{font-size:11px}}
+/* Figure 1.5 buses */
+.f15 .bul{font-size:24px;font-weight:600;fill:var(--st-fg);transition:fill .3s}
+.f15 .pipe.hl .bul{fill:var(--st-gold)}
+.f15 .pipe.dim{opacity:.3}
+.f15 .fr{fill:none;stroke:var(--st-gold);stroke-width:3.5;stroke-dasharray:9 14;opacity:0}
+.f15 .fx.on .fr{opacity:1;animation:flow 1s linear infinite}
+.f15 .fdot{fill:var(--st-gold);stroke:var(--st-bg);stroke-width:2;display:none}
+.f15 .fx.on .fdot{display:block}
 /* keep the animation inside the screen */
 .scene{transform-origin:0 0}
 .stage.fitted{min-height:0}
@@ -1149,6 +1157,32 @@ SC.fig16=(root,cfg)=>{const W=780,H=712;const wrap=el('div',{class:'scroll-x'});
 </script>
 <script>
 "use strict";
+/* ================= scene: Figure 1.5, the three buses (drawn like the textbook) ================= */
+SC.fig15=(root,cfg)=>{const W=1000,H=520;const wrap=el('div',{class:'scroll-x'});
+  const s=sv('svg',{viewBox:`0 0 ${W} ${H}`,class:'dg f16 f15',role:'img','aria-label':'Figure: CPU, memory and I/O connected by the address, control and data buses'});
+  const G={},FX={};const gBus=sv('g'),gN=sv('g'),gF=sv('g');s.append(gBus,gN,gF);
+  const T=(x,y,t,cls,o)=>sv('text',Object.assign({x,y,'text-anchor':'middle',class:cls||'nl'},o||{}),t);
+  /* boxes */
+  [['cpu',40,'CPU'],['mem',395,'Memory'],['io',750,'I/O']].forEach(([id,x,l])=>{const g=sv('g',{class:'node'},sv('rect',{x,y:190,width:210,height:100,rx:4,class:'nb'}),T(x+105,250,l,'nl',{'font-size':26}));G[id]=g;gN.append(g);});
+  /* hollow buses: all casings, then all inners, then the arrowheads, so branches join like the book */
+  const bus=(id,w,segs,heads,lab)=>{const HL=w+4,HW=w+3;const g=sv('g',{class:'pipe node'});const d=segs.map(p=>'M'+p.map(q=>q.join(',')).join(' L'));
+    d.forEach(x=>g.append(sv('path',{d:x,class:'pc','stroke-width':w})));d.forEach(x=>g.append(sv('path',{d:x,class:'pi','stroke-width':w-6})));
+    heads.forEach(([x,y,dir])=>{const b=dir==='u'?y+HL:y-HL;g.append(sv('polygon',{points:`${x},${y} ${x-HW},${b} ${x+HW},${b}`,class:'ph'}));});
+    if(lab)g.append(lab);G[id]=g;gBus.append(g);};
+  bus('ab',18,[[[130,190],[130,100],[855,100],[855,168]],[[500,100],[500,168]]],[[855,190,'d'],[500,190,'d']],T(500,72,'Address bus','bul'));
+  bus('cb',12,[[[200,306],[200,370],[795,370],[795,306]],[[455,370],[455,306]]],[[200,290,'u'],[795,290,'u'],[455,290,'u']],T(318,354,'Control bus','bul',{'font-size':20}));
+  bus('db',18,[[[120,312],[120,430],[875,430],[875,312]],[[520,430],[520,312]]],[[120,290,'u'],[875,290,'u'],[520,290,'u']],T(500,480,'Data bus','bul'));
+  /* signal routes (animated on top) */
+  const R={a_cm:'M130,190 L130,100 L500,100 L500,190',a_ci:'M130,190 L130,100 L855,100 L855,190',c_cm:'M200,290 L200,370 L455,370 L455,290',c_ci:'M200,290 L200,370 L795,370 L795,290',
+    d_mc:'M520,290 L520,430 L120,430 L120,290',d_cm:'M120,290 L120,430 L520,430 L520,290',d_ic:'M875,290 L875,430 L120,430 L120,290',d_ci:'M120,290 L120,430 L875,430 L875,290'};
+  for(const k in R){const g=sv('g',{class:'fx'});g.append(sv('path',{d:R[k],class:'fr'}));if(!RM){const dot=sv('circle',{r:8,class:'fdot'});dot.append(sv('animateMotion',{dur:'1.6s',repeatCount:'indefinite',path:R[k]}));g.append(dot);}FX[k]=g;gF.append(g);}
+  wrap.append(s);root.append(wrap);
+  return{go(i,steps){const st=steps[i].s||{};const hl=new Set(st.hl||[]),on=new Set(st.on||[]);
+    for(const id in G){G[id].classList.toggle('hl',hl.has(id));G[id].classList.toggle('on',hl.has(id)&&/b$/.test(id));G[id].classList.toggle('dim',hl.size>0&&!hl.has(id));}
+    for(const k in FX)FX[k].classList.toggle('on',on.has(k));}};};
+</script>
+<script>
+"use strict";
 /* ================= scene: the whole system (8086 + buses + memory + I/O devices) ================= */
 (function(){
 const W=1300,H=588;
@@ -1446,26 +1480,17 @@ T('RAM vs. ROM','র‍্যাম বনাম রম',
      'এই কারণেই রমে ফার্মওয়্যার রাখা হয়, যেমন কম্পিউটার চালু করার সময় মেশিন পরীক্ষা করার আর বুট করার রুটিনগুলো।',{hl:[1]})]),
 
 T('Buses: address, data and control','বাস: অ্যাড্রেস, ডেটা ও কন্ট্রোল',
- {type:'dg',h:520,nodes:[
-  {id:'cpu',x:30,y:170,w:200,h:180,l:'CPU'},
-  {id:'mem',x:770,y:40,w:200,h:140,l:'Memory'},
-  {id:'io',x:770,y:340,w:200,h:140,l:'I/O circuits'},
-  {id:'ab',x:300,y:140,w:400,h:30,shape:'bar',l:'ADDRESS BUS'},
-  {id:'db',x:300,y:245,w:400,h:30,shape:'bar',l:'DATA BUS'},
-  {id:'cb',x:300,y:350,w:400,h:30,shape:'bar',l:'CONTROL BUS'}],
-  edges:[{id:'a1',a:'cpu:r:.15',b:'ab:l'},{id:'a2',a:'ab:r',b:'mem:l:.25'},{id:'a3',a:'ab:r',b:'io:l:.25',mx:735},
-   {id:'d1',a:'db:l',b:'cpu:r:.5',bi:true},{id:'d2',a:'mem:l:.6',b:'db:r',bi:true,mx:745},{id:'d3',a:'io:l:.55',b:'db:r',bi:true,mx:745},
-   {id:'c1',a:'cpu:r:.85',b:'cb:l'},{id:'c2',a:'cb:r',b:'mem:l:.9',mx:755},{id:'c3',a:'cb:r',b:'io:l:.85'}]},
- [st('A bus is a set of wires connecting the CPU, memory and I/O circuits. There are three buses, and each carries one kind of signal.',
-     'বাস হলো কতগুলো তারের সমষ্টি, যা সিপিইউ, মেমোরি আর আই/ও সার্কিটকে যুক্ত করে। তিন ধরনের বাস আছে, প্রতিটি এক ধরনের সিগন্যাল বহন করে।',{hl:['ab','db','cb']}),
-  st('To read a memory location, the CPU first places its address on the address bus. Addresses only travel out of the CPU.',
-     'মেমোরি থেকে কিছু পড়তে হলে সিপিইউ প্রথমে সেই লোকেশনের অ্যাড্রেস অ্যাড্রেস বাসে দেয়। অ্যাড্রেস শুধু সিপিইউ থেকে বাইরের দিকে যায়।',{hl:['cpu','ab','mem'],on:['a1','a2'],note:'step 1 · CPU → address bus'}),
-  st('Next, the CPU sends a read signal on the control bus. Control signals such as read and write also travel out of the CPU.',
-     'এরপর সিপিইউ কন্ট্রোল বাসে রিড সিগন্যাল পাঠায়। রিড, রাইটের মতো কন্ট্রোল সিগন্যালও সিপিইউ থেকে বাইরে যায়।',{hl:['cpu','cb','mem'],on:['c1','c2'],note:'step 2 · CPU → control bus: "read"'}),
+ {type:'fig15'},
+ [st('A bus is a set of wires connecting the CPU, memory and I/O circuits. There are three buses, and each carries one kind of signal: addresses, control signals or data.',
+     'বাস হলো কতগুলো তারের সমষ্টি, যা সিপিইউ, মেমোরি আর আই/ও সার্কিটকে যুক্ত করে। তিন ধরনের বাস আছে, প্রতিটি এক ধরনের সিগন্যাল বহন করে: অ্যাড্রেস, কন্ট্রোল সিগন্যাল অথবা ডেটা।',{hl:['ab','cb','db','cpu','mem','io']}),
+  st('Look at the arrows on the address bus: they point only into memory and I/O. Addresses only travel out of the CPU. To read a memory location, the CPU first places its address on the address bus.',
+     'অ্যাড্রেস বাসের তীরগুলো দেখো: এরা শুধু মেমোরি আর আই/ও-র দিকে। অ্যাড্রেস শুধু সিপিইউ থেকে বাইরের দিকে যায়। মেমোরি থেকে কিছু পড়তে হলে সিপিইউ প্রথমে সেই লোকেশনের অ্যাড্রেস অ্যাড্রেস বাসে দেয়।',{hl:['cpu','ab','mem'],on:['a_cm'],note:'step 1 · CPU → address bus'}),
+  st('Next, the CPU sends a read signal on the control bus. The control bus connects to every box, because devices also send signals back to the CPU.',
+     'এরপর সিপিইউ কন্ট্রোল বাসে রিড সিগন্যাল পাঠায়। কন্ট্রোল বাস প্রতিটি অংশের সাথে যুক্ত, কারণ ডিভাইসগুলোও সিপিইউ-কে সিগন্যাল ফেরত পাঠায়।',{hl:['cpu','cb','mem'],on:['c_cm'],note:'step 2 · CPU → control bus: "read"'}),
   st('Memory responds by putting the requested data on the data bus, and the CPU takes it in.',
-     'মেমোরি তখন চাওয়া ডেটাটি ডেটা বাসে দেয়, আর সিপিইউ সেটি গ্রহণ করে।',{hl:['mem','db','cpu'],on:['d2','d1'],note:'step 3 · memory → data bus → CPU'}),
-  st('The data bus is two-way. On a read, data comes into the CPU. On a write, data goes out of the CPU to memory or I/O.',
-     'ডেটা বাস দুই দিকেই কাজ করে। রিডের সময় ডেটা সিপিইউতে আসে, আর রাইটের সময় ডেটা সিপিইউ থেকে মেমোরি বা আই/ও-তে যায়।',{hl:['db'],on:['d1','d2','d3'],rev:['d1','d2','d3'],note:'write: CPU → data bus → memory / I/O'})]),
+     'মেমোরি তখন চাওয়া ডেটাটি ডেটা বাসে দেয়, আর সিপিইউ সেটি গ্রহণ করে।',{hl:['mem','db','cpu'],on:['d_mc'],note:'step 3 · memory → data bus → CPU'}),
+  st('The data bus is two-way, which is why its arrows point into all three boxes. On a read, data comes into the CPU. On a write, data goes out of the CPU to memory or I/O.',
+     'ডেটা বাস দুই দিকেই কাজ করে, তাই এর তীর তিনটি অংশেই ঢুকেছে। রিডের সময় ডেটা সিপিইউতে আসে, আর রাইটের সময় ডেটা সিপিইউ থেকে মেমোরি বা আই/ও-তে যায়।',{hl:['db','cpu','mem','io'],on:['d_cm','d_ci'],note:'write: CPU → data bus → memory / I/O'})]),
 
 T('Inside the 8086: EU and BIU','৮০৮৬-এর ভেতরে: ইইউ ও বিআইইউ',
  {type:'fig16'},
