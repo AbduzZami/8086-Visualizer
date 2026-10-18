@@ -539,6 +539,99 @@ p.cd-b{padding-left:0}
 .f16 .pipe.on .pf{stroke:var(--st-gold);stroke-dasharray:8 16;animation:flow 1s linear infinite}
 .f16 .pipe.on.rev .pf{animation-direction:reverse}
 @media (prefers-reduced-motion:reduce){.f16 .pipe.on .pf{animation:none}}
+/* Chapter 12: whole-system scene */
+.scene.sc-sys{max-width:none}
+.sys{width:100%;display:flex;flex-direction:column;gap:12px;min-width:0}
+.dg.sysv{min-width:880px;--sy-a:#F2B550;--sy-d:#4CC9CE;--sy-c:#F28B82}
+.sysv .big>.nb{fill:rgba(255,255,255,.018);stroke:var(--st-line2);stroke-width:2}
+.sysv .node.big.hl>.nb{fill:rgba(242,181,80,.06)}
+.sysv .ttl{font-size:19px;font-weight:700;letter-spacing:.01em}
+.sysv .sub{font-size:13.5px;fill:var(--st-dim);font-family:var(--f-mono);letter-spacing:.05em}
+.sysv .tiny{font-size:13.5px;fill:var(--st-dim);font-family:var(--f-mono)}
+.sysv .srn{font-size:15px;fill:var(--st-dim);font-family:var(--f-mono);font-weight:600}
+.sysv .srv{font-size:19px;font-family:var(--f-mono);font-weight:500}
+.sysv .node.hl .srn{fill:var(--st-gold)}
+.sysv .node.hl .srv{fill:#fff}
+.sysv .fn{font-size:12.5px;fill:var(--st-dim);font-family:var(--f-mono);font-weight:600}
+.sysv .flag.one .srv{fill:var(--st-gold)}
+.sysv .divl{stroke:var(--st-line2);stroke-width:2;stroke-dasharray:8 7}
+.sysv .ibar{fill:var(--st-line)}
+.sysv .sig{font-size:30px;font-weight:700}
+.sysv .pa2{font-size:15px;font-family:var(--f-mono);fill:var(--st-dim)}
+.sysv .pa1{font-size:20px;font-family:var(--f-mono);font-weight:600;fill:var(--st-gold)}
+.sysv .alut{font-size:15px;font-family:var(--f-mono);fill:var(--st-gold)}
+.sysv .dect{font-size:17px;font-family:var(--f-mono);font-weight:600;fill:var(--st-teal)}
+.sysv .qv{font-size:16px;font-family:var(--f-mono)}
+.sysv .qc.full .nb{fill:var(--st-tealbg);stroke:#2C6E78}
+.sysv .bct{font-size:24px;font-family:var(--f-mono);font-weight:700;fill:var(--sy-c)}
+.sysv .pill:not(.show){display:none}
+.sysv .phr{fill:var(--st-hl);stroke:var(--st-gold);stroke-width:1.5}
+.sysv .pht{font-size:14px;font-family:var(--f-mono);font-weight:700;fill:var(--st-gold);letter-spacing:.04em}
+.sysv .bn{font-size:13.5px;font-weight:600}
+.sysv .ba{font-size:12px;font-family:var(--f-mono);fill:var(--st-dim)}
+.sysv .band.hl .ba{fill:var(--st-gold)}
+.sysv .mcl{font-size:12px;fill:var(--st-gold);font-family:var(--f-mono);opacity:.85}
+.sysv .ca{font-size:12.5px;fill:var(--st-dim);font-family:var(--f-mono)}
+.sysv .cv{font-size:14px;font-family:var(--f-mono);font-weight:500}
+.sysv .mc.hl .nb{stroke:var(--st-gold);stroke-width:2.5;fill:var(--st-hl)}
+.sysv .mc.hl .cv{fill:var(--st-gold)}
+.sysv .dev{font-size:15px;font-weight:600;fill:var(--st-dim)}
+.sysv .node.hl .dev{fill:var(--st-gold)}
+.sysv .key{fill:var(--st-line);stroke:none}
+.sysv .keyb{opacity:0;transition:opacity .25s}
+.sysv .keyb.show{opacity:1}
+.sysv .keyc{fill:var(--st-gold)}
+.sysv .keyt{font-size:20px;font-family:var(--f-mono);font-weight:700;fill:#1B1405}
+.sysv .scr{fill:#050B08;stroke:#1F3A2A}
+.sysv .st{font-size:13.5px;font-family:var(--f-mono);fill:#CFE8D4}
+.sysv .cur{fill:#CFE8D4;animation:blink 1s steps(1) infinite}
+.sysv .ivt{font-size:15px;font-family:var(--f-mono);font-weight:600;fill:var(--st-gold)}
+.sysv .fil{font-size:12.5px;font-family:var(--f-mono);fill:var(--st-teal)}
+.sysv .lane{stroke:var(--st-line);stroke-width:9;stroke-linecap:round;transition:stroke .3s}
+.sysv .ln-a.on .lane{stroke:var(--sy-a)}
+.sysv .ln-d.on .lane{stroke:var(--sy-d)}
+.sysv .ln-c.on .lane{stroke:var(--sy-c)}
+.sysv .lab{font-size:13.5px;fill:var(--st-dim);font-family:var(--f-mono);letter-spacing:.05em}
+.sysv .lanes.on .lab{fill:var(--st-fg)}
+.sysv .bvr{fill:var(--st-bg);stroke:var(--st-line2);stroke-width:1.5}
+.sysv .lanes.on .bvr{stroke:currentColor}
+.sysv .ln-a{color:var(--sy-a)} .sysv .ln-d{color:var(--sy-d)} .sysv .ln-c{color:var(--sy-c)}
+.sysv .bv{font-size:16px;font-family:var(--f-mono);font-weight:600;fill:currentColor}
+.sysv .tap{stroke:var(--st-line2);stroke-width:2}
+.sysv .tapd{fill:var(--st-line2)}
+.sysv .xp{fill:none;stroke-width:6;stroke-linejoin:round;stroke-linecap:round;opacity:0;transition:opacity .25s}
+.sysv .xf{fill:none;stroke:#fff;stroke-width:2;stroke-dasharray:6 14;opacity:0}
+.sysv .x.on .xp{opacity:1}
+.sysv .x.on .xf{opacity:.75;animation:flow .9s linear infinite}
+.sysv .xdot{display:none;stroke:#0D1626;stroke-width:2}
+.sysv .x.on .xdot{display:block}
+.sysv .xl{font-size:13px;font-family:var(--f-mono);fill:var(--sy-c);opacity:0}
+.sysv .x.on .xl{opacity:1}
+.sysv .scell.chg>.nb{animation:schg 1s ease-out}
+@keyframes schg{0%{fill:var(--st-gold)}100%{}}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center}
+.tchip{border:1px solid var(--st-line2);border-radius:10px;padding:6px 12px;background:var(--st-panel);display:flex;flex-direction:column;align-items:center;gap:1px;opacity:.5;transition:all .3s}
+.tchip b{font-size:13.5px;font-weight:600}
+.tchip span{font-family:var(--f-mono);font-size:12px;color:var(--st-dim)}
+.tchip.done{opacity:.9;border-color:#2C6E78}
+.tchip.cur{opacity:1;border-color:var(--st-gold);background:var(--st-hl);box-shadow:0 0 0 3px rgba(242,181,80,.18)}
+.tchip.cur b{color:var(--st-gold)}
+.chA{color:var(--st-dim);font-size:14px}
+.syc{max-height:176px;font-size:13px}
+.syl{display:grid;grid-template-columns:30px 54px 112px minmax(0,1fr);white-space:pre;line-height:1.7;transition:background .25s}
+.syl .so{color:var(--st-dim)}
+.syl .sb{color:var(--st-teal)}
+.syl.cur{background:rgba(242,181,80,.13);box-shadow:inset 3px 0 0 var(--st-gold)}
+.syl.cur .cn{color:var(--st-gold)}
+.syh{position:sticky;top:-8px;background:var(--st-code);font-size:11px;letter-spacing:.08em;color:var(--st-dim);z-index:1}
+.syc.nob .sb{visibility:hidden}
+.busline{display:none;gap:6px;justify-content:center;flex-wrap:wrap;font-family:var(--f-mono);font-size:12px}
+.busline span{display:flex;gap:6px;align-items:center;border:1px solid var(--st-line2);border-radius:999px;padding:3px 10px;color:var(--st-dim);opacity:.55}
+.busline span.on{opacity:1}
+.busline i{font-style:normal;font-size:10px;letter-spacing:.06em}
+.busline b{font-weight:600}
+.busline .bl-a.on{border-color:#F2B550;color:#F2B550}.busline .bl-d.on{border-color:#4CC9CE;color:#4CC9CE}.busline .bl-c.on{border-color:#F28B82;color:#F28B82}
+@media (max-width:760px){.busline{display:flex}.dg.sysv{min-width:1000px}.syl{grid-template-columns:24px 42px 92px minmax(0,1fr)}.syc{font-size:11.5px;max-height:200px}.tchip{padding:5px 8px}.tchip b{font-size:12px}.tchip span{font-size:11px}}
 </style>
 
 </head>
@@ -1019,6 +1112,136 @@ SC.fig16=(root,cfg)=>{const W=780,H=712;const wrap=el('div',{class:'scroll-x'});
     for(const id in G){G[id].classList.toggle('hl',hl.has(id));G[id].classList.toggle('dim',!!st.dim&&!hl.has(id)&&id!=='eu'&&id!=='biu');}
     for(const id in P){P[id].classList.toggle('on',on.has(id));P[id].classList.toggle('rev',rev.has(id));P[id].classList.toggle('dim',!!st.dim&&!on.has(id));}
     requestAnimationFrame(()=>follow(hl));}};};
+</script>
+<script>
+"use strict";
+/* ================= scene: the whole system (8086 + buses + memory + I/O devices) ================= */
+(function(){
+const W=1300,H=588;
+const LY={a:470,d:515,c:560};
+const TAP={cpu:{a:380,d:430,c:480,y:422},mem:{a:650,d:700,c:750,y:430},kbd:{a:938,d:962,c:986,y:424},vid:{a:1060,d:1098,c:1136,y:424},disk:{a:1210,d:1240,c:1270,y:424}};
+const LCOL={a:'var(--sy-a)',d:'var(--sy-d)',c:'var(--sy-c)'};
+const ENDS={cpu:['bcl','cpu'],mem:['mem','map','cells'],kbd:['kport'],vid:['vid'],disk:['dctl']};
+const EUR=['AX','BX','CX','DX','SP','BP','SI','DI'],SEGR=['CS','DS','SS','ES','IP'],FL=['OF','SF','ZF','AF','PF','CF'];
+const BANDS=[['m_ivt','IVT','00000',24],['m_dos','DOS','00400',36],['m_psp','PSP','',28],['m_code','CODE','',34],['m_data','DATA','',28],['m_stack','STACK','',30],['m_free','free','',46],['m_vid','VIDEO','B8000',38],['m_bios','BIOS','F0000',30]];
+const INTERNAL={'q>dec':['M306,289 L297,289 L297,391 L288,391','var(--st-teal)'],'sum>bcl':['M556,150 L564,150 L564,368 L556,368','var(--st-teal)'],
+  'k1':['M962,182 L962,330','var(--st-teal)'],'v1':['M1098,330 L1098,222','var(--st-teal)'],'d1':['M1240,160 L1240,330','var(--st-teal)'],'d1r':['M1240,330 L1240,160','var(--st-teal)'],
+  'irq':['M920,400 L906,400 L906,446 L540,446 L540,430','var(--sy-c)']};
+SC.sys=(root,cfg)=>{const init=cfg.init||{};
+  const box=el('div',{class:'sys'});root.append(box);
+  let chips=null;
+  if(cfg.chain){const c=el('div',{class:'chain'});chips=cfg.chain.map((x,k)=>{const ch=el('div',{class:'tchip'},el('b',{text:L(x.l)}),el('span',{text:L(x.f)||''}));if(k)c.append(el('span',{class:'chA',text:'→'}));c.append(ch);return{k:x.k,el:ch};});box.append(c);}
+  const wrap=el('div',{class:'scroll-x'});box.append(wrap);
+  const s=sv('svg',{viewBox:`0 0 ${W} ${H}`,class:'dg sysv',role:'img','aria-label':'An 8086 computer: CPU, address, data and control buses, memory, keyboard, display and disk'});wrap.append(s);
+  const BL={};const busline=el('div',{class:'busline'},...['a','d','c'].map(k=>{const v=el('b');BL[k]=el('span',{class:'bl-'+k},el('i',{text:{a:'ADDR',d:'DATA',c:'CTRL'}[k]}),v);BL[k]._v=v;return BL[k];}));box.append(busline);
+  const hint=el('div',{class:'swipe',text:'⟷ swipe'});hint.hidden=true;root.append(hint);
+  ['touchstart','pointerdown','wheel'].forEach(ev=>wrap.addEventListener(ev,()=>{hint.hidden=true;},{passive:true}));
+  const gB=sv('g'),gN=sv('g'),gX=sv('g');s.append(gB,gN,gX);
+  const G={},PAR={};
+  const T=(x,y,t,cls,o)=>sv('text',Object.assign({x,y,class:cls||'nl'},o||{}),t);
+  const R=(x,y,w,h,rx,cls)=>sv('rect',{x,y,width:w,height:h,rx:rx==null?6:rx,class:cls||'nb'});
+  const MID={'text-anchor':'middle'},END={'text-anchor':'end'};
+  const grp=(id,cls,par,...k)=>{const g=sv('g',{class:'node '+(cls||'')},...k);G[id]=g;if(par){PAR[id]=par;G[par].append(g);}else gN.append(g);return g;};
+  /* ---------- CPU ---------- */
+  grp('cpu','big',null,R(10,10,560,420,14),T(24,38,'8086 CPU','ttl'));
+  gN.append(sv('line',{x1:297,y1:52,x2:297,y2:424,class:'divl'}));
+  gN.append(T(28,62,'EXECUTION UNIT (EU)','sub'),T(306,62,'BUS INTERFACE UNIT (BIU)','sub'));
+  const PH=T(488,37,'','pht',MID);grp('ph','pill',null,R(420,18,136,28,14,'phr'),PH);
+  const RV={};grp('gr','',null);grp('segs','',null);
+  EUR.forEach((n,k)=>{const x=k<4?26:160,y=72+(k%4)*30;grp('r_'+n,'scell','gr',R(x,y,128,27,5),T(x+10,y+19,n,'srn'),(RV[n]=T(x+118,y+20,'0000','srv',END)));});
+  SEGR.forEach((n,k)=>{const x=306,y=72+k*30;grp('r_'+n,'scell','segs',R(x,y,126,27,5),T(x+10,y+19,n,'srn'),(RV[n]=T(x+116,y+20,'0000','srv',END)));});
+  const PA1=T(498,200,'','pa1',MID),PA2=T(498,172,'','pa2',MID);
+  grp('sum','',null,R(440,72,116,147,8),T(498,104,'Σ','sig',MID),T(498,126,'seg × 10h','tiny',MID),T(498,143,'+ offset','tiny',MID),PA2,PA1);
+  grp('ibus','',null,R(26,230,530,10,4,'nb ibar'));
+  const ALUT=T(159,300,'','alut',MID);
+  grp('alu','',null,sv('polygon',{points:'30,248 145,248 159,264 173,248 288,248 250,306 68,306',class:'nb'}),T(159,284,'ALU','nl',Object.assign({'font-size':17},MID)),ALUT);
+  const FV={};grp('flg','',null);
+  FL.forEach((n,k)=>{const x=30+k*43,y=312;grp('f_'+n,'scell flag','flg',R(x,y,40,40,5),T(x+20,y+15,n,'fn',MID),(FV[n]=T(x+20,y+35,'0','srv',MID)));});
+  const DEC=T(157,407,'—','dect',MID);
+  grp('dec','',null,R(26,360,262,62,6),T(36,380,'DECODER · CONTROL','sub'),DEC);
+  const QV=[];grp('q','',null,T(306,266,'INSTRUCTION QUEUE','sub'));
+  for(let k=0;k<6;k++){const x=306+k*42;grp('q_'+k,'qc','q',R(x,274,40,30,4),(QV[k]=T(x+20,295,'','qv',MID)));}
+  const BC=T(431,378,'','bct',MID);
+  grp('bcl','',null,R(306,314,250,108,8),T(431,338,'Bus control logic','nl',Object.assign({'font-size':16},MID)),BC,T(431,408,'↓ system bus ↓','tiny',MID));
+  /* ---------- memory ---------- */
+  grp('mem','big',null,R(588,10,318,420,14),T(602,38,'MEMORY · 1 MB','ttl'));
+  grp('map','',null);const BA={};let by=52;
+  BANDS.forEach(([id,nm,ad,h])=>{grp(id,'band','map',R(598,by,114,h,4),T(604,by+h/2+5,nm,'bn'),(BA[id]=T(706,by+h/2+5,ad,'ba',END)));BA[id]._d=ad;by+=h+3;});
+  grp('cells','',null,T(722,62,'LIVE VIEW','sub'));const CV={};
+  (cfg.cells||[]).forEach((c,k)=>{const y=72+k*29;grp('c_'+c.k,'scell mc','cells',R(720,y,178,26,5),T(726,y+18,c.l||'','mcl'),T(760,y+18,c.a,'ca'),(CV[c.k]=T(802,y+18,'··','cv')));});
+  /* ---------- I/O devices ---------- */
+  const keys=[];for(let r=0;r<3;r++)for(let c=0;c<5;c++)keys.push(R(927+c*15,60+r*18,12,13,2,'key'));
+  const KEYT=T(962,166,'','keyt',MID);const KEYB=sv('g',{class:'keyb'},sv('circle',{cx:962,cy:160,r:20,class:'keyc'}),KEYT);
+  grp('kbd','',null,T(962,34,'Keyboard','dev',MID),R(920,50,85,70,8),...keys,KEYB);
+  const KP=T(962,406,'','ivt',MID);
+  grp('kport','',null,R(920,330,85,94,8),T(962,352,'Keyboard','nl',Object.assign({'font-size':14},MID)),T(962,371,'port 60h','tiny',MID),KP);
+  const SCR=sv('g');const scrBg=R(1023,54,149,134,4,'scr');
+  grp('mon','',null,T(1097,34,'Display','dev',MID),R(1015,46,165,150,10),scrBg,SCR,R(1083,196,28,14,2),R(1062,210,70,8,3));
+  const VV=T(1098,406,'','ivt',MID);
+  grp('vid','',null,R(1015,330,165,94,8),T(1098,352,'Video adapter','nl',Object.assign({'font-size':14},MID)),T(1098,371,'video RAM B8000h','tiny',MID),VV);
+  const FILE=sv('g');
+  grp('disk','',null,T(1240,34,'Disk','dev',MID),sv('path',{d:'M1204,66 L1204,150 A36,11 0 0 0 1276,150 L1276,66',class:'nb'}),sv('ellipse',{cx:1240,cy:66,rx:36,ry:11,class:'nb'}),FILE);
+  const DV=T(1240,406,'','ivt',MID);
+  grp('dctl','',null,R(1190,330,100,94,8),T(1240,352,'Disk','nl',Object.assign({'font-size':14},MID)),T(1240,371,'controller','tiny',MID),DV);
+  /* ---------- system buses ---------- */
+  const BV={};
+  [['a','abus','ADDRESS BUS · 20 lines'],['d','dbus','DATA BUS · 16 lines'],['c','cbus','CONTROL BUS']].forEach(([k,id,lab])=>{const y=LY[k];
+    grp(id,'lanes ln-'+k,null,sv('line',{x1:14,y1:y,x2:1290,y2:y,class:'lane'}),T(16,y-14,lab,'lab'),sv('rect',{x:214,y:y-14,width:150,height:28,rx:14,class:'bvr'}),(BV[k]=T(289,y+6,'','bv',MID)));});
+  Object.keys(TAP).forEach(c=>['a','d','c'].forEach(k=>{const x=TAP[c][k];gB.append(sv('line',{x1:x,y1:TAP[c].y,x2:x,y2:LY[k],class:'tap'}),sv('circle',{cx:x,cy:LY[k],r:4,class:'tapd'}));}));
+  /* ---------- transfers (drawn on demand) ---------- */
+  const X={};
+  const mkX=(id,d,col,lab)=>{const g=sv('g',{class:'x'});g.append(sv('path',{d,class:'xp',style:`stroke:${col}`}),sv('path',{d,class:'xf'}));
+    if(lab)g.append(lab);
+    if(!RM){const dot=sv('circle',{r:6.5,class:'xdot',style:`fill:${col}`});dot.append(sv('animateMotion',{dur:'1.3s',repeatCount:'indefinite',path:d}));g.append(dot);}
+    gX.append(g);X[id]=g;return g;};
+  const getX=id=>{if(X[id])return X[id];if(INTERNAL[id])return mkX(id,INTERNAL[id][0],INTERNAL[id][1],id==='irq'?T(722,438,'IRQ1 → INTR','xl'):null);
+    const m=/^([adc]):(\w+)>(\w+)$/.exec(id);if(!m||!TAP[m[2]]||!TAP[m[3]])return null;const ln=m[1],A=TAP[m[2]],B=TAP[m[3]],y=LY[ln];
+    return mkX(id,`M${A[ln]},${A.y} L${A[ln]},${y} L${B[ln]},${y} L${B[ln]},${B.y}`,LCOL[ln]);};
+  /* ---------- code listing ---------- */
+  let cp=null,rows=[];
+  if(cfg.code){cp=el('div',{class:'cp syc'});cp.append(el('div',{class:'syl syh'},el('span',{class:'cn',text:''}),el('span',{class:'so',text:'OFFS'}),el('span',{class:'sb',text:'BYTES'}),el('span',{class:'ss',text:'SOURCE'})));
+    rows=cfg.code.map((ln,k)=>{const r=el('div',{class:'syl'},el('span',{class:'cn',text:String(k+1)}),el('span',{class:'so',text:ln.o||''}),el('span',{class:'sb',text:ln.b||''}),el('span',{class:'ss',html:asm(ln.t)}));cp.append(r);return r;});box.append(cp);}
+  /* ---------- state ---------- */
+  const fold=(steps,i)=>{const S={r:Object.assign({},init.r||{}),f:Object.assign({},init.f||{}),m:Object.assign({},init.m||{}),ba:Object.assign({},init.ba||{}),q:init.q||[],scr:init.scr||'',file:init.file||'',line:-1,ch:init.ch||null,bytes:init.bytes!==false};
+    for(let j=0;j<=i;j++){const t=steps[j].s||{};['r','f','m','ba'].forEach(k=>{if(t[k])Object.assign(S[k],t[k]);});['q','scr','file','line','ch','bytes'].forEach(k=>{if(t[k]!==undefined)S[k]=t[k];});}
+    return S;};
+  const follow=(hl,keep)=>{const sw=wrap.scrollWidth,cw=wrap.clientWidth;const over=sw>cw+4;hint.hidden=!over;if(!over)return;
+    const use=[...hl].filter(id=>G[id]&&!/^(cpu|mem|map|cells|abus|dbus|cbus|ph)$/.test(id));
+    let a=1e9,b=-1e9;(use.length?use:[...keep]).forEach(id=>{if(id==='cpu'||id==='mem'||id==='map'||id==='cells'||/bus$/.test(id))return;const g=G[id];if(!g)return;try{const bb=g.getBBox();if(!bb.width)return;a=Math.min(a,bb.x);b=Math.max(b,bb.x+bb.width);}catch(e){}});
+    if(b<a)return;const k=s.getBoundingClientRect().width/W;const left=Math.max(0,(a+b)/2*k-cw/2);try{wrap.scrollTo({left,behavior:RM?'auto':'smooth'});}catch(e){wrap.scrollLeft=left;}};
+  return{go(i,steps){const S=fold(steps,i),P=i>0?fold(steps,i-1):null,c=steps[i].s||{};
+    [...EUR,...SEGR].forEach(n=>{const v=S.r[n]!=null?S.r[n]:'····';RV[n].textContent=v;if(P&&(P.r[n]!=null?P.r[n]:'····')!==v)flash(G['r_'+n]);});
+    FL.forEach(n=>{const v=S.f[n]!=null?String(S.f[n]):'·';FV[n].textContent=v;G['f_'+n].classList.toggle('one',v==='1');if(P&&(P.f[n]!=null?String(P.f[n]):'·')!==v)flash(G['f_'+n]);});
+    for(let k=0;k<6;k++){const v=S.q[k]||'';QV[k].textContent=v;G['q_'+k].classList.toggle('full',!!v);}
+    PA2.textContent=c.pa?c.pa[0]:'';PA1.textContent=c.pa?c.pa[1]:'';
+    DEC.textContent=c.dec?L(c.dec):'—';ALUT.textContent=c.alu||'';BC.textContent=c.C||'';
+    PH.textContent=c.ph?L(c.ph):'';G.ph.classList.toggle('show',!!c.ph);
+    ['a','d','c'].forEach(k=>{const v=c[k.toUpperCase()];BV[k].textContent=v?L(v):'';BL[k]._v.textContent=v?L(v):'—';BL[k].classList.toggle('on',!!v);G[{a:'abus',d:'dbus',c:'cbus'}[k]].classList.toggle('on',!!v);});
+    BANDS.forEach(([id])=>{BA[id].textContent=S.ba[id]!=null?S.ba[id]:BA[id]._d;});
+    const mh=new Set(c.mh||[]);
+    (cfg.cells||[]).forEach(x=>{const v=S.m[x.k]!=null?S.m[x.k]:'··';CV[x.k].textContent=v;G['c_'+x.k].classList.toggle('hl',mh.has(x.k));if(P&&(P.m[x.k]!=null?P.m[x.k]:'··')!==v)flash(G['c_'+x.k]);});
+    SCR.innerHTML='';String(S.scr).split('\n').slice(-7).forEach((t,k,arr)=>{SCR.append(T(1029,73+k*18,t,'st'));if(k===arr.length-1)SCR.append(sv('rect',{x:1030+t.length*8.1,y:61+k*18,width:7,height:14,class:'cur'}));});
+    KEYT.textContent=c.key||'';KEYB.classList.toggle('show',!!c.key);
+    KP.textContent=c.port||'';VV.textContent=c.vio?L(c.vio):'';DV.textContent=c.dio?L(c.dio):'';
+    FILE.innerHTML='';String(S.file||'').split('\n').filter(Boolean).slice(-3).forEach((f,k)=>FILE.append(T(1240,100+k*17,f,'fil',MID)));
+    /* transfers + focus */
+    const on=new Set(c.x||[]);on.forEach(getX);for(const id in X)X[id].classList.toggle('on',on.has(id));
+    const hl=new Set(c.hl||[]);const keep=new Set(hl);
+    on.forEach(id=>{const m=/^([adc]):(\w+)>(\w+)$/.exec(id);if(m){keep.add({a:'abus',d:'dbus',c:'cbus'}[m[1]]);(ENDS[m[2]]||[]).forEach(x=>keep.add(x));(ENDS[m[3]]||[]).forEach(x=>keep.add(x));}
+      if(id==='q>dec'){keep.add('q');keep.add('dec');}if(id==='sum>bcl'){keep.add('sum');keep.add('bcl');}if(id==='k1'){keep.add('kbd');keep.add('kport');}
+      if(id==='v1'){keep.add('vid');keep.add('mon');}if(id==='d1'||id==='d1r'){keep.add('disk');keep.add('dctl');}if(id==='irq'){keep.add('kport');keep.add('cpu');}});
+    if(mh.size){keep.add('cells');mh.forEach(k=>keep.add('c_'+k));}if(c.ph)keep.add('ph');
+    if(c.A)keep.add('abus');if(c.D)keep.add('dbus');if(c.C)keep.add('cbus');
+    [...keep].forEach(id=>{let p=PAR[id];while(p){keep.add(p);p=PAR[p];}});
+    const dim=c.dim!==false&&(hl.size>0||on.size>0);
+    for(const id in G){const g=G[id];if(!(/^c_/.test(id)))g.classList.toggle('hl',hl.has(id));
+      let k=keep.has(id);if(!k){let p=PAR[id];while(p&&!k){if(hl.has(p))k=true;p=PAR[p];}}
+      g.classList.toggle('dim',dim&&!k);}
+    /* code + chain */
+    rows.forEach((r,k)=>r.classList.toggle('cur',k===S.line));if(cp){cp.classList.toggle('nob',!S.bytes);const r=rows[S.line];if(r){const top=r.offsetTop-cp.clientHeight/2+r.offsetHeight/2;cp.scrollTop=Math.max(0,top);}}
+    if(chips){const at=chips.findIndex(x=>x.k===S.ch);chips.forEach((x,k)=>{x.el.classList.toggle('cur',k===at);x.el.classList.toggle('done',at>=0&&k<at);});}
+    const fh=new Set(hl);mh.forEach(k=>fh.add('c_'+k));requestAnimationFrame(()=>follow(fh,keep));}};};
+})();
 </script>
 <script>
 "use strict";
@@ -2819,6 +3042,234 @@ T('General forms of the string instructions','স্ট্রিং ইনস্
 </script>
 <script>
 "use strict";
+/* ===================== CHAPTER 12: the whole system ===================== */
+(function(){
+const Z4={AX:'0000',BX:'0000',CX:'0000',DX:'0000',BP:'0000',SI:'0000',DI:'0000'};
+const F0={OF:0,SF:0,ZF:0,AF:0,PF:0,CF:0};
+const RD=(dev)=>['a:cpu>'+dev,'c:cpu>'+dev,'d:'+dev+'>cpu'];   /* CPU reads from dev */
+const WR=(dev)=>['a:cpu>'+dev,'c:cpu>'+dev,'d:cpu>'+dev];      /* CPU writes to dev */
+const PH=(en,bn)=>({en,bn});
+const FETCH=PH('FETCH','ফেচ'),EXEC=PH('EXECUTE','এক্সিকিউট'),MRD=PH('MEMORY READ','মেমোরি রিড'),MWR=PH('MEMORY WRITE','মেমোরি রাইট'),IORD=PH('I/O READ','আই/ও রিড');
+
+/* ---------- example 1: ADD2 ---------- */
+const ADD2=[
+ {t:'.MODEL SMALL'},{t:'.STACK 100H'},{t:'.DATA'},
+ {o:'0000',b:'05 00',t:'A    DW 5'},{o:'0002',b:'07 00',t:'B    DW 7'},{o:'0004',b:'00 00',t:'SUM  DW ?'},
+ {t:'.CODE'},{t:'MAIN PROC'},
+ {o:'0000',b:'B8 12 10',t:'     MOV AX,@DATA   ;AX = data segment'},
+ {o:'0003',b:'8E D8',t:'     MOV DS,AX      ;DS = data segment'},
+ {o:'0005',b:'A1 00 00',t:'     MOV AX,A       ;AX = A'},
+ {o:'0008',b:'03 06 02 00',t:'     ADD AX,B       ;AX = A + B'},
+ {o:'000C',b:'A3 04 00',t:'     MOV SUM,AX     ;SUM = AX'},
+ {o:'000F',b:'B4 4C',t:'     MOV AH,4CH'},
+ {o:'0011',b:'CD 21',t:'     INT 21H        ;back to DOS'},
+ {t:'MAIN ENDP'},{t:'     END MAIN'}];
+const ADD2_ASM=ADD2.map((l,k)=>k===8?Object.assign({},l,{b:'B8 ---- R'}):l);
+const CELLS1=[{k:'psp',l:'PSP',a:'10000'},{k:'c0',l:'code',a:'10100'},{k:'c1',l:'code',a:'10103'},{k:'c2',l:'code',a:'10105'},{k:'c3',l:'code',a:'10108'},{k:'c4',l:'code',a:'1010C'},
+ {k:'c5',l:'code',a:'1010F'},{k:'c6',l:'code',a:'10111'},{k:'A',l:'A',a:'10120'},{k:'B',l:'B',a:'10122'},{k:'SUM',l:'SUM',a:'10124'},{k:'tos',l:'SP→',a:'10230'}];
+const MEM1={psp:'CD 20 …',c0:'B8 12 10',c1:'8E D8',c2:'A1 00 00',c3:'03 06 02 00',c4:'A3 04 00',c5:'B4 4C',c6:'CD 21',A:'05 00',B:'07 00',SUM:'00 00',tos:'(top)'};
+const BA1={m_psp:'10000',m_code:'10100',m_data:'10120',m_stack:'10130'};
+const LOADED1={r:Object.assign({CS:'1010',IP:'0000',SS:'1012',SP:'0110',DS:'1000',ES:'1000'},Z4),f:F0,m:MEM1,ba:BA1,scr:'C:\\>ADD2',file:'ADD2.EXE'};
+
+/* ---------- example 2: CASE ---------- */
+const CASE=[
+ {t:'.MODEL SMALL'},{t:'.STACK 100H'},{t:'.CODE'},{t:'MAIN PROC'},
+ {o:'0000',b:'B4 01',t:'     MOV AH,1       ;read a key'},
+ {o:'0002',b:'CD 21',t:'     INT 21H        ;AL = its ASCII code'},
+ {o:'0004',b:'2C 20',t:'     SUB AL,20H     ;to upper case'},
+ {o:'0006',b:'88 C2',t:'     MOV DL,AL'},
+ {o:'0008',b:'B4 02',t:'     MOV AH,2       ;display DL'},
+ {o:'000A',b:'CD 21',t:'     INT 21H'},
+ {o:'000C',b:'B4 4C',t:'     MOV AH,4CH'},
+ {o:'000E',b:'CD 21',t:'     INT 21H        ;back to DOS'},
+ {t:'MAIN ENDP'},{t:'     END MAIN'}];
+const CELLS2=[{k:'c0',l:'code',a:'10100'},{k:'c1',l:'code',a:'10104'},{k:'c2',l:'code',a:'10108'},{k:'c3',l:'code',a:'1010C'},
+ {k:'s1',l:'SP→',a:'1020A'},{k:'s2',l:'stk',a:'1020C'},{k:'s3',l:'stk',a:'1020E'},{k:'ivt',l:'v21',a:'00084'},{k:'kb',l:'kbuf',a:'0041E'},{k:'v0',l:'vram',a:'B80A0'},{k:'v1',l:'vram',a:'B80A2'}];
+const BA2={m_psp:'10000',m_code:'10100',m_data:'—',m_stack:'10110'};
+const LOADED2={r:Object.assign({CS:'1010',IP:'0000',SS:'1011',SP:'0100',DS:'1000',ES:'1000'},Z4),f:F0,
+ m:{c0:'B4 01 CD 21',c1:'2C 20 88 C2',c2:'B4 02 CD 21',c3:'B4 4C CD 21',s1:'··',s2:'··',s3:'··',ivt:'→ DOS',kb:'··',v0:'20 07',v1:'20 07'},ba:BA2,scr:'C:\\>CASE',file:'CASE.EXE'};
+
+/* ---------- example 3: STARS ---------- */
+const STARS=[
+ {t:'.MODEL SMALL'},{t:'.STACK 100H'},{t:'.CODE'},{t:'MAIN PROC'},
+ {o:'0000',b:'B4 02',t:'     MOV AH,2       ;display function'},
+ {o:'0002',b:'B2 2A',t:"     MOV DL,'*'     ;character to show"},
+ {o:'0004',b:'B9 05 00',t:'     MOV CX,5       ;loop count'},
+ {o:'0007',b:'CD 21',t:"TOP: INT 21H        ;display '*'"},
+ {o:'0009',b:'E2 FC',t:'     LOOP TOP       ;CX=CX-1, jump if CX≠0'},
+ {o:'000B',b:'B4 4C',t:'     MOV AH,4CH'},
+ {o:'000D',b:'CD 21',t:'     INT 21H        ;back to DOS'},
+ {t:'MAIN ENDP'},{t:'     END MAIN'}];
+const CELLS3=[{k:'c0',l:'code',a:'10100'},{k:'c1',l:'code',a:'10102'},{k:'c2',l:'code',a:'10104'},{k:'c3',l:'TOP',a:'10107'},{k:'c4',l:'code',a:'10109'},{k:'c5',l:'code',a:'1010B'},{k:'c6',l:'code',a:'1010D'},
+ {k:'v0',l:'vram',a:'B80A0'},{k:'v1',l:'vram',a:'B80A2'},{k:'v2',l:'vram',a:'B80A4'},{k:'v3',l:'vram',a:'B80A6'},{k:'v4',l:'vram',a:'B80A8'}];
+const LOADED3={r:Object.assign({CS:'1010',IP:'0000',SS:'1011',SP:'0100',DS:'1000',ES:'1000'},Z4),f:F0,
+ m:{c0:'B4 02',c1:'B2 2A',c2:'B9 05 00',c3:'CD 21',c4:'E2 FC',c5:'B4 4C',c6:'CD 21',v0:'20 07',v1:'20 07',v2:'20 07',v3:'20 07',v4:'20 07'},ba:BA2,scr:'C:\\>STARS',file:'STARS.EXE'};
+
+CH.push({n:12,t:{en:'The Whole System: Programs in Action',bn:'পুরো সিস্টেম: প্রোগ্রাম চলার পথে'},topics:[
+
+/* 12.1 */
+T('The whole system at a glance','এক নজরে পুরো সিস্টেম',
+ {type:'sys',cells:CELLS1,init:LOADED1},
+ [st('This chapter puts everything together. Here is a complete 8086 computer: the CPU on the left, memory in the middle, and the input and output devices on the right. Three buses along the bottom connect them all.',
+     'এই অধ্যায়ে সবকিছু একসাথে জোড়া লাগানো হবে। এখানে একটি পূর্ণাঙ্গ ৮০৮৬ কম্পিউটার: বাম দিকে সিপিইউ, মাঝখানে মেমোরি, আর ডান দিকে ইনপুট ও আউটপুট ডিভাইস। নিচের তিনটি বাস এদের সবাইকে যুক্ত করেছে।',{}),
+  st('The CPU is the 8086 from Figure 1.6. The execution unit holds the general registers, the ALU, the flags and the decoder. The bus interface unit holds the segment registers and IP, the address adder and the six-byte instruction queue.',
+     'সিপিইউটি হলো চিত্র ১.৬-এর ৮০৮৬। এক্সিকিউশন ইউনিটে আছে জেনারেল রেজিস্টার, এএলইউ, ফ্ল্যাগ আর ডিকোডার। বাস ইন্টারফেস ইউনিটে আছে সেগমেন্ট রেজিস্টার ও IP, অ্যাড্রেস যোগ করার সার্কিট, আর ছয় বাইটের ইনস্ট্রাকশন কিউ।',{hl:['cpu','gr','alu','flg','dec','segs','sum','q','bcl','ibus']}),
+  st('The address bus has 20 lines. Only the CPU drives it, so it is one-way. Twenty lines can name two to the power twenty different bytes, which is one megabyte.',
+     'অ্যাড্রেস বাসে ২০টি লাইন। শুধু সিপিইউ এটি চালায়, তাই এটি একমুখী। বিশটি লাইন দিয়ে দুই-এর ঘাত বিশ, অর্থাৎ এক মেগাবাইট আলাদা বাইটকে চিহ্নিত করা যায়।',{hl:['abus'],x:['a:cpu>mem','a:cpu>vid'],A:'00000–FFFFF'}),
+  st('The data bus has 16 lines and is two-way. On a read the data travels into the CPU; on a write it travels out of the CPU.',
+     'ডেটা বাসে ১৬টি লাইন, আর এটি দ্বিমুখী। রিড করার সময় ডেটা সিপিইউ-র ভেতরে আসে; রাইট করার সময় সিপিইউ থেকে বাইরে যায়।',{hl:['dbus'],x:['d:mem>cpu','d:cpu>vid'],D:'16 bits ⇄'}),
+  st('The control bus carries the command: memory read, memory write, I/O read or I/O write. Devices also use it to call the CPU, for example the keyboard raises an interrupt request.',
+     'কন্ট্রোল বাস কমান্ড বহন করে: মেমোরি রিড, মেমোরি রাইট, আই/ও রিড বা আই/ও রাইট। ডিভাইসগুলোও এর মাধ্যমে সিপিইউ-কে ডাকে, যেমন কিবোর্ড একটি ইন্টারাপ্ট রিকোয়েস্ট পাঠায়।',{hl:['cbus','kport'],x:['c:cpu>mem','irq'],C:'MEMR MEMW IOR IOW'}),
+  st('Memory is one big array of one megabyte. The map shows who uses which part: the interrupt vector table at address zero, then DOS, then your program with its PSP, code, data and stack. Video RAM starts at B8000 hex, and the BIOS ROM sits at the top.',
+     'মেমোরি হলো এক মেগাবাইটের একটি বড় অ্যারে। ম্যাপে দেখা যাচ্ছে কোন অংশ কে ব্যবহার করে: শূন্য অ্যাড্রেসে ইন্টারাপ্ট ভেক্টর টেবিল, তারপর ডস, তারপর তোমার প্রোগ্রাম, তার পিএসপি, কোড, ডেটা আর স্ট্যাকসহ। ভিডিও র‍্যাম শুরু B8000 হেক্স থেকে, আর বায়োস রম একদম ওপরে।',{hl:['map','m_ivt','m_dos','m_psp','m_code','m_data','m_stack','m_vid','m_bios']}),
+  st('Devices never sit on the bus directly; each has an interface circuit. The keyboard interface is an I/O port, read with I/O read at port address 60 hex. The video adapter\'s RAM is part of the memory space, so showing a character is just a memory write. The disk controller moves whole blocks of data.',
+     'ডিভাইসগুলো কখনো সরাসরি বাসে বসে না; প্রত্যেকের একটি ইন্টারফেস সার্কিট থাকে। কিবোর্ডের ইন্টারফেস হলো একটি আই/ও পোর্ট, যা পোর্ট অ্যাড্রেস ৬০ হেক্স থেকে আই/ও রিড দিয়ে পড়া হয়। ভিডিও অ্যাডাপ্টারের র‍্যাম মেমোরি স্পেসেরই অংশ, তাই একটি অক্ষর দেখানো মানে শুধু একটি মেমোরি রাইট। ডিস্ক কন্ট্রোলার পুরো ব্লক ধরে ডেটা আনা-নেওয়া করে।',{hl:['kbd','kport','mon','vid','disk','dctl']}),
+  st('Every transfer in this system follows one rule, called a bus cycle: put an address on the address bus, put a command on the control bus, and move the data on the data bus. In the next topics we follow real programs from the moment you type them until they end.',
+     'এই সিস্টেমের প্রতিটি ডেটা আদান-প্রদান একটি নিয়ম মানে, যাকে বাস সাইকেল বলে: অ্যাড্রেস বাসে অ্যাড্রেস দাও, কন্ট্রোল বাসে কমান্ড দাও, আর ডেটা বাসে ডেটা আনা-নেওয়া করো। পরের টপিকগুলোতে আমরা আসল প্রোগ্রাম অনুসরণ করব, টাইপ করার মুহূর্ত থেকে শেষ হওয়া পর্যন্ত।',{x:RD('mem'),A:'10100h',C:'MEMR',D:'B8 12',hl:['bcl','m_code'],mh:['c0'],note:{en:'bus cycle = address + command + data',bn:'বাস সাইকেল = অ্যাড্রেস + কমান্ড + ডেটা'}})]),
+
+/* 12.2 */
+T('From your keyboard to a running program','কিবোর্ড থেকে চলমান প্রোগ্রাম',
+ {type:'sys',cells:CELLS1,code:ADD2_ASM,
+  chain:[{k:'edit',l:{en:'Type & save',bn:'টাইপ ও সেভ'},f:'ADD2.ASM'},{k:'asm',l:{en:'Assemble',bn:'অ্যাসেম্বল'},f:'MASM → .OBJ'},{k:'link',l:{en:'Link',bn:'লিংক'},f:'LINK → .EXE'},{k:'load',l:{en:'Load',bn:'লোড'},f:{en:'DOS loader',bn:'ডস লোডার'}},{k:'run',l:{en:'Run',bn:'রান'},f:'CS:IP'}],
+  init:{r:{},f:{},m:{},ba:{},scr:'C:\\>EDIT ADD2.ASM',bytes:false,ch:'edit'}},
+ [st('It starts with you. You type the program in a text editor. Every key you press goes from the keyboard to its port, the editor program in the CPU reads it, and writes it into video RAM so it appears on the screen.',
+     'শুরুটা তোমার হাতে। তুমি একটি টেক্সট এডিটরে প্রোগ্রাম টাইপ করো। প্রতিটি কি চাপলে তা কিবোর্ড থেকে তার পোর্টে যায়, সিপিইউ-তে চলা এডিটর প্রোগ্রাম তা পড়ে, আর ভিডিও র‍্যামে লিখে দেয়, ফলে স্ক্রিনে দেখা যায়।',
+     {ch:'edit',hl:['kbd','kport','mon','vid'],x:['k1','d:kbd>cpu','d:cpu>vid','v1'],key:'A',port:'1E',scr:'C:\\>EDIT ADD2.ASM\n.MODEL SMALL\n.STACK 100H\n.DATA\nA    DW 5\nB    DW 7\nSUM  DW ?'}),
+  st('When you save, the editor asks the disk controller to write the file. The text is copied out of memory, through the controller, onto the disk as ADD2.ASM.',
+     'সেভ করলে এডিটর ডিস্ক কন্ট্রোলারকে ফাইলটি লিখতে বলে। টেক্সটগুলো মেমোরি থেকে কপি হয়ে কন্ট্রোলারের মধ্য দিয়ে ডিস্কে ADD2.ASM নামে জমা হয়।',
+     {ch:'edit',hl:['dctl','disk'],x:['c:cpu>disk','d:mem>disk','d1r'],C:'IOW',dio:{en:'write',bn:'রাইট'},file:'ADD2.ASM'}),
+  st('Next you assemble: MASM ADD2. The assembler reads ADD2.ASM and turns every instruction into machine code bytes, saved in ADD2.OBJ. Look at MOV AX, @DATA: its value is still blank and marked R, relocatable, because nobody knows yet where in memory the program will sit.',
+     'এরপর অ্যাসেম্বল করো: MASM ADD2। অ্যাসেম্বলার ADD2.ASM পড়ে প্রতিটি ইনস্ট্রাকশনকে মেশিন কোডের বাইটে রূপান্তর করে, আর ADD2.OBJ-তে রাখে। MOV AX,@DATA লক্ষ করো: এর মান এখনো ফাঁকা, R চিহ্ন দেওয়া, মানে রিলোকেটেবল, কারণ প্রোগ্রামটি মেমোরির কোথায় বসবে তা এখনো কেউ জানে না।',
+     {ch:'asm',bytes:true,line:8,hl:['disk','dctl'],x:['d1','d1r'],file:'ADD2.ASM\nADD2.OBJ',scr:'C:\\>MASM ADD2;\n\n  0 Warning Errors\n  0 Severe  Errors\nC:\\>'}),
+  st('Then the linker: LINK ADD2. It builds ADD2.EXE. Besides the code and data, the EXE header records the program size, the starting CS and IP, the starting SS and SP, and a list of the places that must be relocated.',
+     'তারপর লিংকার: LINK ADD2। এটি ADD2.EXE তৈরি করে। কোড আর ডেটার পাশাপাশি EXE হেডারে লেখা থাকে প্রোগ্রামের আকার, শুরুর CS আর IP, শুরুর SS আর SP, আর কোন কোন জায়গা রিলোকেট করতে হবে তার তালিকা।',
+     {ch:'link',line:8,hl:['disk','dctl'],x:['d1','d1r'],file:'ADD2.ASM\nADD2.OBJ\nADD2.EXE',scr:'C:\\>MASM ADD2;\nC:\\>LINK ADD2;\nC:\\>'}),
+  st('Now run it by typing ADD2. DOS finds a free block of memory, here starting at 10000 hex, and builds a 256-byte Program Segment Prefix, the PSP, at its start.',
+     'এবার ADD2 টাইপ করে রান করো। ডস মেমোরিতে একটি খালি জায়গা খুঁজে নেয়, এখানে ১০০০০ হেক্স থেকে শুরু, আর তার শুরুতে ২৫৬ বাইটের প্রোগ্রাম সেগমেন্ট প্রিফিক্স বা পিএসপি তৈরি করে।',
+     {ch:'load',hl:['m_psp'],mh:['psp'],m:{psp:'CD 20 …'},ba:{m_psp:'10000'},x:WR('mem'),A:'10000h',C:'MEMW',D:'CD 20',scr:'C:\\>MASM ADD2;\nC:\\>LINK ADD2;\nC:\\>ADD2'}),
+  st('The loader reads the program from the disk into memory right after the PSP: the code at 10100 hex and the data group at 10120 hex. The disk controller copies the bytes straight into memory.',
+     'লোডার ডিস্ক থেকে প্রোগ্রামটি পড়ে পিএসপি-র ঠিক পরেই মেমোরিতে বসায়: কোড ১০১০০ হেক্সে আর ডেটা গ্রুপ ১০১২০ হেক্সে। ডিস্ক কন্ট্রোলার বাইটগুলো সরাসরি মেমোরিতে কপি করে।',
+     {ch:'load',hl:['m_code','m_data','m_stack'],mh:['c0','c1','c2','c3','c4','c5','c6','A','B','SUM'],x:['d1','a:disk>mem','c:disk>mem','d:disk>mem'],A:'10100h …',C:'MEMW',D:{en:'file bytes',bn:'ফাইলের বাইট'},dio:{en:'read',bn:'রিড'},
+      m:{c0:'B8 00 00',c1:'8E D8',c2:'A1 00 00',c3:'03 06 02 00',c4:'A3 04 00',c5:'B4 4C',c6:'CD 21',A:'05 00',B:'07 00',SUM:'00 00'},ba:{m_code:'10100',m_data:'10120',m_stack:'10130'}}),
+  st('Relocation: the data group really starts at paragraph 1012 hex, so the loader writes 12 10 into the blank of MOV AX, @DATA. Low byte first, as always on Intel processors.',
+     'রিলোকেশন: ডেটা গ্রুপ আসলে প্যারাগ্রাফ ১০১২ হেক্সে শুরু, তাই লোডার MOV AX,@DATA-এর ফাঁকা জায়গায় 12 10 লিখে দেয়। ইন্টেল প্রসেসরে যেমন সবসময়, নিচের বাইট আগে।',
+     {ch:'load',line:8,mh:['c0'],m:{c0:'B8 12 10'},x:WR('mem'),A:'10101h',C:'MEMW',D:'12 10',hl:['m_code']}),
+  st('The loader sets the registers from the EXE header: CS = 1010 and IP = 0000, the entry point MAIN; SS = 1012 and SP = 0110 for the stack; DS and ES point to the PSP at 1000.',
+     'লোডার EXE হেডার দেখে রেজিস্টারগুলো সেট করে: CS = 1010 আর IP = 0000, অর্থাৎ শুরুর বিন্দু MAIN; স্ট্যাকের জন্য SS = 1012 আর SP = 0110; DS আর ES পিএসপি-র দিকে, 1000-এ।',
+     {ch:'load',r:Object.assign({CS:'1010',IP:'0000',SS:'1012',SP:'0110',DS:'1000',ES:'1000'},Z4),f:F0,m:{tos:'(top)'},mh:['tos'],hl:['segs','r_SP']}),
+  st('Finally the loader jumps to CS:IP. The BIU computes 1010 times 10 hex plus 0000 = 10100 hex, and the first fetch begins. The program is running. The next topic follows it instruction by instruction.',
+     'শেষে লোডার CS:IP-তে জাম্প করে। বিআইইউ হিসাব করে 1010 গুণ ১০ হেক্স যোগ 0000 = ১০১০০ হেক্স, আর প্রথম ফেচ শুরু হয়। প্রোগ্রাম চলছে। পরের টপিকে আমরা এটিকে এক এক ইনস্ট্রাকশন করে অনুসরণ করব।',
+     {ch:'run',ph:FETCH,pa:['1010:0000','10100h'],x:RD('mem').concat(['sum>bcl']),A:'10100h',C:'MEMR',D:'B8 12',q:['B8','12','10','8E','D8','A1'],line:8,mh:['c0'],hl:['sum','q','m_code']})]),
+
+/* 12.3 */
+T('Example 1: add two numbers in memory','উদাহরণ ১: মেমোরির দুটি সংখ্যা যোগ',
+ {type:'sys',cells:CELLS1,code:ADD2,init:LOADED1},
+ [st('Fetch. The BIU forms the address of the first instruction: CS times 10 hex plus IP = 10100 hex. It puts it on the address bus, sends MEMR on the control bus, and memory answers on the data bus. The bytes go into the instruction queue.',
+     'ফেচ। বিআইইউ প্রথম ইনস্ট্রাকশনের অ্যাড্রেস বানায়: CS গুণ ১০ হেক্স যোগ IP = ১০১০০ হেক্স। এটি অ্যাড্রেস বাসে রাখে, কন্ট্রোল বাসে MEMR পাঠায়, আর মেমোরি ডেটা বাসে উত্তর দেয়। বাইটগুলো ইনস্ট্রাকশন কিউতে জমা হয়।',
+     {ph:FETCH,pa:['1010:0000','10100h'],x:RD('mem').concat(['sum>bcl']),A:'10100h',C:'MEMR',D:'B8 12',q:['B8','12','10','8E','D8','A1'],line:8,mh:['c0','c1'],hl:['sum','q','m_code']}),
+  st('Decode and execute. The decoder takes B8 from the queue: it means MOV AX with an immediate word. The next two bytes, 12 10, are the value 1012 hex, so AX = 1012. IP moves past the three bytes to 0003.',
+     'ডিকোড ও এক্সিকিউট। ডিকোডার কিউ থেকে B8 নেয়: এর মানে MOV AX, সাথে একটি ইমিডিয়েট ওয়ার্ড। পরের দুটি বাইট 12 10 হলো মান 1012 হেক্স, তাই AX = 1012। IP তিন বাইট এগিয়ে 0003 হয়।',
+     {ph:EXEC,dec:'MOV AX,1012h',r:{AX:'1012',IP:'0003'},q:['8E','D8','A1','00','00','03'],x:['q>dec'],hl:['r_AX','r_IP'],line:8}),
+  st('MOV DS, AX copies 1012 into DS, so DS now points to the data. Its bytes were already waiting in the queue, so the EU did not wait for memory at all. That is pipelining at work.',
+     'MOV DS,AX, 1012 কে DS-এ কপি করে, ফলে DS এখন ডেটার দিকে নির্দেশ করে। এর বাইটগুলো আগেই কিউতে অপেক্ষা করছিল, তাই ইইউ-কে মেমোরির জন্য একটুও অপেক্ষা করতে হয়নি। এটাই পাইপলাইনিং।',
+     {ph:EXEC,dec:'MOV DS,AX',r:{DS:'1012',IP:'0005'},q:['A1','00','00','03','06','02'],x:['q>dec'],hl:['r_DS','r_AX'],line:9}),
+  st('MOV AX, A needs data from memory. A is at offset 0000, so the BIU computes DS times 10 hex plus 0000 = 10120 hex, puts it on the address bus with MEMR, and memory sends back 05 00. AX = 0005.',
+     'MOV AX,A-এর জন্য মেমোরি থেকে ডেটা লাগবে। A আছে অফসেট 0000-এ, তাই বিআইইউ হিসাব করে DS গুণ ১০ হেক্স যোগ 0000 = ১০১২০ হেক্স, MEMR সহ অ্যাড্রেস বাসে রাখে, আর মেমোরি ফেরত পাঠায় 05 00। AX = 0005।',
+     {ph:MRD,dec:'MOV AX,[0000]',pa:['1012:0000','10120h'],x:RD('mem').concat(['sum>bcl']),A:'10120h',C:'MEMR',D:'05 00',r:{AX:'0005',IP:'0008'},mh:['A'],hl:['sum','m_data','r_AX','r_DS'],q:['03','06','02','00','A3','04'],line:10}),
+  st('ADD AX, B. The decoder reads 03 06 02 00: add the word at offset 0002 to AX. The BIU reads address 10122 hex and gets 07 00.',
+     'ADD AX,B। ডিকোডার পড়ে 03 06 02 00: অফসেট 0002-এর ওয়ার্ডটি AX-এর সাথে যোগ করো। বিআইইউ ১০১২২ হেক্স অ্যাড্রেস পড়ে আর পায় 07 00।',
+     {ph:MRD,dec:'ADD AX,[0002]',pa:['1012:0002','10122h'],x:RD('mem').concat(['sum>bcl']),A:'10122h',C:'MEMR',D:'07 00',mh:['B'],hl:['sum','m_data','r_DS'],line:11}),
+  st('The EU sends AX and the word from memory over the internal bus into the ALU. 0005 plus 0007 = 000C, and the result goes back into AX.',
+     'ইইউ AX আর মেমোরি থেকে আসা ওয়ার্ডটি ইন্টারনাল বাস দিয়ে এএলইউ-তে পাঠায়। 0005 যোগ 0007 = 000C, আর ফলাফল আবার AX-এ ফিরে যায়।',
+     {ph:EXEC,alu:'0005+0007=000C',r:{AX:'000C',IP:'000C'},hl:['alu','ibus','r_AX'],q:['A3','04','00','B4','4C','CD'],line:11}),
+  st('At the same time the ALU updates the flags. 000C is not zero, so ZF = 0. It is positive, so SF = 0. There is no carry and no overflow, so CF = 0 and OF = 0. 0C = 0000 1100 has two 1 bits, an even number, so PF = 1.',
+     'একই সময়ে এএলইউ ফ্ল্যাগগুলো আপডেট করে। 000C শূন্য নয়, তাই ZF = 0। এটি ধনাত্মক, তাই SF = 0। কোনো ক্যারি বা ওভারফ্লো নেই, তাই CF = 0 আর OF = 0। 0C = 0000 1100-এ দুটি ১ বিট, জোড় সংখ্যা, তাই PF = 1।',
+     {ph:EXEC,f:{OF:0,SF:0,ZF:0,AF:0,PF:1,CF:0},hl:['flg','alu'],line:11}),
+  st('MOV SUM, AX writes to memory. Address 10124 hex goes on the address bus, but this time the control bus says MEMW and the data bus carries 0C 00 out of the CPU. Memory stores it in SUM.',
+     'MOV SUM,AX মেমোরিতে লেখে। অ্যাড্রেস বাসে যায় ১০১২৪ হেক্স, কিন্তু এবার কন্ট্রোল বাস বলে MEMW, আর ডেটা বাস সিপিইউ থেকে 0C 00 বাইরে নিয়ে যায়। মেমোরি তা SUM-এ রেখে দেয়।',
+     {ph:MWR,dec:'MOV [0004],AX',pa:['1012:0004','10124h'],x:WR('mem').concat(['sum>bcl']),A:'10124h',C:'MEMW',D:'0C 00',m:{SUM:'0C 00'},mh:['SUM'],r:{IP:'000F'},hl:['sum','m_data','r_DS','r_AX'],q:['B4','4C','CD','21'],line:12}),
+  st('MOV AH, 4CH puts the DOS function number for end program into AH. AX becomes 4C0C, because AL still holds 0C.',
+     'MOV AH,4CH, প্রোগ্রাম শেষ করার ডস ফাংশন নম্বরটি AH-এ রাখে। AX হয় 4C0C, কারণ AL-এ এখনো 0C আছে।',
+     {ph:EXEC,dec:'MOV AH,4Ch',r:{AX:'4C0C',IP:'0011'},x:['q>dec'],hl:['r_AX'],q:['CD','21'],line:13}),
+  st('INT 21H calls DOS. Because AH = 4C, DOS ends the program, frees its memory and writes its prompt into video RAM. The answer, 12, is still sitting in memory at 10124 hex.',
+     'INT 21H ডসকে ডাকে। AH = 4C বলে ডস প্রোগ্রামটি শেষ করে, তার মেমোরি ছেড়ে দেয়, আর ভিডিও র‍্যামে প্রম্পট লেখে। উত্তর ১২ এখনো মেমোরির ১০১২৪ হেক্সে বসে আছে।',
+     {ph:PH('EXIT → DOS','প্রস্থান → ডস'),dec:'INT 21h',x:WR('vid').concat(['v1']),A:'B80A0h',C:'MEMW',D:"'C' 07",scr:'C:\\>ADD2\nC:\\>',mh:['SUM'],hl:['vid','mon','m_vid'],line:14,q:[],note:{en:'SUM = 000Ch = 12',bn:'SUM = 000Ch = ১২'}})]),
+
+/* 12.4 */
+T('Example 2: keyboard in, screen out','উদাহরণ ২: কিবোর্ড থেকে ইনপুট, স্ক্রিনে আউটপুট',
+ {type:'sys',cells:CELLS2,code:CASE,init:LOADED2},
+ [st('The program CASE is loaded at 10100 hex. The BIU fetches its first bytes into the queue, and MOV AH, 1 selects DOS function 1: read a key from the keyboard.',
+     'CASE প্রোগ্রামটি ১০১০০ হেক্সে লোড হয়েছে। বিআইইউ এর প্রথম বাইটগুলো কিউতে আনে, আর MOV AH,1 ডস ফাংশন ১ বেছে নেয়: কিবোর্ড থেকে একটি কি পড়ো।',
+     {ph:FETCH,pa:['1010:0000','10100h'],x:RD('mem'),A:'10100h',C:'MEMR',D:'B4 01',q:['B4','01','CD','21','2C','20'],r:{AX:'0100',IP:'0002'},dec:'MOV AH,1',mh:['c0'],hl:['q','m_code','r_AX'],line:4}),
+  st('INT 21H is a software interrupt. First the CPU saves its place: it pushes FLAGS, CS and the return address 0004 onto the stack. These are three memory writes, and SP drops from 0100 to 00FA.',
+     'INT 21H একটি সফটওয়্যার ইন্টারাপ্ট। প্রথমে সিপিইউ নিজের অবস্থান সংরক্ষণ করে: FLAGS, CS আর ফেরার অ্যাড্রেস 0004 স্ট্যাকে পুশ করে। এগুলো তিনটি মেমোরি রাইট, আর SP 0100 থেকে কমে 00FA হয়।',
+     {ph:PH('INT · PUSH','ইন্টারাপ্ট · পুশ'),dec:'INT 21h',pa:['1011:00FA','1020Ah'],x:WR('mem'),A:'1020Ah',C:'MEMW',D:'04 00',r:{SP:'00FA',IP:'0004'},m:{s3:'FLAGS',s2:'10 10',s1:'04 00'},mh:['s1','s2','s3'],hl:['r_SP','r_SS','m_stack'],line:5}),
+  st('Next it reads the interrupt vector. Each vector is four bytes, so vector 21 hex is at 21 times 4 = 84 hex, address 00084. Those bytes are the IP and CS of the DOS routine. The CPU loads them and jumps into DOS, and the queue is emptied because of the jump.',
+     'এরপর এটি ইন্টারাপ্ট ভেক্টর পড়ে। প্রতিটি ভেক্টর চার বাইটের, তাই ২১ হেক্স নম্বর ভেক্টর আছে ২১ গুণ ৪ = ৮৪ হেক্সে, অর্থাৎ অ্যাড্রেস 00084-এ। এই বাইটগুলোই ডস রুটিনের IP আর CS। সিপিইউ এগুলো লোড করে ডসে জাম্প করে, আর জাম্পের কারণে কিউ খালি হয়ে যায়।',
+     {ph:PH('INT · VECTOR','ইন্টারাপ্ট · ভেক্টর'),dec:'INT 21h',pa:['0000:0084','00084h'],x:RD('mem'),A:'00084h',C:'MEMR',D:'IP, CS',r:{CS:'DOS',IP:'····'},q:[],mh:['ivt'],hl:['m_ivt','r_CS','r_IP'],line:5}),
+  st('DOS function 1 waits for a key. You press a. The keyboard sends its scan code, 1E hex, to the keyboard interface, which holds it in port 60 hex and raises an interrupt request, IRQ1, on the control bus.',
+     'ডস ফাংশন ১ একটি কি-এর জন্য অপেক্ষা করে। তুমি a চাপলে। কিবোর্ড তার স্ক্যান কোড ১E হেক্স কিবোর্ড ইন্টারফেসে পাঠায়, যা সেটি পোর্ট ৬০ হেক্সে ধরে রাখে আর কন্ট্রোল বাসে একটি ইন্টারাপ্ট রিকোয়েস্ট, IRQ1, তোলে।',
+     {ph:PH('WAIT · KEY','অপেক্ষা · কি'),key:'a',port:'1E',x:['k1','irq'],C:'INTR',hl:['kbd','kport'],line:5}),
+  st('The interrupt runs the BIOS keyboard routine, which reads port 60 hex with an I/O read: address 0060 on the address bus, IOR on the control bus, and the scan code 1E comes back on the data bus. Note IOR, not MEMR: ports have their own address space.',
+     'ইন্টারাপ্টটি বায়োসের কিবোর্ড রুটিন চালায়, যা আই/ও রিড দিয়ে পোর্ট ৬০ হেক্স পড়ে: অ্যাড্রেস বাসে 0060, কন্ট্রোল বাসে IOR, আর ডেটা বাসে ফেরত আসে স্ক্যান কোড 1E। লক্ষ করো, MEMR নয়, IOR: পোর্টগুলোর নিজস্ব অ্যাড্রেস স্পেস আছে।',
+     {ph:IORD,dec:'IN AL,60h',x:RD('kbd'),A:'0060h',C:'IOR',D:'1E',port:'1E',hl:['kport'],line:5}),
+  st('The BIOS turns scan code 1E into ASCII 61 hex, the letter a, and stores it in the keyboard buffer in memory. DOS takes it from there and returns it in AL.',
+     'বায়োস স্ক্যান কোড 1E কে ASCII ৬১ হেক্স, অর্থাৎ a অক্ষরে রূপান্তর করে মেমোরির কিবোর্ড বাফারে রাখে। ডস সেখান থেকে নিয়ে AL-এ ফেরত দেয়।',
+     {ph:MWR,x:WR('mem'),A:'0041Eh',C:'MEMW',D:'61 1E',m:{kb:'61 1E'},mh:['kb'],r:{AX:'0161'},hl:['r_AX'],line:5}),
+  st('Function 1 also echoes the key. DOS, through the BIOS, writes character 61 and its colour attribute 07 into video RAM at B80A0 hex. That is an ordinary memory write. The video adapter keeps scanning video RAM, so a appears on the screen.',
+     'ফাংশন ১ কি-টি ইকোও করে। ডস, বায়োসের মাধ্যমে, অক্ষর ৬১ আর তার রঙের অ্যাট্রিবিউট ০৭ ভিডিও র‍্যামের B80A0 হেক্সে লেখে। এটি একটি সাধারণ মেমোরি রাইট। ভিডিও অ্যাডাপ্টার সবসময় ভিডিও র‍্যাম পড়তে থাকে, তাই স্ক্রিনে a দেখা যায়।',
+     {ph:MWR,x:WR('vid').concat(['v1']),A:'B80A0h',C:'MEMW',D:'61 07',vio:"B80A0 ← 'a'",m:{v0:'61 07'},mh:['v0'],scr:'C:\\>CASE\na',hl:['vid','mon','m_vid'],line:5}),
+  st('DOS finishes with IRET. The CPU pops IP, CS and FLAGS back off the stack, so CS:IP = 1010:0004 again and SP returns to 0100. The program continues right after INT 21H, with the key in AL = 61.',
+     'ডস IRET দিয়ে শেষ করে। সিপিইউ স্ট্যাক থেকে IP, CS আর FLAGS পপ করে ফিরিয়ে আনে, ফলে আবার CS:IP = 1010:0004 আর SP ফিরে আসে 0100-এ। প্রোগ্রাম INT 21H-এর ঠিক পর থেকে চলতে থাকে, আর কি-টি আছে AL-এ, AL = 61।',
+     {ph:PH('IRET · POP','IRET · পপ'),dec:'IRET',pa:['1011:00FA','1020Ah'],x:RD('mem'),A:'1020Ah',C:'MEMR',D:'04 00',r:{CS:'1010',IP:'0004',SP:'0100'},mh:['s1','s2','s3'],q:['2C','20','88','C2','B4','02'],hl:['r_CS','r_IP','r_SP','r_SS','m_stack'],line:5}),
+  st('SUB AL, 20H. Lower-case letters are 20 hex above upper-case ones, so the ALU computes 61 minus 20 = 41 hex, the code for A. 41 hex = 0100 0001 has two 1 bits, so PF = 1; all the other flags are 0.',
+     'SUB AL,20H। ছোট হাতের অক্ষর বড় হাতের অক্ষরের চেয়ে ২০ হেক্স বেশি, তাই এএলইউ হিসাব করে ৬১ বিয়োগ ২০ = ৪১ হেক্স, যা A-এর কোড। ৪১ হেক্স = 0100 0001-এ দুটি ১ বিট, তাই PF = 1; বাকি সব ফ্ল্যাগ 0।',
+     {ph:EXEC,dec:'SUB AL,20h',alu:'61−20=41',r:{AX:'0141',IP:'0006'},f:{OF:0,SF:0,ZF:0,AF:0,PF:1,CF:0},x:['q>dec'],hl:['alu','r_AX','flg'],q:['88','C2','B4','02','CD','21'],line:6}),
+  st('MOV DL, AL copies 41 into DL, and MOV AH, 2 chooses DOS function 2: display the character in DL.',
+     'MOV DL,AL, ৪১ কে DL-এ কপি করে, আর MOV AH,2 ডস ফাংশন ২ বেছে নেয়: DL-এর অক্ষরটি দেখাও।',
+     {ph:EXEC,dec:'MOV AH,2',r:{DX:'0041',AX:'0241',IP:'000A'},x:['q>dec'],hl:['r_DX','r_AX'],q:['CD','21','B4','4C','CD','21'],line:8}),
+  st('INT 21H again: the same push, vector and jump into DOS as before. This time DOS writes 41, the letter A, into video RAM at B80A2 hex, next to the a. The screen now shows aA, and IRET returns to 000C.',
+     'আবার INT 21H: আগের মতোই পুশ, ভেক্টর আর ডসে জাম্প। এবার ডস ৪১, অর্থাৎ A অক্ষরটি ভিডিও র‍্যামের B80A2 হেক্সে, a-এর ঠিক পাশে লেখে। স্ক্রিনে এখন aA, আর IRET ফিরে আসে 000C-তে।',
+     {ph:PH('INT 21h · DISPLAY','INT 21h · ডিসপ্লে'),dec:'INT 21h',x:WR('vid').concat(['v1']),A:'B80A2h',C:'MEMW',D:'41 07',vio:"B80A2 ← 'A'",m:{v1:'41 07'},mh:['v1'],scr:'C:\\>CASE\naA',r:{IP:'000C'},hl:['vid','mon','m_vid'],q:['B4','4C','CD','21'],line:9}),
+  st('MOV AH, 4CH and INT 21H end the program, and DOS prints its prompt on the next line. In this one short program the keyboard, an I/O port, interrupts, the stack, the ALU and video RAM all worked together.',
+     'MOV AH,4CH আর INT 21H প্রোগ্রামটি শেষ করে, আর ডস পরের লাইনে তার প্রম্পট দেখায়। এই ছোট্ট প্রোগ্রামেই কিবোর্ড, আই/ও পোর্ট, ইন্টারাপ্ট, স্ট্যাক, এএলইউ আর ভিডিও র‍্যাম সবাই একসাথে কাজ করল।',
+     {ph:PH('EXIT → DOS','প্রস্থান → ডস'),dec:'INT 21h',r:{AX:'4C41'},x:WR('vid').concat(['v1']),A:'B8140h',C:'MEMW',D:"'C' 07",scr:'C:\\>CASE\naA\nC:\\>',hl:['mon','vid'],q:[],line:11})]),
+
+/* 12.5 */
+T('Example 3: a loop that prints stars','উদাহরণ ৩: লুপ দিয়ে তারা ছাপা',
+ {type:'sys',cells:CELLS3,code:STARS,init:LOADED3},
+ [st('STARS is loaded at 10100 hex. The BIU fills the queue, and MOV AH, 2 selects the DOS display function.',
+     'STARS প্রোগ্রামটি ১০১০০ হেক্সে লোড হয়েছে। বিআইইউ কিউ ভরে ফেলে, আর MOV AH,2 ডসের ডিসপ্লে ফাংশন বেছে নেয়।',
+     {ph:FETCH,pa:['1010:0000','10100h'],x:RD('mem'),A:'10100h',C:'MEMR',D:'B4 02',q:['B4','02','B2','2A','B9','05'],r:{AX:'0200',IP:'0002'},dec:'MOV AH,2',mh:['c0'],hl:['q','m_code','r_AX'],line:4}),
+  st('MOV DL, the star character, puts 2A hex, the ASCII code of the star, into DL.',
+     'MOV DL,\'*\' তারার ASCII কোড ২A হেক্স DL-এ রাখে।',
+     {ph:EXEC,dec:"MOV DL,'*'",r:{DX:'002A',IP:'0004'},x:['q>dec'],hl:['r_DX'],q:['B2','2A','B9','05','00','CD'],line:5}),
+  st('MOV CX, 5 loads the loop counter. LOOP will count CX down to zero.',
+     'MOV CX,5 লুপের কাউন্টার লোড করে। LOOP, CX কে কমিয়ে শূন্য পর্যন্ত গুনবে।',
+     {ph:EXEC,dec:'MOV CX,5',r:{CX:'0005',IP:'0007'},x:['q>dec'],hl:['r_CX'],q:['B9','05','00','CD','21','E2'],line:6}),
+  st('INT 21H calls DOS function 2, just like in the previous example: save the flags and return address on the stack, jump through vector 21 hex, and DOS writes the star into video RAM. One star appears.',
+     'INT 21H ডস ফাংশন ২ ডাকে, ঠিক আগের উদাহরণের মতো: ফ্ল্যাগ আর ফেরার অ্যাড্রেস স্ট্যাকে রাখা, ভেক্টর ২১ হেক্স দিয়ে জাম্প, আর ডস তারাটি ভিডিও র‍্যামে লেখে। একটি তারা দেখা যায়।',
+     {ph:PH('INT 21h · DISPLAY','INT 21h · ডিসপ্লে'),dec:'INT 21h',x:WR('vid').concat(['v1']),A:'B80A0h',C:'MEMW',D:'2A 07',vio:"B80A0 ← '*'",m:{v0:'2A 07'},mh:['v0'],scr:'C:\\>STARS\n*',r:{IP:'0009',AX:'022A'},hl:['vid','mon','m_vid'],q:['CD','21','E2','FC','B4','4C'],line:7}),
+  st('LOOP TOP does two things. First it subtracts 1 from CX: 5 minus 1 = 4. LOOP does not change any flags.',
+     'LOOP TOP দুটি কাজ করে। প্রথমে CX থেকে ১ বিয়োগ করে: ৫ বিয়োগ ১ = ৪। LOOP কোনো ফ্ল্যাগ পরিবর্তন করে না।',
+     {ph:EXEC,dec:'LOOP TOP',alu:'CX−1 = 0004',r:{CX:'0004'},x:['q>dec'],hl:['r_CX','alu'],q:['E2','FC','B4','4C','CD','21'],line:8}),
+  st('CX is not 0, so it jumps. FC means minus 4, so the new IP = 000B minus 4 = 0007, back to TOP. The bytes already prefetched after LOOP are useless now, so the BIU empties the queue and fetches again from 1010:0007 = 10107 hex.',
+     'CX শূন্য নয়, তাই জাম্প হয়। FC মানে মাইনাস ৪, তাই নতুন IP = 000B বিয়োগ ৪ = 0007, আবার TOP-এ। LOOP-এর পরে আগেভাগে আনা বাইটগুলো এখন অকেজো, তাই বিআইইউ কিউ খালি করে আবার 1010:0007 = ১০১০৭ হেক্স থেকে ফেচ করে।',
+     {ph:PH('JUMP · FLUSH','জাম্প · কিউ খালি'),pa:['1010:0007','10107h'],x:RD('mem').concat(['sum>bcl']),A:'10107h',C:'MEMR',D:'CD 21',r:{IP:'0007'},q:['CD','21','E2','FC','B4','4C'],mh:['c3'],hl:['q','sum','r_IP','m_code'],line:7,note:{en:'a jump empties the queue',bn:'জাম্প করলে কিউ খালি হয়'}}),
+  st('The loop repeats: INT 21H prints a star, LOOP subtracts 1 and jumps back. After the fourth star, CX = 1.',
+     'লুপ চলতে থাকে: INT 21H একটি তারা ছাপে, LOOP ১ বিয়োগ করে আবার জাম্প করে। চতুর্থ তারার পর CX = 1।',
+     {ph:EXEC,r:{CX:'0001',IP:'0007'},m:{v1:'2A 07',v2:'2A 07',v3:'2A 07'},mh:['v1','v2','v3'],scr:'C:\\>STARS\n****',hl:['r_CX','mon','vid'],x:['v1'],line:7}),
+  st('Fifth pass: INT 21H prints the fifth star, and LOOP makes CX = 0. This time it does not jump. IP simply moves on to 000B, and MOV AH, 4CH is already waiting in the queue.',
+     'পঞ্চম বার: INT 21H পঞ্চম তারাটি ছাপে, আর LOOP CX = 0 করে। এবার আর জাম্প হয় না। IP শুধু এগিয়ে 000B-তে যায়, আর MOV AH,4CH আগেই কিউতে অপেক্ষা করছে।',
+     {ph:EXEC,dec:'LOOP TOP',alu:'CX−1 = 0000',r:{CX:'0000',IP:'000B'},m:{v4:'2A 07'},mh:['v4'],scr:'C:\\>STARS\n*****',q:['B4','4C','CD','21'],hl:['r_CX','r_IP','q'],line:8}),
+  st('MOV AH, 4CH and INT 21H return to DOS. Five stars, one loop, and every one of them travelled from the CPU over the buses into video RAM.',
+     'MOV AH,4CH আর INT 21H ডসে ফিরে যায়। পাঁচটি তারা, একটি লুপ, আর প্রত্যেকটি সিপিইউ থেকে বাস দিয়ে ভিডিও র‍্যামে পৌঁছেছে।',
+     {ph:PH('EXIT → DOS','প্রস্থান → ডস'),dec:'INT 21h',r:{AX:'4C2A'},x:WR('vid').concat(['v1']),A:'B8140h',C:'MEMW',D:"'C' 07",scr:'C:\\>STARS\n*****\nC:\\>',hl:['mon','vid'],q:[],line:10})])
+]});
+})();
+</script>
+<script>
+"use strict";
 /* ================= quiz data helpers ================= */
 const QZ={};
 const E=(en,bn)=>({en,bn});
@@ -3257,6 +3708,30 @@ QZ.c11t7=[
  M(E('MOVS STRING2,STRING1 with byte strings is coded as…','বাইট স্ট্রিং হলে MOVS STRING2,STRING1 কোড হয়…'),['MOVSB','MOVSW','MOV','REP MOVSB'],E('The operands only choose the byte or word form.','অপারেন্ড শুধু বাইট নাকি ওয়ার্ড রূপ তা ঠিক করে।')),
  M(E('REPNZ is another name for…','REPNZ আর কোনটির অন্য নাম?'),['REPNE','REPE','REP','REPZ'],E('REPNE and REPNZ produce the same code.','REPNE আর REPNZ একই কোড তৈরি করে।')),
  M(E('Which instructions are used with REPE / REPNE?','কোন ইনস্ট্রাকশনের সাথে REPE / REPNE ব্যবহার হয়?'),[E('SCAS and CMPS','SCAS আর CMPS'),E('MOVS and STOS','MOVS আর STOS'),E('LODS only','শুধু LODS'),E('All of them','সবগুলো')],E('Only scan and compare set flags for the condition.','শুধু স্ক্যান আর কম্পেয়ার শর্তের জন্য ফ্ল্যাগ সেট করে।'))];
+</script>
+<script>
+"use strict";
+/* ===== Chapter 12 ===== */
+QZ.c12t1=[
+ M(E('Which bus is one-way, driven only by the CPU?','কোন বাসটি একমুখী, শুধু সিপিইউ চালায়?'),[E('Address bus','অ্যাড্রেস বাস'),E('Data bus','ডেটা বাস'),E('Both','দুটোই'),E('Neither','কোনোটিই নয়')],E('The CPU puts addresses out; the data bus carries data both ways.','সিপিইউ অ্যাড্রেস বাইরে পাঠায়; ডেটা বাস দুই দিকেই ডেটা বহন করে।')),
+ I(E('How many address lines does the 8086 have?','৮০৮৬-এর কয়টি অ্যাড্রেস লাইন আছে?'),['20'],E('20 lines address 2^20 = 1 MB.','২০টি লাইন দিয়ে ২^২০ = ১ মেগাবাইট অ্যাড্রেস করা যায়।')),
+ M(E('Showing a character on the screen in text mode is done by…','টেক্সট মোডে স্ক্রিনে একটি অক্ষর দেখানো হয়…'),[E('A memory write to video RAM at B8000h','B8000h-এ ভিডিও র‍্যামে একটি মেমোরি রাইট দিয়ে'),E('An I/O read from port 60h','পোর্ট 60h থেকে আই/ও রিড দিয়ে'),E('A write to the IVT','IVT-তে রাইট দিয়ে'),E('Changing a flag','একটি ফ্ল্যাগ বদলে')],E('Video RAM is mapped into the memory space, so it is an ordinary MEMW cycle.','ভিডিও র‍্যাম মেমোরি স্পেসে ম্যাপ করা, তাই এটি সাধারণ MEMW সাইকেল।'))];
+QZ.c12t2=[
+ M(E('Which program turns ADD2.ASM into machine code?','কোন প্রোগ্রাম ADD2.ASM কে মেশিন কোডে রূপান্তর করে?'),[E('The assembler (MASM)','অ্যাসেম্বলার (MASM)'),E('The linker (LINK)','লিংকার (LINK)'),E('The DOS loader','ডস লোডার'),E('The editor','এডিটর')],E('MASM produces the object file ADD2.OBJ; LINK then builds the EXE.','MASM অবজেক্ট ফাইল ADD2.OBJ বানায়; তারপর LINK EXE তৈরি করে।')),
+ M(E('Why is MOV AX,@DATA marked R in the assembler listing?','অ্যাসেম্বলার লিস্টিংয়ে MOV AX,@DATA-তে R চিহ্ন কেন?'),[E('Its segment value is only known when the loader places the program in memory','প্রোগ্রাম মেমোরিতে বসানোর সময়ই লোডার এর সেগমেন্ট মান জানতে পারে'),E('It is a read-only instruction','এটি রিড-অনলি ইনস্ট্রাকশন'),E('It uses a register','এটি রেজিস্টার ব্যবহার করে'),E('It must be repeated','এটি বারবার চালাতে হবে')],E('R = relocatable. The loader patches in the real segment, here 1012h.','R = রিলোকেটেবল। লোডার আসল সেগমেন্ট বসিয়ে দেয়, এখানে 1012h।')),
+ I(E('The PSP is how many bytes long? (decimal)','পিএসপি কত বাইটের? (দশমিকে)'),['256'],E('The Program Segment Prefix is 256 bytes (100h), so the code starts 10h paragraphs later.','প্রোগ্রাম সেগমেন্ট প্রিফিক্স ২৫৬ বাইট (100h), তাই কোড ১০h প্যারাগ্রাফ পরে শুরু হয়।'))];
+QZ.c12t3=[
+ I(E('CS = 1010h, IP = 0000h. Physical address of the first fetch? (hex)','CS = 1010h, IP = 0000h। প্রথম ফেচের ফিজিক্যাল অ্যাড্রেস? (হেক্সে)'),['10100'],E('1010h × 10h + 0000h = 10100h.','1010h × 10h + 0000h = 10100h।')),
+ M(E('Which control signal does MOV SUM,AX put on the control bus?','MOV SUM,AX কন্ট্রোল বাসে কোন সিগন্যাল দেয়?'),['MEMW','MEMR','IOR','IOW'],E('It writes AX into memory, so it is a memory write.','এটি AX কে মেমোরিতে লেখে, তাই মেমোরি রাইট।')),
+ I(E('After ADD AX,B (5 + 7), what is PF? (0 or 1)','ADD AX,B (৫ + ৭)-এর পর PF কত? (0 বা 1)'),['1'],E('Result 0Ch = 0000 1100 has two 1s, an even count, so PF = 1.','ফলাফল 0Ch = 0000 1100-এ দুটি ১, জোড় সংখ্যা, তাই PF = 1।'))];
+QZ.c12t4=[
+ M(E('How is the keyboard\'s scan code read by the CPU?','কিবোর্ডের স্ক্যান কোড সিপিইউ কীভাবে পড়ে?'),[E('I/O read (IOR) from port 60h','পোর্ট 60h থেকে আই/ও রিড (IOR)'),E('Memory read from B8000h','B8000h থেকে মেমোরি রিড'),E('Through the instruction queue','ইনস্ট্রাকশন কিউ দিয়ে'),E('From the FLAGS register','FLAGS রেজিস্টার থেকে')],E('The keyboard interface is an I/O port; ports use IOR/IOW and their own address space.','কিবোর্ড ইন্টারফেস একটি আই/ও পোর্ট; পোর্ট IOR/IOW আর নিজস্ব অ্যাড্রেস স্পেস ব্যবহার করে।')),
+ I(E('INT 21h: at which physical address is its vector? (hex)','INT 21h: এর ভেক্টর কোন ফিজিক্যাল অ্যাড্রেসে? (হেক্সে)'),['84','00084'],E('Each vector is 4 bytes: 21h × 4 = 84h.','প্রতিটি ভেক্টর ৪ বাইট: 21h × 4 = 84h।')),
+ M(E('What does INT 21h push onto the stack?','INT 21h স্ট্যাকে কী পুশ করে?'),[E('FLAGS, CS and IP','FLAGS, CS আর IP'),E('AX only','শুধু AX'),E('DS and ES','DS আর ES'),E('Nothing','কিছুই না')],E('So that IRET can return to the instruction after INT.','যাতে IRET, INT-এর পরের ইনস্ট্রাকশনে ফিরতে পারে।'))];
+QZ.c12t5=[
+ M(E('What happens to the instruction queue when LOOP jumps?','LOOP জাম্প করলে ইনস্ট্রাকশন কিউর কী হয়?'),[E('It is emptied and refilled from the new address','খালি হয়ে নতুন অ্যাড্রেস থেকে আবার ভরে'),E('Nothing changes','কিছুই বদলায় না'),E('It is saved on the stack','স্ট্যাকে সেভ হয়'),E('It is copied to CX','CX-এ কপি হয়')],E('Prefetched bytes after the jump are useless, so the BIU flushes the queue.','জাম্পের পরে আগেভাগে আনা বাইটগুলো অকেজো, তাই বিআইইউ কিউ খালি করে।')),
+ I(E('LOOP TOP is at 0009h (E2 FC). Where does it jump? (hex offset)','LOOP TOP আছে 0009h-এ (E2 FC)। এটি কোথায় জাম্প করে? (হেক্স অফসেট)'),['7','0007'],E('Next IP = 000Bh; FC = −4; 000Bh − 4 = 0007h.','পরের IP = 000Bh; FC = −4; 000Bh − 4 = 0007h।')),
+ I(E('With MOV CX,5, how many stars are printed?','MOV CX,5 থাকলে কয়টি তারা ছাপা হয়?'),['5'],E('LOOP decrements CX and stops when it reaches 0, after 5 passes.','LOOP, CX কমায় আর শূন্য হলে থামে, ৫ বার পর।'))];
 </script>
 <script>
 "use strict";

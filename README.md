@@ -2,7 +2,8 @@
 
 Animated, chapter-by-chapter lessons for the course **Microprocessor and Assembly Language**, prepared by Abduz Zami, Lecturer in CSE at BUFT.
 
-- 11 chapters and 101 topics, each with step-by-step animations
+- 12 chapters and 106 topics, each with step-by-step animations
+- Chapter 12 shows the whole system at work: CPU (EU + BIU), address, data and control buses, memory, keyboard, display and disk, running real programs from typing to exit
 - Voice-over in English and Bangla, with a choice of voice, tone and speed, and a voice on/off switch
 - Captions and transcripts for every step
 - An interactive quiz after every topic
